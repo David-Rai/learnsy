@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
 import supabase from '../config/supabase'
-import {useUser} from '../context/userContext'
+import { useUser } from '../context/userContext'
 import React from 'react'
 import {
     FaHeart,
@@ -10,14 +9,16 @@ import {
 } from 'react-icons/fa';
 
 const SocialIcons = ({ q }) => {
-    const {user,setUser}=useUser()
+    const { user, setUser } = useUser()
     const { like_count, id } = q
 
     //Handling like question
     const handleLike = async () => {
         try {
-            console.log("user_id",user.id)
+            console.log("user_id", user.id)
             console.log("question_id", id)
+            const res = await supabase.from("likes")
+                .insert({ user_id: user.id, q_id: id, likes: true })
 
         } catch (error) {
             console.log(error)
