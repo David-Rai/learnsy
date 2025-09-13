@@ -68,7 +68,7 @@ const Home = () => {
     return (
         <>
             <div className="relative h-screen w-full bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 overflow-hidden">
-               
+
                 {/* Main Content */}
                 <main className="h-full w-full overflow-y-scroll snap-y snap-mandatory pb-16">
                     {questions.map((q, index) => (
@@ -77,33 +77,33 @@ const Home = () => {
                             className="relative snap-start h-screen flex flex-col justify-center items-center px-4 bg-gradient-to-br from-indigo-500 via-indigo-600 to-indigo-700"
                         >
                             <div className="h-full w-full absolute inset-0 bg-black/20" />
+                           
                             {/* Question */}
                             <div className="flex flex-col items-center justify-center flex-1 relative z-10 max-w-lg w-full px-4">
                                 <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mb-6 text-center text-white drop-shadow-lg leading-snug break-words overflow-hidden">
                                     {q.q}
                                 </h2>
-
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
                                     {q.options && q.options.length > 0 ? (
                                         q.options.map((opt, i) => (
                                             <button
-                                                key={i}
-                                                className="bg-black/80 backdrop-blur-sm text-yellow-300 px-5 py-4 rounded-2xl shadow-lg hover:bg-black/90 transition-all font-medium text-sm sm:text-base break-words"
+                                                key={i} className='option-button'
                                             >
                                                 {opt}
                                             </button>
                                         ))
                                     ) : (
                                         <>
-                                            <button className="bg-black/80 backdrop-blur-sm text-yellow-300 px-5 py-4 rounded-2xl shadow-lg hover:bg-black/90 transition-all font-medium text-sm sm:text-base mx-2">
+                                            <button className="option-button " >
                                                 Yes
                                             </button>
-                                            <button className="bg-black/80 backdrop-blur-sm text-yellow-300 px-5 py-4 rounded-2xl shadow-lg hover:bg-black/90 transition-all font-medium text-sm sm:text-base mx-2">
+                                            <button className="option-button">
                                                 No
                                             </button>
                                         </>
                                     )}
                                 </div>
+
                             </div>
 
                             {/* Socials icons */}
