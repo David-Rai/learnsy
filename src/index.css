@@ -1,11 +1,20 @@
 @import "tailwindcss";
 
-@layer components{
-    .option-button{
-        @apply  bg-black/80 backdrop-blur-sm text-yellow-300
-        px-4 sm:px-5 py-4
-        rounded-2xl shadow-lg hover:bg-black/90 transition-all 
-        font-medium text-sm sm:text-base 
-        w-full max-w-xs sm:max-w-full
+@layer components {
+    .option-button {
+        @apply bg-black/80 backdrop-blur-sm text-yellow-300 px-4 sm:px-5 py-4 rounded-2xl shadow-lg hover:bg-black/90 transition-all font-medium text-sm sm:text-base w-full max-w-xs sm:max-w-full
+    }
+
+    .home {
+        @apply relative h-screen w-full bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 overflow-hidden
+    }
+
+    .question-container {
+        @apply relative snap-start h-screen flex flex-col justify-center items-center px-4
+        bg-gradient-to-br from-indigo-500 via-indigo-600 to-indigo-700
+    }
+
+    .question-text {
+        @apply text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mb-6 text-center text-white drop-shadow-lg w-[80%] leading-snug break-words overflow-hidden
     }
 }
