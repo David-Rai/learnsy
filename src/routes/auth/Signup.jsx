@@ -82,7 +82,10 @@ const Signup = () => {
         toast.error(error.message)
       } else {
         toast.success("successully signup")
-        // navigate('/profile')
+        const res=await supabase.from("board")
+        .insert({user_id:data.user.id})
+        console.log(res)
+        navigate('/profile')
       }
 
 

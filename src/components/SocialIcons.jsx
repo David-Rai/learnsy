@@ -1,6 +1,6 @@
 import supabase from '../config/supabase'
 import { useUser } from '../context/userContext'
-import React from 'react'
+import React, { useState } from 'react'
 import {
     FaHeart,
     FaComment,
@@ -11,22 +11,49 @@ import {
 const SocialIcons = ({ q }) => {
     const { user, setUser } = useUser()
     const { like_count, id } = q
+    const [isLiking, setIsLiking] = useState(false)
+
+       //gettingn like count
+       const getLikeCount = async (q_id) => {
+        const { count, error } = await supabase
+          .from('likes')
+          .select('id', { count: 'exact' }) // get row count only
+          .eq('q_id', q_id)
+      
+        if (error) {
+          console.log('Error fetching like count:', error)
+          return 0
+        }
+      
+        return count || 0
+      }
 
     //Handling like question
     const handleLike = async () => {
         try {
+            if (isLiking) return
+            setIsLiking(true)
             const user_id = user.id
             const q_id = id
 
-            console.log("user_id", user.id)
-            console.log("question_id", id)
+            console.log(`${user_id} liked ${q_id}`)
 
             //checking if liked
             const res = await supabase.from('likes')
                 .select()
                 .eq("user_id", user_id)
                 .eq("q_id", q_id)
+
+            //no liked
+            if (res.data.length === 0) {
+                await supabase.from('likes').insert({ user_id, q_id })
+            } else {
+                //liked
+                await supabase.from('likes').delete().eq("user_id", user_id).eq("q_id", q_id)
+            }
+            setIsLiking(false)
         } catch (error) {
+            setIsLiking(false)
             console.log(error)
         }
     }

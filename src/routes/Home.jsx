@@ -15,6 +15,8 @@ const Home = () => {
     const [page, setPage] = useState(0);
     const targetRef = useRef(null);
     const [maxReached, setMaxReached] = useState(false)
+    const [selected, setSelected] = useState(null);     // what user clicked
+    const [isAnswered, setIsAnswered] = useState(false); // lock after answering
 
     //Initial
     useEffect(() => {
@@ -45,7 +47,9 @@ const Home = () => {
         const { data, error, count } = await supabase
             .from('questions')
             .select('*', { count: 'exact' })
-            .range(page * BATCH_SIZE, (page + 1) * BATCH_SIZE - 1);
+            // .not('id', 'in', '(1,2,3)') 
+            .range(page * BATCH_SIZE, (page + 1) * BATCH_SIZE - 1)
+
 
         if (error) console.error(error);
         if (questions.length === count) {
@@ -84,6 +88,21 @@ const Home = () => {
         };
     }, [questions, maxReached, page]);
 
+
+    const checkAnswer = (q,opt) => {
+        if (isAnswered) return; // prevent re-clicking
+
+        setSelected(opt);
+        setIsAnswered(true);
+
+        if (q.a === opt) {
+            console.log("✅ Right answer");
+        } else {
+            console.log("❌ Wrong answer");
+        }
+        setIsAnswered(false)
+    };
+
     return (
         <>
             <div className="home">
@@ -103,14 +122,20 @@ const Home = () => {
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
                                     {q.options && q.options.length > 0 ? (
                                         q.options.map((opt, i) => (
-                                            <button key={i} className="option-button">
+                                            <button key={i} className="option-button"
+                                                onClick={() => checkAnswer(q, opt)}
+                                            >
                                                 {opt}
                                             </button>
                                         ))
                                     ) : (
                                         <>
-                                            <button className="option-button">Yes</button>
-                                            <button className="option-button">No</button>
+                                            <button className="option-button"
+                                                onClick={() => checkAnswer(q, 'true')}
+                                            >Yes</button>
+                                            <button className="option-button"
+                                                onClick={() => checkAnswer(q, 'false')}
+                                            >No</button>
                                         </>
                                     )}
                                 </div>
