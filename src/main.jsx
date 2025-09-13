@@ -1,11 +1,13 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
+import Progress from './routes/Progress.jsx'
 import { UserProvider } from './context/userContext.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router'
 import './index.css'
 import Signin from './routes/auth/Signin.jsx'
 import Profile from './routes/Profile.jsx'
 import Home from './routes/Home'
+import Explore from './routes/Explore.jsx'
 import Signup from './routes/auth/Signup.jsx'
 
 const router = createBrowserRouter([
@@ -24,6 +26,15 @@ const router = createBrowserRouter([
   {
     path: '/profile',
     element: <Profile />
+  }
+  ,
+  {
+    path: '/explore',
+    element: <Explore />
+  },
+  {
+    path: '/progress',
+    element: <Progress />
   }
 ])
 createRoot(document.getElementById('root')).render(

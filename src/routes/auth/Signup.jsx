@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useUser } from '../../context/userContext'
 import { toast, ToastContainer } from 'react-toastify'
 import { useNavigate } from 'react-router'
+import BottomNav from '../../components/BottomNav'
 import supabase from '../../config/supabase'
 import { useForm } from 'react-hook-form'
 import { Eye, EyeOff, Mail, Lock, User, Check, X } from 'lucide-react'
@@ -92,8 +93,7 @@ const Signup = () => {
   }
 
   return (
-    <main className="min-h-screen  bg-black
-         flex items-center justify-center p-4">
+    <main className="min-h-screen bg-black flex flex-col items-center justify-start p-4 pb-24">
       <div className="w-full max-w-md">
         {/* Main Form Container */}
         <div className=" rounded-xl shadow-2xl overflow-hidden">
@@ -257,7 +257,7 @@ const Signup = () => {
               </button>
 
               {/* Divider */}
-              <div className="relative my-6">
+              <div className="relative">
                 <div className="absolute inset-0 flex items-center">
                   <div className="w-full border-t border-gray-300"></div>
                 </div>
@@ -290,7 +290,7 @@ const Signup = () => {
         </div>
 
         {/* Sign In Link */}
-        <div className="rounded-xl shadow-lg p-x4 text-center">
+        <div className="rounded-xl shadow-lg text-center">
           <p className="text-sm text-gray-300">
             Have an account?{' '}
             <button
@@ -303,8 +303,11 @@ const Signup = () => {
             </button>
           </p>
         </div>
+
       </div>
       <ToastContainer autoClose={100} />
+
+      {/* <BottomNav /> */}
     </main>
 
   )

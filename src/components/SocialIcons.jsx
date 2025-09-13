@@ -15,11 +15,17 @@ const SocialIcons = ({ q }) => {
     //Handling like question
     const handleLike = async () => {
         try {
+            const user_id = user.id
+            const q_id = id
+
             console.log("user_id", user.id)
             console.log("question_id", id)
-            const res = await supabase.from("likes")
-                .insert({ user_id: user.id, q_id: id, likes: true })
 
+            //checking if liked
+            const res = await supabase.from('likes')
+                .select()
+                .eq("user_id", user_id)
+                .eq("q_id", q_id)
         } catch (error) {
             console.log(error)
         }

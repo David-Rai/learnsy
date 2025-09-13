@@ -20,7 +20,7 @@ const BottomNav = () => {
       }, [location.pathname])
 
     return (
-        <div className="absolute bottom-0 left-0 right-0 bg-gray-900 border-t border-gray-800 z-30">
+        <div className="absolute w-full bottom-0 left-0 right-0 bg-gray-900 border-t border-gray-800 z-30">
             <div className="flex items-center justify-around py-2 px-4">
                 {/* Home */}
                 <button

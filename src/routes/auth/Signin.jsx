@@ -1,6 +1,7 @@
 import React from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import { useEffect } from 'react'
+import BottomNav from '../../components/BottomNav.jsx'
 import { useNavigate } from 'react-router'
 import supabase from '../../config/supabase.js'
 import { useForm } from 'react-hook-form'
@@ -196,6 +197,7 @@ const Signin = () => {
 
       </div>
       <ToastContainer autoClose={100} />
+      {/* <BottomNav/> */}
     </main>
   )
 }

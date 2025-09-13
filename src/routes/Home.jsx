@@ -89,65 +89,44 @@ const Home = () => {
             <div className="home">
                 {/* Main Content */}
                 <main className="h-full w-full overflow-y-scroll snap-y snap-mandatory pb-16">
-                    <Suspense
-                        fallback={
-                            <div className="flex items-center justify-center h-full w-full">
-                                <div className="text-gray-500 text-lg animate-pulse">
-                                    Loading questions...
+                    {questions.map((q, index) => (
+                        <div key={index} className="question-container">
+                            {/* Top Bar */}
+                            <HomeTop category={q.category} />
+
+                            {/* Overlay */}
+                            <div className="h-full w-full absolute inset-0 bg-black/20" />
+
+                            {/* Question */}
+                            <div className="flex flex-col items-center justify-center flex-1 relative z-10 max-w-lg w-full px-4">
+                                <h2 className="question-text">{q.q}</h2>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+                                    {q.options && q.options.length > 0 ? (
+                                        q.options.map((opt, i) => (
+                                            <button key={i} className="option-button">
+                                                {opt}
+                                            </button>
+                                        ))
+                                    ) : (
+                                        <>
+                                            <button className="option-button">Yes</button>
+                                            <button className="option-button">No</button>
+                                        </>
+                                    )}
                                 </div>
                             </div>
-                        }
-                    >
-                        {questions.map((q, index) => (
-                                <div key={index} className="question-container">
-                                    {/* Top Bar */}
-                                    <HomeTop category={q.category} />
 
-                                    {/* Overlay */}
-                                    <div className="h-full w-full absolute inset-0 bg-black/20" />
+                            {/* Socials icons */}
+                            <SocialIcons q={q} />
 
-                                    {/* Question */}
-                                    <div className="flex flex-col items-center justify-center flex-1 relative z-10 max-w-lg w-full px-4">
-                                        <h2 className="question-text">{q.q}</h2>
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-                                            {q.options && q.options.length > 0 ? (
-                                                q.options.map((opt, i) => (
-                                                    <button key={i} className="option-button">
-                                                        {opt}
-                                                    </button>
-                                                ))
-                                            ) : (
-                                                <>
-                                                    <button className="option-button">Yes</button>
-                                                    <button className="option-button">No</button>
-                                                </>
-                                            )}
-                                        </div>
-                                    </div>
-
-                                    {/* Socials icons */}
-                                    <SocialIcons q={q} />
-
-                                    {/* Observer */}
-                                    {index === questions.length - 1 && <div ref={targetRef}></div>}
-                                </div>
-                        ))}
-
-                    </Suspense>
+                            {/* Observer */}
+                            {index === questions.length - 1 && <div ref={targetRef}></div>}
+                        </div>
+                    ))}
                 </main>
 
-                {/* TikTok-style Bottom Navigation */}
-                <Suspense
-                    fallback={
-                        <div className="flex items-center justify-center py-4">
-                            <div className="text-gray-500 text-sm animate-pulse">
-                                Loading navigation...
-                            </div>
-                        </div>
-                    }
-                >
-                    <BottomNav />
-                </Suspense>
+                {/* Bottom navigation */}
+                <BottomNav />
 
                 <ToastContainer />
             </div>
