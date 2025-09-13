@@ -1,5 +1,7 @@
 import React from 'react'
+import {toast,ToastContainer} from 'react-toastify'
 import { useNavigate } from 'react-router'
+import supabase from '../../config/supabase.js'
 import { useForm } from 'react-hook-form'
 import { Eye, EyeOff, Mail, Lock } from 'lucide-react'
 
@@ -10,18 +12,28 @@ const Signin = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting }
+    formState: { errors, isSubmitting },
+    reset
   } = useForm()
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (formData) => {
     try {
-      console.log('Form data:', data)
+      const { email, password } = formData
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password })
 
-      alert('Login successful!')
+      if (error) {
+        toast.error(error.message)
+        reset()
+      } else {
+        console.log(data.user)
+        navigate("/profile")
+      }
+
     } catch (error) {
       console.error('Login failed:', error)
       alert('Login failed. Please try again.')
     }
+
   }
 
   return (
@@ -37,7 +49,7 @@ const Signin = () => {
               <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-indigo-800 bg-clip-text text-transparent mb-2">
                 Learnsy
               </h1>
-              <p className="text-gray-500 text-sm">Sign in to continue learning</p>
+              <p className="text-gray-300 text-sm">Sign in to continue learning</p>
             </div>
 
             {/* Form */}
@@ -121,7 +133,7 @@ const Signin = () => {
                   <div className="w-full border-t border-gray-300"></div>
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white text-gray-500">OR</span>
+                  <span className="px-2 bg-white  rounded-md text-gray-500">OR</span>
                 </div>
               </div>
 
@@ -151,8 +163,8 @@ const Signin = () => {
         </div>
 
         {/* Sign Up Link */}
-        <div className="rounded-xl shadow-lg mt-4 p-4 text-center">
-          <p className="text-sm text-gray-600">
+        <div className="rounded-xl shadow-lg p-4 text-center">
+          <p className="text-sm text-gray-300">
             Don't have an account?{' '}
             <button
               onClick={() => navigate('/signup')}
@@ -167,6 +179,7 @@ const Signin = () => {
 
 
       </div>
+      <ToastContainer autoClose={100}/>
     </main>
   )
 }

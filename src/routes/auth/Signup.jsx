@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { toast, ToastContainer } from 'react-toastify'
 import { useNavigate } from 'react-router'
+import supabase from '../../config/supabase'
 import { useForm } from 'react-hook-form'
 import { Eye, EyeOff, Mail, Lock, User, Check, X } from 'lucide-react'
 
@@ -8,11 +10,22 @@ const Signup = () => {
   const [showPassword, setShowPassword] = React.useState(false)
   const [passwordStrength, setPasswordStrength] = React.useState(0)
 
+  useEffect(() => {
+    async function checkUser() {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user) {
+        console.log("user existed",user)
+      }
+    }
+    checkUser()
+  }, [])
+
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors, isSubmitting }
+    ,reset
   } = useForm()
 
   const password = watch('password', '')
@@ -45,25 +58,37 @@ const Signup = () => {
     return 'Strong'
   }
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (formData) => {
     try {
-      // Simulate API call
-      console.log('Form data:', data)
+      const { username, email, password } = formData
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options:{
+          data: { 
+            username
+           }
+        }
+      })
 
-      // Handle successful signup here
-      // Example: localStorage.setItem('token', response.token)
-      // navigate('/verify-email') or navigate('/dashboard')
+      if (error) {
+        reset()
+        toast.error(error.message)
+      } else {
+        toast.success("successully signup")
+        // navigate('/profile')
+      }
 
-      alert('Account created successfully!')
+
+      // alert('Account created successfully!')
     } catch (error) {
-      console.error('Signup failed:', error)
-      alert('Signup failed. Please try again.')
+      toast.error(error.message)
     }
   }
 
   return (
     <main className="min-h-screen  bg-black
-    flex items-center justify-center p-4">
+         flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         {/* Main Form Container */}
         <div className=" rounded-xl shadow-2xl overflow-hidden">
@@ -74,7 +99,7 @@ const Signup = () => {
               bg-gradient-to-r from-indigo-600 to-indigo-800 bg-clip-text text-transparent mb-2">
                 Learnsy
               </h1>
-              <p className="text-gray-500 text-sm">Sign up to start your learning journey</p>
+              <p className="text-gray-300 text-sm">Sign up to start your learning journey</p>
             </div>
 
             {/* Form */}
@@ -173,8 +198,8 @@ const Signup = () => {
                   <div className="flex items-center justify-between">
                     <span className="text-xs text-gray-600">Password strength:</span>
                     <span className={`text-xs font-medium ${passwordStrength <= 1 ? 'text-red-500' :
-                        passwordStrength <= 2 ? 'text-yellow-500' :
-                          passwordStrength <= 3 ? 'text-blue-500' : 'text-green-500'
+                      passwordStrength <= 2 ? 'text-yellow-500' :
+                        passwordStrength <= 3 ? 'text-blue-500' : 'text-green-500'
                       }`}>
                       {getStrengthText(passwordStrength)}
                     </span>
@@ -193,10 +218,6 @@ const Signup = () => {
                   <div className="space-y-1 mt-2">
                     {[
                       { met: password.length >= 8, text: 'At least 8 characters' },
-                      { met: /[a-z]/.test(password), text: 'One lowercase letter' },
-                      { met: /[A-Z]/.test(password), text: 'One uppercase letter' },
-                      { met: /[0-9]/.test(password), text: 'One number' },
-                      { met: /[^A-Za-z0-9]/.test(password), text: 'One special character' }
                     ].map((req, index) => (
                       <div key={index} className="flex items-center space-x-2">
                         {req.met ? (
@@ -236,7 +257,7 @@ const Signup = () => {
                   <div className="w-full border-t border-gray-300"></div>
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white text-gray-500">OR</span>
+                  <span className="px-2 bg-white rounded-2xl text-gray-500">OR</span>
                 </div>
               </div>
 
@@ -264,21 +285,23 @@ const Signup = () => {
         </div>
 
         {/* Sign In Link */}
-        <div className="rounded-xl shadow-lg mt-4 p-4 text-center">
-          <p className="text-sm text-gray-600">
+        <div className="rounded-xl shadow-lg p-x4 text-center">
+          <p className="text-sm text-gray-300">
             Have an account?{' '}
             <button
               onClick={() => navigate('/signin')}
-              className="text-indigo-600 font-semibold hover:text-indigo-800 transition-colors duration-200 underline underline-offset-2"
+              className="text-indigo-600 font-semibold
+               hover:text-indigo-800 transition-colors
+                duration-200 underline underline-offset-2"
             >
               Log in
             </button>
           </p>
         </div>
-
-
       </div>
+      <ToastContainer autoClose={100} />
     </main>
+
   )
 }
 

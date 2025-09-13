@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import SocialIcons from '../components/SocialIcons.jsx';
+import { ToastContainer } from 'react-toastify';
 import HomeTop from '../components/HomeTop.jsx';
 import supabase from '../config/supabase.js'
 import BottomNav from '../components/BottomNav.jsx';
@@ -124,6 +125,7 @@ const Home = () => {
                 {/* TikTok-style Bottom Navigation */}
                 <BottomNav />
 
+                <ToastContainer />
             </div>
 
         </>

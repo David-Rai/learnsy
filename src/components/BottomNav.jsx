@@ -17,7 +17,10 @@ const BottomNav = () => {
             <div className="flex items-center justify-around py-2 px-4">
                 {/* Home */}
                 <button
-                    onClick={() => setActiveTab("home")}
+                    onClick={() => {
+                        setActiveTab("home")
+                        navigate("/")
+                    }}
                     className={`flex flex-col items-center py-2 px-3 rounded-lg transition-colors ${activeTab === "home"
                         ? "text-indigo-400"
                         : "text-gray-400 hover:text-white"
@@ -29,7 +32,10 @@ const BottomNav = () => {
 
                 {/* Explore */}
                 <button
-                    onClick={() => setActiveTab("explore")}
+                       onClick={() => {
+                        setActiveTab("explore")
+                        navigate("/explore")
+                    }}
                     className={`flex flex-col items-center py-2 px-3 rounded-lg transition-colors ${activeTab === "explore"
                         ? "text-indigo-400"
                         : "text-gray-400 hover:text-white"
@@ -41,7 +47,10 @@ const BottomNav = () => {
 
                 {/* Progress */}
                 <button
-                    onClick={() => setActiveTab("progress")}
+                     onClick={() => {
+                        setActiveTab("progress")
+                        navigate("/progress")
+                    }}
                     className={`flex flex-col items-center py-2 px-3 rounded-lg transition-colors ${activeTab === "progress"
                         ? "text-indigo-400"
                         : "text-gray-400 hover:text-white"
@@ -53,7 +62,10 @@ const BottomNav = () => {
 
                 {/* Profile */}
                 <button
-                    onClick={() => setActiveTab("profile")}
+                       onClick={() => {
+                        setActiveTab("profile")
+                        navigate("/profile")
+                    }}
                     className={`flex flex-col items-center py-2 px-3 rounded-lg transition-colors ${activeTab === "profile"
                         ? "text-indigo-400"
                         : "text-gray-400 hover:text-white"
