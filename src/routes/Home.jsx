@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Suspense, lazy } from 'react'
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import supabase from '../config/supabase.js'
 import { useUser } from '../context/userContext.jsx';
 import HomeTop from "../components/HomeTop";
@@ -16,38 +16,45 @@ const Home = () => {
     const targetRef = useRef(null);
     const [maxReached, setMaxReached] = useState(false)
     const [selected, setSelected] = useState(null);     // what user clicked
-    const [isAnswered, setIsAnswered] = useState(false); // lock after answering
-
-    //Initial
-    useEffect(() => {
-        async function get() {
-            console.log("started fetching data....")
-            const data = await fetchQuestions()
-            setQuestions(data)
-        }
-        get()
-    }, [])
+    const [answers, setAnswers] = useState([]);
 
     //checking user
     useEffect(() => {
-        async function checkUser() {
-            const { data: { user } } = await supabase.auth.getUser()
-            if (user) {
-                setUser(user)
-                console.log("user existed")
+        async function start() {
+            async function checkUser() {
+                const { data: { user } } = await supabase.auth.getUser()
+                if (user) {
+                    setUser(user)
+                    console.log("user existed")
+                    get2(user.id)
+                } else {
+                    get()
+                }
             }
+            await checkUser()
         }
-        checkUser()
+        start()
     }, [])
+
+    //Initial
+    async function get2(id) {
+        console.log("started fetching data....")
+        const data = await fetchQuestions2(id)
+        setQuestions(data)
+    }
+    async function get() {
+        console.log("started fetching data....")
+        const data = await fetchQuestions()
+        setQuestions(data)
+    }
 
     //fetching more questions
     async function fetchQuestions() {
         if (maxReached) return
-
-        const { data, error, count } = await supabase
+        
+            const { data, error, count } = await supabase
             .from('questions')
             .select('*', { count: 'exact' })
-            // .not('id', 'in', '(1,2,3)') 
             .range(page * BATCH_SIZE, (page + 1) * BATCH_SIZE - 1)
 
 
@@ -62,6 +69,33 @@ const Home = () => {
         setPage(prevPage => prevPage + 1);
         return data; // array of questions
     }
+
+    async function fetchQuestions2(id) {
+        if (maxReached) return
+        
+            const notQuestions = await supabase.from("user_answer").select().eq("user_id", id)
+            const ids = notQuestions.data.map(q => q.q_id); // get array of q_id
+            const idsString = `(${ids.join(',')})`;
+
+            const { data, error, count } = await supabase
+            .from('questions')
+            .select('*', { count: 'exact' })
+            .not('id', 'in', idsString)
+            .range(page * BATCH_SIZE, (page + 1) * BATCH_SIZE - 1)
+
+
+        if (error) console.error(error);
+        if (questions.length === count) {
+            console.log("max reached")
+            setMaxReached(true)
+        } else {
+            setMaxReached(false)
+        }
+
+        setPage(prevPage => prevPage + 1);
+        return data; // array of questions
+    }
+
 
     // Intersection Observer
     useEffect(() => {
@@ -88,20 +122,33 @@ const Home = () => {
         };
     }, [questions, maxReached, page]);
 
+    const checkAnswer = async (q, opt) => {
+        if (answers.find(ans => ans.id === q.id)) return; // prevent re-clicking
 
-    const checkAnswer = (q,opt) => {
-        if (isAnswered) return; // prevent re-clicking
+        const isCorrect = q.a === opt;
 
-        setSelected(opt);
-        setIsAnswered(true);
+        if (isCorrect) {
+            toast.success("✅ Right answer");
+            const { data } = await supabase.from("board").select("point").eq("user_id", user.id).single()
+            await supabase.from('board').update({ point: data.point + 5 }).eq("user_id", user.id)
+            await supabase.from("user_answer").insert({ user_id: user.id, q_id: q.id, answer: opt })
 
-        if (q.a === opt) {
-            console.log("✅ Right answer");
         } else {
-            console.log("❌ Wrong answer");
+            const { data } = await supabase.from("board").select("point").eq("user_id", user.id).single()
+            await supabase.from('board').update({ point: data.point - 5 }).eq("user_id", user.id)
+            await supabase.from("user_answer").insert({ user_id: user.id, q_id: q.id, answer: opt })
+
+            toast.error("❌ Wrong answer");
         }
-        setIsAnswered(false)
+
+        //add the answers
+
+
+        // save the answer
+        setAnswers(prev => [...prev, { id: q.id, selectedOption: opt, isCorrect }]);
     };
+
+
 
     return (
         <>
@@ -121,23 +168,57 @@ const Home = () => {
                                 <h2 className="question-text">{q.q}</h2>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
                                     {q.options && q.options.length > 0 ? (
-                                        q.options.map((opt, i) => (
-                                            <button key={i} className="option-button"
-                                                onClick={() => checkAnswer(q, opt)}
-                                            >
-                                                {opt}
-                                            </button>
-                                        ))
+                                        q.options.map((opt, i) => {
+                                            const answer = answers.find(ans => ans.id === q.id);
+                                            let buttonClass = "option-button";
+
+                                            if (answer) {
+                                                if (answer.selectedOption === opt) {
+                                                    buttonClass += answer.isCorrect ? " bg-green-500 text-white" : " bg-red-500 text-white";
+                                                } else {
+                                                    buttonClass += " bg-white text-black"; // other options after answering
+                                                }
+                                            }
+
+                                            return (
+                                                <button
+                                                    key={i}
+                                                    className={buttonClass}
+                                                    onClick={() => checkAnswer(q, opt)}
+                                                    disabled={!!answer} // disable after answering
+                                                >
+                                                    {opt}
+                                                </button>
+                                            );
+                                        })
                                     ) : (
                                         <>
-                                            <button className="option-button"
-                                                onClick={() => checkAnswer(q, 'true')}
-                                            >Yes</button>
-                                            <button className="option-button"
-                                                onClick={() => checkAnswer(q, 'false')}
-                                            >No</button>
+                                            {["true", "false"].map((opt, i) => {
+                                                const answer = answers.find(ans => ans.id === q.id);
+                                                let buttonClass = "option-button";
+
+                                                if (answer) {
+                                                    if (answer.selectedOption === opt) {
+                                                        buttonClass += answer.isCorrect ? " bg-green-500 text-white" : " bg-red-500 text-white";
+                                                    } else {
+                                                        buttonClass += " bg-white text-black";
+                                                    }
+                                                }
+
+                                                return (
+                                                    <button
+                                                        key={i}
+                                                        className={buttonClass}
+                                                        onClick={() => checkAnswer(q, opt)}
+                                                        disabled={!!answer}
+                                                    >
+                                                        {opt === "true" ? "Yes" : "No"}
+                                                    </button>
+                                                );
+                                            })}
                                         </>
                                     )}
+
                                 </div>
                             </div>
 
@@ -153,7 +234,7 @@ const Home = () => {
                 {/* Bottom navigation */}
                 <BottomNav />
 
-                <ToastContainer />
+                <ToastContainer autoClose={100} />
             </div>
         </>
     );
