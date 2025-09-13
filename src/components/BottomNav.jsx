@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState ,useEffect} from 'react';
+import { useLocation } from 'react-router';
 import React from 'react'
 import { useNavigate } from 'react-router'
 import {
@@ -9,8 +10,14 @@ import {
 } from 'react-icons/fa';
 
 const BottomNav = () => {
+    const location=useLocation()
     const navigate = useNavigate()
     const [activeTab, setActiveTab] = useState('home');
+
+    useEffect(() => {
+        const path = location.pathname.replace("/", "") // remove leading slash
+        setActiveTab(path || "home") // default to home if empty
+      }, [location.pathname])
 
     return (
         <div className="absolute bottom-0 left-0 right-0 bg-gray-900 border-t border-gray-800 z-30">

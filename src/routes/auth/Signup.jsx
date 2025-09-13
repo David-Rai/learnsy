@@ -10,11 +10,13 @@ const Signup = () => {
   const [showPassword, setShowPassword] = React.useState(false)
   const [passwordStrength, setPasswordStrength] = React.useState(0)
 
+    //checking user
   useEffect(() => {
     async function checkUser() {
       const { data: { user } } = await supabase.auth.getUser()
       if (user) {
-        console.log("user existed",user)
+        console.log("user existed")
+        navigate("/profile")
       }
     }
     checkUser()
