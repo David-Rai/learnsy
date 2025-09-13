@@ -1,5 +1,6 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
+import { UserProvider } from './context/userContext.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router'
 import './index.css'
 import Signin from './routes/auth/Signin.jsx'
@@ -26,5 +27,7 @@ const router = createBrowserRouter([
   }
 ])
 createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router} />
+  <UserProvider>
+    <RouterProvider router={router} />
+  </UserProvider>
 )

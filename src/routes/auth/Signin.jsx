@@ -1,12 +1,14 @@
 import React from 'react'
 import { toast, ToastContainer } from 'react-toastify'
-import {useEffect} from 'react'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import supabase from '../../config/supabase.js'
 import { useForm } from 'react-hook-form'
+import { useUser } from '../../context/userContext.jsx'
 import { Eye, EyeOff, Mail, Lock } from 'lucide-react'
 
 const Signin = () => {
+  const { user, setUser } = useUser()
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = React.useState(false)
 
@@ -16,6 +18,7 @@ const Signin = () => {
       const { data: { user } } = await supabase.auth.getUser()
       if (user) {
         console.log("user existed")
+        setUser(user)
         navigate("/profile")
       }
     }

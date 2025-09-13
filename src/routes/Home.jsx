@@ -3,10 +3,12 @@ import SocialIcons from '../components/SocialIcons.jsx';
 import { ToastContainer } from 'react-toastify';
 import HomeTop from '../components/HomeTop.jsx';
 import supabase from '../config/supabase.js'
+import { useUser } from '../context/userContext.jsx';
 import BottomNav from '../components/BottomNav.jsx';
 
 
 const Home = () => {
+    const { use, setUser } = useUser()
     const BATCH_SIZE = 5; // number of questions per batch
     const [questions, setQuestions] = useState([]);
     const [page, setPage] = useState(0);
@@ -21,6 +23,18 @@ const Home = () => {
             setQuestions(data)
         }
         get()
+    }, [])
+
+    //checking user
+    useEffect(() => {
+        async function checkUser() {
+            const { data: { user } } = await supabase.auth.getUser()
+            if (user) {
+                setUser(user)
+                console.log("user existed")
+            }
+        }
+        checkUser()
     }, [])
 
     //fetching more questions
@@ -114,7 +128,7 @@ const Home = () => {
                             </div>
 
                             {/* Socials icons */}
-                            <SocialIcons />
+                            <SocialIcons q={q} />
 
                             {/* Observer */}
                             {index === questions.length - 1 && <div ref={targetRef}></div>}

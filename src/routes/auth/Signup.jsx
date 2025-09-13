@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { useUser } from '../../context/userContext'
 import { toast, ToastContainer } from 'react-toastify'
 import { useNavigate } from 'react-router'
 import supabase from '../../config/supabase'
@@ -6,16 +7,18 @@ import { useForm } from 'react-hook-form'
 import { Eye, EyeOff, Mail, Lock, User, Check, X } from 'lucide-react'
 
 const Signup = () => {
+  const { user, setUser } = useUser()
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = React.useState(false)
   const [passwordStrength, setPasswordStrength] = React.useState(0)
 
-    //checking user
+  //checking user
   useEffect(() => {
     async function checkUser() {
       const { data: { user } } = await supabase.auth.getUser()
       if (user) {
         console.log("user existed")
+        setUser(user)
         navigate("/profile")
       }
     }
@@ -27,7 +30,7 @@ const Signup = () => {
     handleSubmit,
     watch,
     formState: { errors, isSubmitting }
-    ,reset
+    , reset
   } = useForm()
 
   const password = watch('password', '')
@@ -66,10 +69,10 @@ const Signup = () => {
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
-        options:{
-          data: { 
+        options: {
+          data: {
             username
-           }
+          }
         }
       })
 
