@@ -4,30 +4,42 @@ import React from 'react'
 
 const CompletedAll = () => {
     return (
-        <div className="home">
-            <main className="h-full w-full overflow-y-scroll snap-y snap-mandatory pb-16">
-                <div className="question-container relative max-w-lg w-full mx-auto my-8 p-6 bg-white rounded-xl shadow-lg flex flex-col items-center justify-center">
+        <div className="relative h-screen w-full bg-gray-50 dark:bg-gray-900
+         text-gray-800 dark:text-gray-100 overflow-hidden">
+            <main className="h-full w-full flex items-center justify-center pb-16">
 
-                    {/* Sidebar or category */}
-                    <div className="absolute left-0 top-0 h-full w-2 bg-blue-500 rounded-l-xl"></div>
+                <div className=" relative max-w-lg w-full 
+                mx-auto my-8 p-8 rounded-xl shadow-lg flex
+                 flex-col items-center justify-center animate-bounce-slow
+                 ">
+
 
                     {/* Overlay */}
-                    <div className="h-full w-full absolute inset-0 bg-black/10 rounded-xl" />
+                    <div className="h-full w-full absolute rounded-xl" />
 
                     {/* Content */}
-                    <div className="flex flex-col items-center justify-center relative z-10">
-                        <h2 className="text-2xl font-bold mb-4">🎉 You have completed all questions!</h2>
-                        <p className="text-gray-700 text-center">
-                            No more questions left to answer. Come back later for new questions!
+                    <div className="flex flex-col items-center justify-center relative z-10 text-center">
+                        <h2 className="text-3xl font-bold mb-4 text-green-600 animate-pulse">
+                            🎉 Congratulations! 🎉
+                        </h2>
+                        <p className="text-gray-700 mb-6">
+                            You have completed all questions. Come back later for new challenges!
                         </p>
+                        <div className="flex gap-2 justify-center">
+                            <span className="w-3 h-3 bg-green-400 rounded-full animate-bounce delay-0"></span>
+                            <span className="w-3 h-3 bg-green-400 rounded-full animate-bounce delay-200"></span>
+                            <span className="w-3 h-3 bg-green-400 rounded-full animate-bounce delay-400"></span>
+                        </div>
                     </div>
                 </div>
+
             </main>
 
             {/* Bottom navigation */}
             <BottomNav />
             <ToastContainer autoClose={100} />
         </div>
+
     )
 }
 

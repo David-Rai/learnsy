@@ -6,7 +6,8 @@
     }
 
     .home {
-        @apply relative h-screen w-full bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 overflow-hidden
+        @apply relative h-screen w-full bg-gray-50 dark:bg-gray-900
+         text-gray-800 dark:text-gray-100 overflow-hidden
     }
 
     .question-container {
@@ -15,6 +16,7 @@
     }
 
     .question-text {
-        @apply text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mb-6 text-center text-white drop-shadow-lg w-[80%] leading-snug break-words overflow-hidden
+        @apply text-lg sm:text-xl md:text-2xl lg:text-3xl 
+        font-bold mb-6 text-center text-white drop-shadow-lg w-[80%] leading-snug break-words overflow-hidden
     }
 }
