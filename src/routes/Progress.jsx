@@ -68,7 +68,7 @@ const StatsCard = ({ title, value, icon, gradientFrom, gradientTo, bgGradient })
   <div className="group relative overflow-hidden bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:border-transparent hover:scale-105">
     {/* Background gradient overlay */}
     <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 ${bgGradient || 'bg-gradient-to-br from-indigo-500 to-purple-600'}`}></div>
-
+    
     <div className="relative p-6">
       <div className="flex items-center justify-between">
         <div className="flex-1">
@@ -76,10 +76,10 @@ const StatsCard = ({ title, value, icon, gradientFrom, gradientTo, bgGradient })
           <p className="text-2xl font-bold text-gray-900 dark:text-white">{value}</p>
         </div>
         {icon && (
-          <div className={`${gradientFrom && gradientTo
-            ? `bg-gradient-to-br ${gradientFrom} ${gradientTo}`
+          <div className={`${gradientFrom && gradientTo 
+            ? `bg-gradient-to-br ${gradientFrom} ${gradientTo}` 
             : 'bg-gradient-to-br from-indigo-500 to-purple-600'
-            } rounded-xl p-3 text-white shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+          } rounded-xl p-3 text-white shadow-lg group-hover:scale-110 transition-transform duration-300`}>
             {icon}
           </div>
         )}
@@ -122,7 +122,7 @@ const Progress = () => {
   }
 
   return (
-    <main className='relative min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 overflow-y-auto pb-24'>
+    <main className='home min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 overflow-y-auto pb-24'>
       {/* Fixed Header with Gradient */}
       <div className="sticky top-0 z-10 bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-b border-gray-200 dark:border-gray-700 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -144,9 +144,9 @@ const Progress = () => {
           </h2>
           <div className="flex justify-center">
             <div className="relative">
-              <CircularProgress
-                percentage={stats.accuracy || 0}
-                size={160}
+              <CircularProgress 
+                percentage={stats.accuracy || 0} 
+                size={160} 
                 strokeWidth={14}
               />
               <div className="absolute -inset-4 bg-gradient-to-r from-emerald-400 to-green-600 rounded-full opacity-20 blur-xl"></div>
@@ -156,33 +156,6 @@ const Progress = () => {
 
         {/* Stats Grid */}
         <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
-          <StatsCard
-            title="Current Rank"
-            value={`#${stats.rank || 'N/A'}`}
-            gradientFrom="from-purple-500"
-            gradientTo="to-pink-500"
-            bgGradient="bg-gradient-to-br from-purple-500 to-pink-500"
-            icon={
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-              </svg>
-            }
-          />
-
-          <StatsCard
-            title="Accuracy Rate"
-            value={`${(stats.accuracy || 0).toFixed(1)}%`}
-            gradientFrom="from-indigo-500"
-            gradientTo="to-violet-600"
-            bgGradient="bg-gradient-to-br from-indigo-500 to-violet-600"
-            icon={
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-              </svg>
-            }
-          />
-
           <StatsCard
             title="Total Points"
             value={stats.point || 0}
@@ -205,6 +178,19 @@ const Progress = () => {
             icon={
               <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+              </svg>
+            }
+          />
+
+          <StatsCard
+            title="Current Rank"
+            value={`#${stats.rank || 'N/A'}`}
+            gradientFrom="from-purple-500"
+            gradientTo="to-pink-500"
+            bgGradient="bg-gradient-to-br from-purple-500 to-pink-500"
+            icon={
+              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
             }
           />
@@ -235,6 +221,18 @@ const Progress = () => {
             }
           />
 
+          <StatsCard
+            title="Accuracy Rate"
+            value={`${(stats.accuracy || 0).toFixed(1)}%`}
+            gradientFrom="from-indigo-500"
+            gradientTo="to-violet-600"
+            bgGradient="bg-gradient-to-br from-indigo-500 to-violet-600"
+            icon={
+              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
+            }
+          />
         </section>
 
         {/* Progress Breakdown */}
@@ -252,8 +250,8 @@ const Progress = () => {
                 </span>
               </div>
               <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 shadow-inner">
-                <div
-                  className="bg-gradient-to-r from-emerald-500 to-green-600 h-3 rounded-full transition-all duration-700 ease-out shadow-lg relative overflow-hidden"
+                <div 
+                  className="bg-gradient-to-r from-emerald-500 to-green-600 h-3 rounded-full transition-all duration-700 ease-out shadow-lg relative overflow-hidden" 
                   style={{ width: `${stats.total ? (stats.correct / stats.total) * 100 : 0}%` }}
                 >
                   <div className="absolute inset-0 bg-white/30 animate-pulse"></div>
@@ -270,8 +268,8 @@ const Progress = () => {
                 </span>
               </div>
               <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 shadow-inner">
-                <div
-                  className="bg-gradient-to-r from-red-500 to-rose-600 h-3 rounded-full transition-all duration-700 ease-out shadow-lg relative overflow-hidden"
+                <div 
+                  className="bg-gradient-to-r from-red-500 to-rose-600 h-3 rounded-full transition-all duration-700 ease-out shadow-lg relative overflow-hidden" 
                   style={{ width: `${stats.total ? (stats.wrong / stats.total) * 100 : 0}%` }}
                 >
                   <div className="absolute inset-0 bg-white/30 animate-pulse"></div>
@@ -298,8 +296,10 @@ const Progress = () => {
         </section>
       </div>
 
-      {/* Bottom navigation */}
-      <BottomNav />
+            {/* Bottom Navigation */}
+            <div className="fixed bottom-0 left-0 right-0 z-50">
+                <BottomNav />
+            </div>
     </main>
   )
 }

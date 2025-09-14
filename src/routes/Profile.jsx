@@ -70,7 +70,7 @@ const Profile = () => {
                     {/* Stats */}
                     <div className="flex-1 flex justify-around">
                         <div className="text-center">
-                            <div className="text-lg font-semibold">{stats?.accuracy}%</div>
+                            <div className="text-lg font-semibold">{(stats?.accuracy || 0).toFixed(1)}%</div>
                             <div className="text-xs text-gray-400">Accuracy</div>
                         </div>
                         <div className="text-center">
