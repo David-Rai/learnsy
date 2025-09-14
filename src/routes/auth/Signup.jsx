@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import BottomNav from '../../components/BottomNav';
 import { checkUser } from '../../utils/checkUser';
 import { useUser } from '../../context/userContext'
 import { toast, ToastContainer } from 'react-toastify'
@@ -327,7 +328,10 @@ const Signup = () => {
       </div>
       <ToastContainer autoClose={100} />
 
-      {/* <BottomNav /> */}
+      {/* Bottom Navigation */}
+      <div className="fixed bottom-0 left-0 right-0 z-50">
+        <BottomNav />
+      </div>
     </main>
 
   )

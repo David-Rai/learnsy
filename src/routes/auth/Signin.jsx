@@ -1,5 +1,6 @@
 import { checkUser } from '../../utils/checkUser.jsx'
 import React from 'react'
+import BottomNav from '../../components/BottomNav.jsx'
 import { toast, ToastContainer } from 'react-toastify'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router'
@@ -15,8 +16,8 @@ const Signin = () => {
 
   //checking user
   useEffect(() => {
-    checkUser(setUser).then((result)=>{
-      if(result.exist){
+    checkUser(setUser).then((result) => {
+      if (result.exist) {
         console.log("user existed")
         setUser(user)
         navigate("/profile")
@@ -53,7 +54,9 @@ const Signin = () => {
 
   return (
     <main className="min-h-screen bg-black
-    flex items-center justify-center p-4">
+    flex items-center justify-center p-4
+    pb-22
+    ">
       <div className="w-full max-w-md">
 
         {/* Main Form Container */}
@@ -196,6 +199,9 @@ const Signin = () => {
       </div>
       <ToastContainer autoClose={100} />
       {/* <BottomNav/> */}
+      <div className="fixed bottom-0 left-0 right-0 z-50">
+        <BottomNav />
+      </div>
     </main>
   )
 }
