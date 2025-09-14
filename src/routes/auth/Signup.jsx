@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react'
-import { IoChevronBack } from "react-icons/io5";
+import { checkUser } from '../../utils/checkUser';
 import { useUser } from '../../context/userContext'
 import { toast, ToastContainer } from 'react-toastify'
 import { useNavigate } from 'react-router'
-import BottomNav from '../../components/BottomNav'
 import supabase from '../../config/supabase'
 import { useForm } from 'react-hook-form'
 import { Eye, EyeOff, Mail, Lock, User, Check, X } from 'lucide-react'
@@ -16,15 +15,13 @@ const Signup = () => {
 
   //checking user
   useEffect(() => {
-    async function checkUser() {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (user) {
+    checkUser(setUser).then((result)=>{
+      if(result.exist){
         console.log("user existed")
         setUser(user)
         navigate("/profile")
       }
-    }
-    checkUser()
+    })
   }, [])
 
   const {

@@ -1,16 +1,20 @@
-import { useUser } from "../context/userContext"
-import supabase from "../config/supabase"
+import supabase from "../config/supabase";
 
-export async function checkUser() {
-    const { user, setUser } = useUser()
-    const { data } = await supabase.auth.getUser()
-    if (data.user) {
-        // setUser(data.user)
-        console.log(data.user)
-        console.log("user existed")
-        return true
-    } else {
-        console.log("user doesnot exist")
-        return false
-    }
+// Accept setUser as a parameter
+export async function checkUser(setUser) {
+  const { data, error } = await supabase.auth.getUser();
+
+  if (error) {
+    console.log("Error fetching user:", error);
+    return false;
+  }
+
+  if (data.user) {
+    setUser(data.user); // update user in context
+    console.log("User exists");
+    return {user:data.user,exist:true}
+  } else {
+    console.log("User does not exist");
+    return {exist:false}
+  }
 }

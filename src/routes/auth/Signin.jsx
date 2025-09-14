@@ -1,7 +1,7 @@
+import { checkUser } from '../../utils/checkUser.jsx'
 import React from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import { useEffect } from 'react'
-import BottomNav from '../../components/BottomNav.jsx'
 import { useNavigate } from 'react-router'
 import supabase from '../../config/supabase.js'
 import { useForm } from 'react-hook-form'
@@ -15,15 +15,13 @@ const Signin = () => {
 
   //checking user
   useEffect(() => {
-    async function checkUser() {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (user) {
+    checkUser(setUser).then((result)=>{
+      if(result.exist){
         console.log("user existed")
         setUser(user)
         navigate("/profile")
       }
-    }
-    checkUser()
+    })
   }, [])
 
   const {

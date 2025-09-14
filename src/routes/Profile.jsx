@@ -1,38 +1,33 @@
 import { useState } from 'react'
-import { getAccuracy } from '../utils/getAccuracy'
-import {getRank} from '../utils/getRank'
 import React from 'react'
 import { useUser } from '.././context/userContext'
 import supabase from '../config/supabase'
 import BottomNav from '../components/BottomNav'
 import { useNavigate } from 'react-router'
 import { useEffect } from 'react'
-import { getPoints } from '../utils/getPoints'
+import { getStats } from '../utils/getStats'
 
 const Profile = () => {
     const { user, setUser } = useUser()
     const navigate = useNavigate()
-    const [points, setPoints] = useState(10)
-    const [accuracy, setAccuracy] = useState(0);
-    const [rank,setRank]=useState(null)
+    const [stats, setStats] = useState(null); // null initially
 
-    //checking user
     useEffect(() => {
-        async function checkUser() {
-            const { data: { user } } = await supabase.auth.getUser()
-            if (user) {
-                setUser(user)
-                console.log("user existed")
-                getPoints(user.id).then((p) => setPoints(p));
-                getAccuracy(user.id).then((acc) => setAccuracy(acc));
-                getRank(user.id).then((r)=> setRank(r) )
-            } else {
-                navigate("/signup")
-            }
+      async function checkUser() {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+          setUser(user);
+          console.log("user existed");
+          const s = await getStats(user.id);
+          console.log(s); // fixed typo
+          setStats(s);
+        } else {
+          navigate("/signup");
         }
-        checkUser()
-    }, [])
-
+      }
+      checkUser();
+    }, []);
+    
     
     return (
         <main className='relative min-h-screen bg-black text-white'>
@@ -75,15 +70,15 @@ const Profile = () => {
                     {/* Stats */}
                     <div className="flex-1 flex justify-around">
                         <div className="text-center">
-                            <div className="text-lg font-semibold">{accuracy}%</div>
+                            <div className="text-lg font-semibold">{stats?.accuracy}%</div>
                             <div className="text-xs text-gray-400">Accuracy</div>
                         </div>
                         <div className="text-center">
-                            <div className="text-lg font-semibold">#{rank}</div>
+                            <div className="text-lg font-semibold">#{stats?.rank}</div>
                             <div className="text-xs text-gray-400">Rank</div>
                         </div>
                         <div className="text-center">
-                            <div className="text-lg font-semibold">{points}</div>
+                            <div className="text-lg font-semibold">{stats?.point}</div>
                             <div className="text-xs text-gray-400">Points</div>
                         </div>
                     </div>
@@ -94,7 +89,7 @@ const Profile = () => {
                     <h2 className="text-sm font-semibold mb-1">{user?.user_metadata.username}</h2>
                     <div className="flex items-center mb-2">
                         <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-xs px-2 py-1 rounded-full font-medium">
-                            Rank #{rank}
+                            Rank #{stats?.rank}
                         </span>
                     </div>
                     <p className="text-sm text-gray-300 leading-relaxed">
