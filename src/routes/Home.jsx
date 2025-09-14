@@ -144,6 +144,7 @@ const Home = () => {
             user_id: user.id,
             q_id: q.id,
             answer: opt,
+            isRight:isCorrect
         });
     }
         // save the answer
@@ -235,7 +236,6 @@ const Home = () => {
 
                 {/* Bottom navigation */}
                 <BottomNav />
-
                 <ToastContainer autoClose={100} />
             </div>
         </>

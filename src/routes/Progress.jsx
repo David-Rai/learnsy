@@ -5,6 +5,8 @@ const Progress = () => {
   return (
     <main className='home'>
 
+
+      {/* Bottom navigation */}
       <BottomNav />
     </main>
   )
