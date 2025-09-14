@@ -176,6 +176,23 @@ const Home = () => {
         );
     }
 
+    
+
+
+    // Loading state
+    if (questions.length === 0) {
+        return (
+            <main className='home min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 overflow-y-auto'>
+                <div className="flex items-center justify-center h-64">
+                    <div className="relative">
+                        <div className="w-12 h-12 border-4 border-indigo-200 dark:border-indigo-800 rounded-full animate-spin"></div>
+                        <div className="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin absolute top-0 left-0"></div>
+                    </div>
+                </div>
+                <BottomNav />
+            </main>
+        )
+    }
     return (
         <>
             <div className="home">
