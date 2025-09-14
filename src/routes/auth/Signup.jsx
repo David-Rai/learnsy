@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { IoChevronBack } from "react-icons/io5";
 import { useUser } from '../../context/userContext'
 import { toast, ToastContainer } from 'react-toastify'
 import { useNavigate } from 'react-router'
@@ -96,7 +97,10 @@ const Signup = () => {
   }
 
   return (
-    <main className="min-h-screen bg-black flex flex-col items-center justify-start p-4 pb-24">
+    <main className="min-h-screen bg-black flex flex-col items-center justify-start p-4 pb-24"> 
+    {/* <nav className='text-white w-full'>
+    <IoChevronBack />
+    </nav> */}
       <div className="w-full max-w-md">
         {/* Main Form Container */}
         <div className=" rounded-xl shadow-2xl overflow-hidden">

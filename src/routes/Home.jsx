@@ -51,8 +51,8 @@ const Home = () => {
     //fetching more questions
     async function fetchQuestions() {
         if (maxReached) return
-        
-            const { data, error, count } = await supabase
+
+        const { data, error, count } = await supabase
             .from('questions')
             .select('*', { count: 'exact' })
             .range(page * BATCH_SIZE, (page + 1) * BATCH_SIZE - 1)
@@ -72,12 +72,12 @@ const Home = () => {
 
     async function fetchQuestions2(id) {
         if (maxReached) return
-        
-            const notQuestions = await supabase.from("user_answer").select().eq("user_id", id)
-            const ids = notQuestions.data.map(q => q.q_id); // get array of q_id
-            const idsString = `(${ids.join(',')})`;
 
-            const { data, error, count } = await supabase
+        const notQuestions = await supabase.from("user_answer").select().eq("user_id", id)
+        const ids = notQuestions.data.map(q => q.q_id); // get array of q_id
+        const idsString = `(${ids.join(',')})`;
+
+        const { data, error, count } = await supabase
             .from('questions')
             .select('*', { count: 'exact' })
             .not('id', 'in', idsString)
@@ -122,28 +122,29 @@ const Home = () => {
         };
     }, [questions, maxReached, page]);
 
+
+    //Handling Answering
     const checkAnswer = async (q, opt) => {
         if (answers.find(ans => ans.id === q.id)) return; // prevent re-clicking
 
         const isCorrect = q.a === opt;
 
-        if (isCorrect) {
-            toast.success("✅ Right answer");
-            const { data } = await supabase.from("board").select("point").eq("user_id", user.id).single()
-            await supabase.from('board').update({ point: data.point + 5 }).eq("user_id", user.id)
-            await supabase.from("user_answer").insert({ user_id: user.id, q_id: q.id, answer: opt })
+        //popups
+        isCorrect ? toast.success("✅ Right answer") : toast.error("❌ Wrong answer");
 
-        } else {
-            const { data } = await supabase.from("board").select("point").eq("user_id", user.id).single()
-            await supabase.from('board').update({ point: data.point - 5 }).eq("user_id", user.id)
-            await supabase.from("user_answer").insert({ user_id: user.id, q_id: q.id, answer: opt })
+        const scoreDelta = isCorrect ? 5 : -5;
 
-            toast.error("❌ Wrong answer");
-        }
-
-        //add the answers
-
-
+        await supabase.rpc("increment_points", {
+          uid: user.id,
+          delta: scoreDelta,
+        });
+        
+        await supabase.from("user_answer").insert({
+          user_id: user.id,
+          q_id: q.id,
+          answer: opt,
+        });
+        
         // save the answer
         setAnswers(prev => [...prev, { id: q.id, selectedOption: opt, isCorrect }]);
     };
