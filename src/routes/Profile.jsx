@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import avatar from '../../public/profiles/1.jpg'
 import React from 'react'
 import { useUser } from '.././context/userContext'
 import supabase from '../config/supabase'
@@ -11,6 +12,7 @@ const Profile = () => {
     const { user, setUser } = useUser()
     const navigate = useNavigate()
     const [stats, setStats] = useState(null); // null initially
+
 
     useEffect(() => {
       async function checkUser() {
@@ -27,8 +29,7 @@ const Profile = () => {
       }
       checkUser();
     }, []);
-    
-    
+
     return (
         <main className='relative min-h-screen bg-black text-white'>
             {/* Header */}
@@ -57,7 +58,7 @@ const Profile = () => {
                     <div className="relative">
                         <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-600 p-0.5">
                             <img
-                                src="https://media.newyorker.com/photos/59095bb86552fa0be682d9d0/master/w_2560%2Cc_limit/Monkey-Selfie.jpg"
+                                src={user?.user_metadata.avatar || avatar}
                                 alt="Profile"
                                 className="w-full h-full rounded-full object-cover border-2 border-black"
                             />

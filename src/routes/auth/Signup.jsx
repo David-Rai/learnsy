@@ -12,11 +12,26 @@ const Signup = () => {
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = React.useState(false)
   const [passwordStrength, setPasswordStrength] = React.useState(0)
+  const avatars = [
+    '/profiles/1.jpg',
+    '/profiles/2.jpg',
+    '/profiles/3.jpg',
+    '/profiles/4.jpg',
+    '/profiles/5.jpg',
+  ];
+  const randomAvatar = getRandomAvatar();
+
+  //random images
+  function getRandomAvatar() {
+    const num = Math.floor(Math.random() * 5) + 1; // generates 1 to 5
+    return avatars[num];
+  }
+
 
   //checking user
   useEffect(() => {
-    checkUser(setUser).then((result)=>{
-      if(result.exist){
+    checkUser(setUser).then((result) => {
+      if (result.exist) {
         console.log("user existed")
         setUser(user)
         navigate("/profile")
@@ -70,7 +85,8 @@ const Signup = () => {
         password,
         options: {
           data: {
-            username
+            username,
+            avatar: randomAvatar
           }
         }
       })
@@ -80,8 +96,8 @@ const Signup = () => {
         toast.error(error.message)
       } else {
         toast.success("successully signup")
-        const res=await supabase.from("board")
-        .insert({user_id:data.user.id})
+        const res = await supabase.from("board")
+          .insert({ user_id: data.user.id })
         console.log(res)
         navigate('/profile')
       }
@@ -94,8 +110,8 @@ const Signup = () => {
   }
 
   return (
-    <main className="min-h-screen bg-black flex flex-col items-center justify-start p-4 pb-24"> 
-    {/* <nav className='text-white w-full'>
+    <main className="min-h-screen bg-black flex flex-col items-center justify-start p-4 pb-24">
+      {/* <nav className='text-white w-full'>
     <IoChevronBack />
     </nav> */}
       <div className="w-full max-w-md">

@@ -1,3 +1,4 @@
+import CompletedAll from '../components/CompletedAll.jsx'
 import React, { useState, useEffect, useRef } from 'react';
 import { Suspense, lazy } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
@@ -28,6 +29,7 @@ const Home = () => {
                     console.log("user existed")
                     removePrevious(user.id)
                 } else {
+                    console.log("new user raixa")
                     get()
                 }
             }
@@ -40,6 +42,7 @@ const Home = () => {
     async function removePrevious(id) {
         console.log("started fetching data....")
         const data = await fetchFiltered(id)
+        console.log("filterd data...", data)
         setQuestions(data)
     }
     async function get() {
@@ -50,7 +53,7 @@ const Home = () => {
 
     //fetching more questions
     async function fetchQuestions() {
-        if (maxReached) return
+        if (maxReached) return []
 
         const { data, error, count } = await supabase
             .from('questions')
@@ -85,6 +88,7 @@ const Home = () => {
 
 
         if (error) console.error(error);
+
         if (questions.length === count) {
             console.log("max reached")
             setMaxReached(true)
@@ -93,7 +97,7 @@ const Home = () => {
         }
 
         setPage(prevPage => prevPage + 1);
-        return data; // array of questions
+        return data || [] // array of questions
     }
 
 
@@ -105,8 +109,13 @@ const Home = () => {
             (entries) => {
                 entries.forEach(async entry => {
                     if (entry.isIntersecting) {
-                        const nextQuestions = await fetchQuestions();
-                        setQuestions(prev => [...prev, ...nextQuestions]);
+                        if (user) {
+                            const nextQuestions = await fetchFiltered(user.id);
+                            setQuestions(prev => [...prev, ...nextQuestions]);
+                        } else {
+                            const nextQuestions = await fetchQuestions();
+                            setQuestions(prev => [...prev, ...nextQuestions]);
+                        }
                     }
                 });
             },
@@ -127,30 +136,43 @@ const Home = () => {
     const checkAnswer = async (q, opt) => {
         if (answers.find(ans => ans.id === q.id)) return; // prevent re-clicking
 
+        //checking if already choosed
+        const { data, count } = await supabase.from('user_answer')
+            .select("*", { count: 'exact', head: true })
+            .eq("user_id", user.id)
+            .eq("q_id", q.id)
+
+        if (count !== 0) return
+
         const isCorrect = q.a === opt;
 
         //popups
         isCorrect ? toast.success("✅ Right answer") : toast.error("❌ Wrong answer");
 
-        if(user){
-        const scoreDelta = isCorrect ? 5 : -5;
+        if (user) {
+            const scoreDelta = isCorrect ? 5 : -5;
 
-        await supabase.rpc("increment_points", {
-            uid: user.id,
-            delta: scoreDelta,
-        });
+            await supabase.rpc("increment_points", {
+                uid: user.id,
+                delta: scoreDelta,
+            });
 
-        await supabase.from("user_answer").insert({
-            user_id: user.id,
-            q_id: q.id,
-            answer: opt,
-            isRight:isCorrect
-        });
-    }
+            await supabase.from("user_answer").insert({
+                user_id: user.id,
+                q_id: q.id,
+                answer: opt,
+                isRight: isCorrect
+            });
+        }
         // save the answer
         setAnswers(prev => [...prev, { id: q.id, selectedOption: opt, isCorrect }]);
     };
 
+    if (maxReached) {
+        return (
+            <CompletedAll />
+        );
+    }
 
     return (
         <>
