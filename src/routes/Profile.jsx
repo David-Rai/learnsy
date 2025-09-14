@@ -16,12 +16,23 @@ const Profile = () => {
             if (user) {
                 setUser(user)
                 console.log("user existed")
+                getPoints(user.id)
             } else {
                 navigate("/signup")
             }
         }
         checkUser()
     }, [])
+
+    //Getting user points
+    const getPoints=async (id)=>{
+     const res=await supabase.from("board")
+     .select()
+     .eq("user_id",id)
+     
+     console.log(res)
+    }
+
     return (
         <main className='relative min-h-screen bg-black text-white'>
             {/* Header */}

@@ -26,7 +26,7 @@ const Home = () => {
                 if (user) {
                     setUser(user)
                     console.log("user existed")
-                    get2(user.id)
+                    removePrevious(user.id)
                 } else {
                     get()
                 }
@@ -37,9 +37,9 @@ const Home = () => {
     }, [])
 
     //Initial
-    async function get2(id) {
+    async function removePrevious(id) {
         console.log("started fetching data....")
-        const data = await fetchQuestions2(id)
+        const data = await fetchFiltered(id)
         setQuestions(data)
     }
     async function get() {
@@ -70,7 +70,7 @@ const Home = () => {
         return data; // array of questions
     }
 
-    async function fetchQuestions2(id) {
+    async function fetchFiltered(id) {
         if (maxReached) return
 
         const notQuestions = await supabase.from("user_answer").select().eq("user_id", id)
@@ -132,23 +132,23 @@ const Home = () => {
         //popups
         isCorrect ? toast.success("✅ Right answer") : toast.error("❌ Wrong answer");
 
+        if(user){
         const scoreDelta = isCorrect ? 5 : -5;
 
         await supabase.rpc("increment_points", {
-          uid: user.id,
-          delta: scoreDelta,
+            uid: user.id,
+            delta: scoreDelta,
         });
-        
+
         await supabase.from("user_answer").insert({
-          user_id: user.id,
-          q_id: q.id,
-          answer: opt,
+            user_id: user.id,
+            q_id: q.id,
+            answer: opt,
         });
-        
+    }
         // save the answer
         setAnswers(prev => [...prev, { id: q.id, selectedOption: opt, isCorrect }]);
     };
-
 
 
     return (
@@ -156,6 +156,7 @@ const Home = () => {
             <div className="home">
                 {/* Main Content */}
                 <main className="h-full w-full overflow-y-scroll snap-y snap-mandatory pb-16">
+
                     {questions.map((q, index) => (
                         <div key={index} className="question-container">
                             {/* Top Bar */}
