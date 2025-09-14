@@ -137,12 +137,14 @@ const Home = () => {
         if (answers.find(ans => ans.id === q.id)) return; // prevent re-clicking
 
         //checking if already choosed
-        const { data, count } = await supabase.from('user_answer')
-            .select("*", { count: 'exact', head: true })
-            .eq("user_id", user.id)
-            .eq("q_id", q.id)
+        if (user) {
+            const { data, count } = await supabase.from('user_answer')
+                .select("*", { count: 'exact', head: true })
+                .eq("user_id", user.id)
+                .eq("q_id", q.id)
 
-        if (count !== 0) return
+            if (count !== 0) return
+        }
 
         const isCorrect = q.a === opt;
 

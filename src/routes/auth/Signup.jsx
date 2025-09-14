@@ -97,10 +97,12 @@ const Signup = () => {
         toast.error(error.message)
       } else {
         toast.success("successully signup")
+        const { avatar, username } = data.user.user_metadata
         const res = await supabase.from("board")
-          .insert({ user_id: data.user.id })
-        console.log(res)
+          .insert({ user_id: data.user.id, avatar, username })
+        console.log("added to board table", res)
         navigate('/profile')
+
       }
 
 

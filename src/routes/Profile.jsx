@@ -14,27 +14,46 @@ const Profile = () => {
     const [stats, setStats] = useState(null); // null initially
 
 
+    //Get personal infos
     useEffect(() => {
-      async function checkUser() {
-        const { data: { user } } = await supabase.auth.getUser();
-        if (user) {
-          setUser(user);
-          console.log("user existed");
-          const s = await getStats(user.id);
-          console.log(s); // fixed typo
-          setStats(s);
-        } else {
-          navigate("/signup");
+        async function checkUser() {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (user) {
+                setUser(user);
+                console.log("user existed");
+                const s = await getStats(user.id);
+                console.log(s); // fixed typo
+                setStats(s);
+            } else {
+                navigate("/signup");
+            }
         }
-      }
-      checkUser();
+        checkUser();
     }, []);
+
+
+
+    // Loading state
+    if (!stats) {
+        return (
+            <main className='home min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 overflow-y-auto'>
+                <div className="flex items-center justify-center h-64">
+                    <div className="relative">
+                        <div className="w-12 h-12 border-4 border-indigo-200 dark:border-indigo-800 rounded-full animate-spin"></div>
+                        <div className="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin absolute top-0 left-0"></div>
+                    </div>
+                </div>
+                <BottomNav />
+            </main>
+        )
+    }
+
 
     return (
         <main className='relative min-h-screen bg-black text-white'>
             {/* Header */}
             <nav className='w-full h-[60px] flex items-center justify-between px-4 border-b border-gray-800'>
-                <div className="flex items-center" onClick={()=> navigate(-1)}>
+                <div className="flex items-center" onClick={() => navigate(-1)}>
                     <button className="p-2">
                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
