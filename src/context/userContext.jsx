@@ -5,11 +5,6 @@ export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    console.log("user set")
-  }, [user])
-
   return (
     <UserContext.Provider value={{ user, setUser }}>
       {children}

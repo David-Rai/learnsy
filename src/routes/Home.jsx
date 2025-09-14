@@ -42,7 +42,7 @@ const Home = () => {
     async function removePrevious(id) {
         console.log("started fetching data....")
         const data = await fetchFiltered(id)
-        console.log("filterd data...", data)
+        // console.log("filterd data...", data)
         setQuestions(data)
     }
     async function get() {

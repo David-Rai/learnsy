@@ -1,6 +1,6 @@
 import supabase from '../config/supabase'
 import { useUser } from '../context/userContext'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     FaHeart,
     FaComment,
@@ -10,23 +10,29 @@ import {
 
 const SocialIcons = ({ q }) => {
     const { user, setUser } = useUser()
-    const { like_count, id } = q
+    const { id } = q
     const [isLiking, setIsLiking] = useState(false)
+    const [like_count, setLikeCount] = useState(0)
 
-       //gettingn like count
-       const getLikeCount = async (q_id) => {
+    useEffect(() => {
+        getLikeCount(id)
+    }, [])
+
+    //gettingn like count
+    const getLikeCount = async (question_id) => {
         const { count, error } = await supabase
-          .from('likes')
-          .select('id', { count: 'exact' }) // get row count only
-          .eq('q_id', q_id)
-      
+            .from('likes')
+            .select('id', { count: 'exact' }) // get row count only
+            .eq('q_id', question_id)
+
         if (error) {
-          console.log('Error fetching like count:', error)
-          return 0
+            console.log('Error fetching like count:', error)
+            return 0
         }
-      
-        return count || 0
-      }
+
+        setLikeCount(count)
+        // return count || 0
+    }
 
     //Handling like question
     const handleLike = async () => {
@@ -63,11 +69,11 @@ const SocialIcons = ({ q }) => {
             {/* Social */}
             <div className="absolute bottom-24 right-4 flex flex-col gap-4 z-20">
                 {/* profile */}
-                <div className="flex flex-col items-center">
+                {/* <div className="flex flex-col items-center">
                     <button className="bg-black/40 backdrop-blur-sm p-3 rounded-full hover:bg-black/60 transition-all mb-1">
                         <FaHeart className="w-6 h-6 text-white" />
                     </button>
-                </div>
+                </div> */}
                 {/* like */}
                 <div className="flex flex-col items-center" onClick={handleLike}>
                     <button className="bg-black/40 backdrop-blur-sm p-3 rounded-full hover:bg-black/60 transition-all mb-1">
