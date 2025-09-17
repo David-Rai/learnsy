@@ -273,7 +273,7 @@ const Progress = () => {
         navigate('/signup')
       }
     })
-  }, [])
+z  }, [])
 
   // Loading state
   if (!stats) {
