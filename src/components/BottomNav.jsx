@@ -49,7 +49,7 @@ const BottomNav = () => {
                         }`}
                 >
                     <FaCompass className="w-6 h-6 mb-1" />
-                    <span className="text-xs md:text-sm font-medium">Leaderboard</span>
+                    <span className="text-xs md:text-sm font-medium">Explore</span>
                 </button>
 
                 {/* Progress */}
@@ -64,7 +64,7 @@ const BottomNav = () => {
                         }`}
                 >
                     <FaChartLine className="w-6 h-6 mb-1" />
-                    <span className="text-xs md:text-sm font-medium">Progress</span>
+                    <span className="text-xs md:text-sm font-medium">Leaderboard</span>
                 </button>
 
                 {/* Profile */}
