@@ -18,6 +18,8 @@ const Home = () => {
     const [maxReached, setMaxReached] = useState(false)
     const [selected, setSelected] = useState(null);     // what user clicked
     const [answers, setAnswers] = useState([]);
+    const [userLikes, setUserLikes] = useState([])
+
 
     //checking user
     useEffect(() => {
@@ -149,7 +151,7 @@ const Home = () => {
         const isCorrect = q.a === opt;
 
         //popups
-        isCorrect ? toast.success("✅ Right answer") : toast.error("❌ Wrong answer");
+        // isCorrect ? toast.success("✅ Right answer") : toast.error("❌ Wrong answer");
 
         if (user) {
             const scoreDelta = isCorrect ? 5 : -5;
@@ -176,7 +178,7 @@ const Home = () => {
         );
     }
 
-    
+
 
 
     // Loading state
@@ -201,16 +203,12 @@ const Home = () => {
 
                     {questions.map((q, index) => (
                         <div key={index} className="question-container">
-                            {/* Top Bar */}
-                            <HomeTop category={q.category} />
-
-                            {/* Overlay */}
-                            <div className="h-full w-full absolute inset-0 bg-black/20" />
+                            {/* <HomeTop category={q.category} /> */}
 
                             {/* Question */}
                             <div className="flex flex-col items-center justify-center flex-1 relative z-10 max-w-lg w-full px-4">
                                 <h2 className="question-text">{q.q}</h2>
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full justify-items-center">
                                     {q.options && q.options.length > 0 ? (
                                         q.options.map((opt, i) => {
                                             const answer = answers.find(ans => ans.id === q.id);
@@ -218,9 +216,9 @@ const Home = () => {
 
                                             if (answer) {
                                                 if (answer.selectedOption === opt) {
-                                                    buttonClass += answer.isCorrect ? " bg-green-500 text-white" : " bg-red-500 text-white";
+                                                    buttonClass += answer.isCorrect ? " bg-right text-bg" : " bg-wrong text-bg";
                                                 } else {
-                                                    buttonClass += " bg-white text-black"; // other options after answering
+                                                    buttonClass += " bg-secondary text-text"; // other options after answering
                                                 }
                                             }
 
@@ -243,9 +241,10 @@ const Home = () => {
 
                                                 if (answer) {
                                                     if (answer.selectedOption === opt) {
-                                                        buttonClass += answer.isCorrect ? " bg-green-500 text-white" : " bg-red-500 text-white";
+                                                        buttonClass += answer.isCorrect ? " bg-right text-bg" : " bg-wrong text-bg";
+                                                    
                                                     } else {
-                                                        buttonClass += " bg-white text-black";
+                                                        buttonClass += " bg-secondary text-text";
                                                     }
                                                 }
 
@@ -267,12 +266,13 @@ const Home = () => {
                             </div>
 
                             {/* Socials icons */}
-                            <SocialIcons q={q} />
+                            <SocialIcons q={q} userLikes={userLikes} setUserLikes={setUserLikes} />
 
                             {/* Observer */}
                             {index === questions.length - 1 && <div ref={targetRef}></div>}
                         </div>
                     ))}
+                    
                 </main>
 
                 {/* Bottom navigation */}

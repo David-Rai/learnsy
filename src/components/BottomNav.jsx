@@ -20,7 +20,7 @@ const BottomNav = () => {
       }, [location.pathname])
 
     return (
-        <div className="absolute w-full bottom-0 left-0 right-0 bg-gray-900 border-t border-gray-800 z-30">
+        <div className="absolute w-full bottom-0 left-0 right-0 bg-secondary z-30">
             <div className="flex items-center justify-around py-2 px-4">
                 {/* Home */}
                 <button
@@ -29,7 +29,7 @@ const BottomNav = () => {
                         navigate("/")
                     }}
                     className={`flex flex-col items-center py-2 px-3 rounded-lg transition-colors ${activeTab === "home"
-                        ? "text-indigo-400"
+                        ? "text-primary"
                         : "text-gray-400 hover:text-white"
                         }`}
                 >
@@ -44,7 +44,7 @@ const BottomNav = () => {
                         navigate("/explore")
                     }}
                     className={`flex flex-col items-center py-2 px-3 rounded-lg transition-colors ${activeTab === "explore"
-                        ? "text-indigo-400"
+                        ? "text-primary"
                         : "text-gray-400 hover:text-white"
                         }`}
                 >
@@ -59,7 +59,7 @@ const BottomNav = () => {
                         navigate("/progress")
                     }}
                     className={`flex flex-col items-center py-2 px-3 rounded-lg transition-colors ${activeTab === "progress"
-                        ? "text-indigo-400"
+                        ? "text-primary"
                         : "text-gray-400 hover:text-white"
                         }`}
                 >
@@ -74,7 +74,7 @@ const BottomNav = () => {
                         navigate("/profile")
                     }}
                     className={`flex flex-col items-center py-2 px-3 rounded-lg transition-colors ${activeTab === "profile"
-                        ? "text-indigo-400"
+                        ? "text-primary"
                         : "text-gray-400 hover:text-white"
                         }`}
                 >

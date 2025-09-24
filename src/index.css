@@ -1,22 +1,42 @@
 @import "tailwindcss";
 
+:root {
+    --bg: #000000;
+    --text: #FFFFFF;
+    --right: #48FF00;
+    --wrong: #FF385A;
+    --secondary: #2C2C36;
+    --primary: oklch(58.5% 0.233 277.117);
+}
+
+@theme {
+    --color-bg: var(--bg);
+    --color-text: var(--text);
+    --color-right: var(--right);
+    --color-wrong: var(--wrong);
+    --color-secondary: var(--secondary);
+    --color-primary: var(--primary);
+}
+
 @layer components {
     .option-button {
-        @apply bg-black/80 backdrop-blur-sm text-yellow-300 px-4 sm:px-5 py-4 cursor-pointer  rounded-2xl shadow-lg hover:bg-black/90 transition-all font-medium text-sm sm:text-base w-full max-w-xs sm:max-w-full
+        @apply bg-text backdrop-blur-sm
+         text-bg sm:px-5 py-4
+          cursor-pointer rounded-md shadow-lg
+           font-medium text-sm sm:text-base w-full max-w-xs sm:max-w-full
     }
 
     .home {
-        @apply relative h-screen w-full bg-gray-50 dark:bg-gray-900
-         text-gray-800 dark:text-gray-100 overflow-hidden
+        @apply relative h-screen w-full bg-bg
+        text-gray-800 dark:text-gray-100 overflow-hidden
     }
 
     .question-container {
-        @apply relative snap-start h-screen flex flex-col justify-center items-center px-4
-        bg-gradient-to-br from-indigo-500 via-indigo-600 to-indigo-700
+        @apply relative snap-start h-screen flex flex-col
     }
 
     .question-text {
-        @apply text-lg sm:text-xl md:text-2xl lg:text-3xl 
-        font-bold mb-6 text-center text-white drop-shadow-lg w-[80%] leading-snug break-words overflow-hidden
+        @apply text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mb-6
+         text-center text-text drop-shadow-lg w-[80%] leading-snug break-words overflow-hidden
     }
 }

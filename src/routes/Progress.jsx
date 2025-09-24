@@ -452,7 +452,7 @@ const Progress = () => {
           <h2 className="text-xl font-semibold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-6">
             Leaderboard
           </h2>
-          <LeaderboardSection />
+          {/* <LeaderboardSection /> */}
         </section>
       </div>
 

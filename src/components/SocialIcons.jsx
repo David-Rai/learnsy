@@ -1,50 +1,36 @@
 import supabase from '../config/supabase'
 import { useUser } from '../context/userContext'
 import React, { useEffect, useState } from 'react'
-import {
-    FaHeart,
-    FaComment,
-    FaBookmark,
-    FaShare
-} from 'react-icons/fa';
+import { FaHeart } from 'react-icons/fa';
+import { Share2, Lightbulb } from 'lucide-react';
 
-const SocialIcons = ({ q }) => {
+const SocialIcons = ({ q, setUserLikes, userLikes }) => {
     const { user, setUser } = useUser()
     const { id } = q
     const [isLiking, setIsLiking] = useState(false)
-    const [like_count, setLikeCount] = useState(0)
-
-    useEffect(() => {
-        getLikeCount(id)
-    }, [])
-
-    //gettingn like count
-    const getLikeCount = async (question_id) => {
-        const { count, error } = await supabase
-            .from('likes')
-            .select('id', { count: 'exact' }) // get row count only
-            .eq('q_id', question_id)
-
-        if (error) {
-            console.log('Error fetching like count:', error)
-            return 0
-        }
-
-        setLikeCount(count)
-        // return count || 0
-    }
+    const isLiked = userLikes.some(l => l.q_id === id);
 
     //Handling like question
     const handleLike = async () => {
+        if (isLiking) return
+        setIsLiking(true)
+
+        const user_id = user.id
+        const q_id = id
+
+        //Adding new like
+        setUserLikes((prev) => {
+            if (prev.some(l => l.q_id === id)) {
+                console.log("remove like")
+                return userLikes.filter(l => l.q_id !== id)
+
+            }
+            console.log("added new like")
+            return [...prev, { q_id }]
+        })
+
         try {
-            if (isLiking) return
-            setIsLiking(true)
-            const user_id = user.id
-            const q_id = id
-
-            console.log(`${user_id} liked ${q_id}`)
-
-            //checking if liked
+            // checking if liked
             const res = await supabase.from('likes')
                 .select()
                 .eq("user_id", user_id)
@@ -57,6 +43,7 @@ const SocialIcons = ({ q }) => {
                 //liked
                 await supabase.from('likes').delete().eq("user_id", user_id).eq("q_id", q_id)
             }
+
             setIsLiking(false)
         } catch (error) {
             setIsLiking(false)
@@ -64,43 +51,43 @@ const SocialIcons = ({ q }) => {
         }
     }
 
+    //Handling share features
+    const handleShare = () => {
+        const url = `${window.location.href}/${id}`
+        console.log("sharing", url)
+    }
+
     return (
         <>
             {/* Social */}
             <div className="absolute bottom-24 right-4 flex flex-col gap-4 z-20">
-                {/* profile */}
-                {/* <div className="flex flex-col items-center">
-                    <button className="bg-black/40 backdrop-blur-sm p-3 rounded-full hover:bg-black/60 transition-all mb-1">
-                        <FaHeart className="w-6 h-6 text-white" />
-                    </button>
-                </div> */}
                 {/* like */}
                 <div className="flex flex-col items-center" onClick={handleLike}>
-                    <button className="bg-black/40 backdrop-blur-sm p-3 rounded-full hover:bg-black/60 transition-all mb-1">
-                        <FaHeart className="w-6 h-6 text-white" />
+                    <button className="bg-black/40 backdrop-blur-sm p-3
+                     cursor-pointer rounded-full hover:bg-black/60
+                      transition-all mb-1">
+                        {isLiked ? (<FaHeart className="w-6 h-6 text-red-500" />)
+                            :
+                            (<FaHeart className="w-6 h-6 text-white" />)
+                        }
                     </button>
-                    <span className="text-white text-xs md:text-sm font-medium drop-shadow-sm">{like_count}</span>
                 </div>
                 {/* comment */}
-                <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center cursor-pointer"
+                    onClick={handleShare}
+                >
                     <button className="bg-black/40 backdrop-blur-sm p-3 rounded-full hover:bg-black/60 transition-all mb-1">
-                        <FaComment className="w-6 h-6 text-white" />
+                        <Share2 className='cursor-pointer' />
                     </button>
-                    <span className="text-white text-xs md:text-sm font-medium drop-shadow-sm">847</span>
                 </div>
-                {/* saved */}
-                <div className="flex flex-col items-center">
+
+                {/* Hint */}
+                <div className="flex flex-col items-center cursor-pointer"
+                // onClick={handleShare}
+                >
                     <button className="bg-black/40 backdrop-blur-sm p-3 rounded-full hover:bg-black/60 transition-all mb-1">
-                        <FaBookmark className="w-6 h-6 text-white" />
+                        <Lightbulb className='cursor-pointer' />
                     </button>
-                    <span className="text-white text-xs md:text-sm font-medium drop-shadow-sm">3.2K</span>
-                </div>
-                {/* shared */}
-                <div className="flex flex-col items-center">
-                    <button className="bg-black/40 backdrop-blur-sm p-3 rounded-full hover:bg-black/60 transition-all mb-1">
-                        <FaShare className="w-6 h-6 text-white" />
-                    </button>
-                    <span className="text-white text-xs md:text-sm font-medium drop-shadow-sm">Share</span>
                 </div>
             </div>
         </>
