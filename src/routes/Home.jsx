@@ -206,7 +206,7 @@ const Home = () => {
                             {/* <HomeTop category={q.category} /> */}
 
                             {/* Question */}
-                            <div className="flex flex-col items-center justify-center flex-1 relative z-10 max-w-lg w-full px-4">
+                            <div className="flex flex-col items-center justify-start pt-20 flex-1 relative z-10 max-w-lg w-full px-4">
                                 <h2 className="question-text">{q.q}</h2>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full justify-items-center">
                                     {q.options && q.options.length > 0 ? (

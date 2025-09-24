@@ -15,7 +15,7 @@ const SocialIcons = ({ q, setUserLikes, userLikes }) => {
         if (isLiking) return
         setIsLiking(true)
 
-        const user_id = user.id
+        const user_id = user?.id
         const q_id = id
 
         //Adding new like
@@ -60,7 +60,7 @@ const SocialIcons = ({ q, setUserLikes, userLikes }) => {
     return (
         <>
             {/* Social */}
-            <div className="absolute bottom-24 right-4 flex flex-col gap-4 z-20">
+            <div className="absolute w-full bottom-24 right-0 flex justify-center items-center gap-4 z-20">
                 {/* like */}
                 <div className="flex flex-col items-center" onClick={handleLike}>
                     <button className="bg-black/40 backdrop-blur-sm p-3

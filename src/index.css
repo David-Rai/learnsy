@@ -32,7 +32,7 @@
     }
 
     .question-container {
-        @apply relative snap-start h-screen flex flex-col
+        @apply relative snap-start h-screen flex flex-col w-full justify-center items-center
     }
 
     .question-text {
