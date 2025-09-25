@@ -43,9 +43,8 @@ const Home = () => {
 
     //Initial
     async function removePrevious(id) {
-        console.log("started fetching data....")
+        console.log("started filtered fetching data....")
         const data = await fetchFiltered(id)
-        // console.log("filterd data...", data)
         setQuestions(data)
     }
     async function get() {
@@ -140,36 +139,37 @@ const Home = () => {
         if (answers.find(ans => ans.id === q.id)) return; // prevent re-clicking
 
         //checking if already choosed
-        if (user) {
-            const { data, count } = await supabase.from('user_answer')
-                .select("*", { count: 'exact', head: true })
-                .eq("user_id", user.id)
-                .eq("q_id", q.id)
+        // if (user) {
+        //     const { data, count } = await supabase.from('user_answer')
+        //         .select("*", { count: 'exact', head: true })
+        //         .eq("user_id", user.id)
+        //         .eq("q_id", q.id)
 
-            if (count !== 0) return
-        }
+        //     if (count !== 0) return
+        // }
 
         const isCorrect = q.a === opt;
 
         //popups
         // isCorrect ? toast.success("✅ Right answer") : toast.error("❌ Wrong answer");
 
-        if (user) {
-            const scoreDelta = isCorrect ? 5 : -5;
+        // if (user) {
+        //     const scoreDelta = isCorrect ? 5 : -5;
 
-            await supabase.rpc("increment_points", {
-                uid: user.id,
-                delta: scoreDelta,
-            });
+        //     await supabase.rpc("increment_points", {
+        //         uid: user.id,
+        //         delta: scoreDelta,
+        //     });
 
-            await supabase.from("user_answer").insert({
-                user_id: user.id,
-                q_id: q.id,
-                answer: opt,
-                isRight: isCorrect
-            });
-        }
+        //     await supabase.from("user_answer").insert({
+        //         user_id: user.id,
+        //         q_id: q.id,
+        //         answer: opt,
+        //         isRight: isCorrect
+        //     });
+        // }
         // save the answer
+
         setAnswers(prev => [...prev, { id: q.id, selectedOption: opt, isCorrect }]);
     };
 
@@ -182,7 +182,7 @@ const Home = () => {
     // Loading state
     if (questions.length === 0) {
         return (
-          <Loader />
+            <Loader />
         )
     }
     return (
@@ -194,10 +194,13 @@ const Home = () => {
                     {questions.map((q, index) => (
                         <div key={index} className="question-container">
                             {/* <HomeTop category={q.category} /> */}
+
                             {/* Question */}
                             <div className="flex flex-col items-center justify-center
                              flex-1 relative z-10 max-w-lg w-full px-4">
+
                                 <h2 className="question-text">{q.q}</h2>
+
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full justify-items-center">
                                     {q.options && q.options.length > 0 ? (
                                         q.options.map((opt, i) => {
@@ -205,10 +208,16 @@ const Home = () => {
                                             let buttonClass = "option-button";
 
                                             if (answer) {
+
                                                 if (answer.selectedOption === opt) {
+                                                    //showing the users answer
                                                     buttonClass += answer.isCorrect ? " bg-right text-bg" : " bg-wrong text-bg";
                                                 } else {
-                                                    buttonClass += " bg-secondary text-text"; // other options after answering
+                                                    if (q.a === opt) {
+                                                        buttonClass += " bg-right text-bg"
+                                                    } else {
+                                                        buttonClass += " bg-secondary text-text"; // other options after answering
+                                                    }
                                                 }
                                             }
 
@@ -232,7 +241,7 @@ const Home = () => {
                                                 if (answer) {
                                                     if (answer.selectedOption === opt) {
                                                         buttonClass += answer.isCorrect ? " bg-right text-bg" : " bg-wrong text-bg";
-                                                    
+
                                                     } else {
                                                         buttonClass += " bg-secondary text-text";
                                                     }
@@ -262,7 +271,7 @@ const Home = () => {
                             {index === questions.length - 1 && <div ref={targetRef}></div>}
                         </div>
                     ))}
-                    
+
                 </main>
 
                 {/* Bottom navigation */}
