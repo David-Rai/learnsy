@@ -53,7 +53,7 @@ const Signin = () => {
   }
 
   return (
-    <main className="h-screen bg-bg flex flex-col">
+    <main className="h-screen bg-bg flex flex-col justify-center items-center">
       
       <div className="w-full h-full max-w-md overflow-hidden">
         {/* Main Form Container */}

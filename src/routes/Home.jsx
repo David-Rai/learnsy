@@ -20,6 +20,7 @@ const Home = () => {
     const [selected, setSelected] = useState(null);     // what user clicked
     const [answers, setAnswers] = useState([]);
     const [userLikes, setUserLikes] = useState([])
+    const [hints, setHints] = useState([])
 
 
     //checking user
@@ -228,7 +229,7 @@ const Home = () => {
                 <main className="w-full h-[calc(100% - 80px)] overflow-y-scroll snap-y snap-mandatory">
 
                     {questions.map((q, index) => (
-                        <div key={index} className="question-container">
+                        <div key={index} className="question-container overflow-hidden">
                             {/* <HomeTop category={q.category} /> */}
 
                             {/* Question */}
@@ -301,7 +302,16 @@ const Home = () => {
                             </div>
 
                             {/* Socials icons */}
-                            <SocialIcons q={q} userLikes={userLikes} setUserLikes={setUserLikes} />
+                            <SocialIcons q={q} userLikes={userLikes} hint={hints} setHints={setHints} setUserLikes={setUserLikes} />
+
+                            {/* Hint section */}
+                            <div className='bg-red-100 rounded-[5px]
+                             mx-5 w-full py-5 px-8 h-[200px] absolute z-20
+                               left-0
+                               bottom-[-100%]
+                               '>
+                            <h2>{q.hint}</h2>
+                            </div>
 
                             {/* Observer */}
                             {index === questions.length - 2 && <div ref={targetRef}></div>}

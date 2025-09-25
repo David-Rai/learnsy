@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { FaHeart } from 'react-icons/fa';
 import { Share2, Lightbulb } from 'lucide-react';
 
-const SocialIcons = ({ q, setUserLikes, userLikes }) => {
+const SocialIcons = ({ q, setUserLikes, userLikes, hints, setHints }) => {
     const { user, setUser } = useUser()
     const { id } = q
     const [isLiking, setIsLiking] = useState(false)
@@ -57,6 +57,22 @@ const SocialIcons = ({ q, setUserLikes, userLikes }) => {
         console.log("sharing", url)
     }
 
+    const handleShowHint = () => {
+        //Adding new like
+        setHints((prev) => {
+            if (prev.some(l => l.q_id === id)) {
+                const hint=prev.find(l=> l.q_id === id)
+                console.log("hide hint",hint)
+                
+                // return [...prev, { q_id:id,show: }]
+
+            }
+            console.log("added new hint",prev)
+            return [...prev, { q_id:id,show:true }]
+        })
+
+    }
+
     return (
         <>
             {/* Social */}
@@ -71,17 +87,17 @@ const SocialIcons = ({ q, setUserLikes, userLikes }) => {
                     </button>
                 </div>
                 {/* comment */}
-                <div className="flex flex-col items-center cursor-pointer"
+                {/* <div className="flex flex-col items-center cursor-pointer"
                     onClick={handleShare}
                 >
                     <button className='social-contain' >
                         <Share2 className='cursor-pointer' />
                     </button>
-                </div>
+                </div> */}
 
                 {/* Hint */}
                 <div className="flex flex-col items-center cursor-pointer"
-                // onClick={handleShare}
+                    onClick={handleShowHint}
                 >
                     <button className='social-contain' >
                         <Lightbulb className='cursor-pointer' />
