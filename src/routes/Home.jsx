@@ -82,11 +82,16 @@ const Home = () => {
         const ids = notQuestions.data.map(q => q.q_id); // get array of q_id
         const idsString = `(${ids.join(',')})`;
 
+        const fetchedIds=questions.map(q => q.q_id); // get array of q_id
+        const idsString2=`(${fetchedIds.join(',')})`;
+
         const { data, error, count } = await supabase
             .from('questions')
             .select('*', { count: 'exact' })
             .not('id', 'in', idsString)
-            .range(page * BATCH_SIZE, (page + 1) * BATCH_SIZE - 1)
+            .not('id', 'in', idsString2)
+            .limit(BATCH_SIZE)
+            // .range(page * BATCH_SIZE, (page + 1) * BATCH_SIZE - 1)
 
 
         if (error) console.error(error);
@@ -153,24 +158,25 @@ const Home = () => {
         //popups
         // isCorrect ? toast.success("✅ Right answer") : toast.error("❌ Wrong answer");
 
-        // if (user) {
-        //     const scoreDelta = isCorrect ? 5 : -5;
+         // save the answer
+         setAnswers(prev => [...prev, { id: q.id, selectedOption: opt, isCorrect }]);
 
-        //     await supabase.rpc("increment_points", {
-        //         uid: user.id,
-        //         delta: scoreDelta,
-        //     });
+         //Increase the points and insert into user answers
+        if (user) {
+            const scoreDelta = isCorrect ? 5 : -5;
 
-        //     await supabase.from("user_answer").insert({
-        //         user_id: user.id,
-        //         q_id: q.id,
-        //         answer: opt,
-        //         isRight: isCorrect
-        //     });
-        // }
-        // save the answer
+            await supabase.rpc("increment_points", {
+                uid: user.id,
+                delta: scoreDelta,
+            });
 
-        setAnswers(prev => [...prev, { id: q.id, selectedOption: opt, isCorrect }]);
+            await supabase.from("user_answer").insert({
+                user_id: user.id,
+                q_id: q.id,
+                answer: opt,
+                isRight: isCorrect
+            });
+        }
     };
 
     if (maxReached) {
@@ -268,7 +274,7 @@ const Home = () => {
                             <SocialIcons q={q} userLikes={userLikes} setUserLikes={setUserLikes} />
 
                             {/* Observer */}
-                            {index === questions.length - 1 && <div ref={targetRef}></div>}
+                            {index === questions.length - 2 && <div ref={targetRef}></div>}
                         </div>
                     ))}
 

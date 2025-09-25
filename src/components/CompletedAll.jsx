@@ -1,10 +1,11 @@
+
 import BottomNav from './BottomNav'
 import { ToastContainer } from 'react-toastify'
 import React from 'react'
 
 const CompletedAll = () => {
     return (
-        <div className="relative h-screen w-full bg-gray-50 dark:bg-gray-900
+        <div className="relative h-[calc(100%-80px)] w-full bg-gray-50 dark:bg-gray-900
          text-gray-800 dark:text-gray-100 overflow-hidden">
             <main className="h-full w-full flex items-center justify-center pb-16">
 
