@@ -184,7 +184,8 @@ const Home = () => {
     // Loading state
     if (questions.length === 0) {
         return (
-            <main className='home min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 overflow-y-auto'>
+            // <main className='home h-[calc(100% - 80px)] bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 overflow-y-auto'>
+            <main className='home'>
                 <div className="flex items-center justify-center h-64">
                     <div className="relative">
                         <div className="w-12 h-12 border-4 border-indigo-200 dark:border-indigo-800 rounded-full animate-spin"></div>
@@ -199,14 +200,14 @@ const Home = () => {
         <>
             <div className="home">
                 {/* Main Content */}
-                <main className="h-full w-full overflow-y-scroll snap-y snap-mandatory pb-16">
+                <main className="w-full h-[calc(100% - 80px)] overflow-y-scroll snap-y snap-mandatory">
 
                     {questions.map((q, index) => (
                         <div key={index} className="question-container">
                             {/* <HomeTop category={q.category} /> */}
-
                             {/* Question */}
-                            <div className="flex flex-col items-center justify-start pt-20 flex-1 relative z-10 max-w-lg w-full px-4">
+                            <div className="flex flex-col items-center justify-center
+                             flex-1 relative z-10 max-w-lg w-full px-4">
                                 <h2 className="question-text">{q.q}</h2>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full justify-items-center">
                                     {q.options && q.options.length > 0 ? (

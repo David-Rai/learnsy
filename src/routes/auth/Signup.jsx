@@ -112,18 +112,17 @@ const Signup = () => {
   }
 
   return (
-    <main className="min-h-screen bg-black flex flex-col items-center justify-start p-4 pb-24">
-      {/* <nav className='text-white w-full'>
-    <IoChevronBack />
-    </nav> */}
+    <main className="h-[calc(100% - 80px)] bg-bg flex flex-col">
+   
       <div className="w-full max-w-md">
         {/* Main Form Container */}
-        <div className=" rounded-xl shadow-2xl overflow-hidden">
+        <div className="overflow-hidden">
           <div className="p-8">
+           
             {/* Logo/Brand */}
             <div className="text-center mb-8">
-              <h1 className="text-3xl font-bold 
-              bg-gradient-to-r from-indigo-600 to-indigo-800 bg-clip-text text-transparent mb-2">
+              <h1 className="text-3xl font-bold bg-primary
+              bg-clip-text text-transparent mb-2">
                 Learnsy
               </h1>
               <p className="text-gray-300 text-sm">Sign up to start your learning journey</p>
@@ -308,11 +307,9 @@ const Signup = () => {
                 </button>
               </div>
             </form>
-          </div>
-        </div>
 
-        {/* Sign In Link */}
-        <div className="rounded-xl shadow-lg text-center">
+           {/* Sign In Link */}
+        <div className="mt-3 text-center">
           <p className="text-sm text-gray-300">
             Have an account?{' '}
             <button
@@ -325,14 +322,16 @@ const Signup = () => {
             </button>
           </p>
         </div>
+</div>
+        </div>
 
       </div>
+
+
       <ToastContainer autoClose={100} />
 
       {/* Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 z-50">
-        <BottomNav />
-      </div>
+      <BottomNav />
     </main>
 
   )

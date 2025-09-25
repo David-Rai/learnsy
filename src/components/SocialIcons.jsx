@@ -60,7 +60,7 @@ const SocialIcons = ({ q, setUserLikes, userLikes }) => {
     return (
         <>
             {/* Social */}
-            <div className="absolute w-full bottom-24 right-0 flex justify-center items-center gap-4 z-20">
+            <div className=" w-full  flex justify-center items-center gap-4 z-20 py-3">
                 {/* like */}
                 <div className="flex flex-col items-center" onClick={handleLike}>
                     <button className="social-contain">

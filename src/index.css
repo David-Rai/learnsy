@@ -1,11 +1,13 @@
 @import "tailwindcss";
 
 :root {
+    /* --bg: #000000; */
     --bg: oklch(12.9% 0.042 264.695);
     --text: #FFFFFF;
     --right: #48FF00;
     --wrong: #FF385A;
     --secondary: oklch(20.8% 0.042 265.755);
+    --primary: oklch(58.5% 0.233 277.117);
 }
 
 @theme {
@@ -27,11 +29,13 @@
 
     .home {
         @apply relative h-screen w-full bg-bg
-        text-gray-800 dark:text-gray-100 overflow-hidden
+        text-gray-800 dark:text-gray-100 overflow-hidden flex flex-col
     }
 
     .question-container {
-        @apply relative snap-start h-screen flex flex-col w-full justify-center items-center
+        @apply relative snap-start h-full 
+        flex flex-col w-full justify-center
+         items-center
     }
 
     .question-text {
