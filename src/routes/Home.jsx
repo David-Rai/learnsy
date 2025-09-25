@@ -57,22 +57,49 @@ const Home = () => {
     async function fetchQuestions() {
         if (maxReached) return []
 
-        const { data, error, count } = await supabase
-            .from('questions')
-            .select('*', { count: 'exact' })
-            .range(page * BATCH_SIZE, (page + 1) * BATCH_SIZE - 1)
+        const fetchedIds = questions.map(q => q.id); // get array of q_id
+        // console.log("total questions", questions)
+        // console.log("already fteched data are", fetchedIds)
 
+        if (fetchedIds.length > 0) {
+            // console.log(fetchedIds)
 
-        if (error) console.error(error);
-        if (questions.length === count) {
-            console.log("max reached")
-            setMaxReached(true)
+            const idsString2 = `(${fetchedIds.join(',')})`;
+            const { data, error, count } = await supabase
+                .from('questions')
+                .select('*', { count: 'exact' })
+                .not('id', 'in', idsString2)
+                .limit(BATCH_SIZE)
+
+            if (questions.length === count) {
+                console.log("max reached")
+                setMaxReached(true)
+            } else {
+                setMaxReached(false)
+            }
+
+            if (data) {
+                return data
+            }
+
         } else {
-            setMaxReached(false)
-        }
+            const { data, error, count } = await supabase
+                .from('questions')
+                .select('*', { count: 'exact' })
 
-        setPage(prevPage => prevPage + 1);
-        return data; // array of questions
+            if (questions.length === count) {
+                console.log("max reached")
+                setMaxReached(true)
+            } else {
+                setMaxReached(false)
+            }
+
+            if (data) {
+                return data
+            }
+
+        }
+        // setPage(prevPage => prevPage + 1);
     }
 
     async function fetchFiltered(id) {
@@ -82,8 +109,8 @@ const Home = () => {
         const ids = notQuestions.data.map(q => q.q_id); // get array of q_id
         const idsString = `(${ids.join(',')})`;
 
-        const fetchedIds=questions.map(q => q.q_id); // get array of q_id
-        const idsString2=`(${fetchedIds.join(',')})`;
+        const fetchedIds = questions.map(q => q.id); // get array of q_id
+        const idsString2 = `(${fetchedIds.join(',')})`;
 
         const { data, error, count } = await supabase
             .from('questions')
@@ -91,7 +118,7 @@ const Home = () => {
             .not('id', 'in', idsString)
             .not('id', 'in', idsString2)
             .limit(BATCH_SIZE)
-            // .range(page * BATCH_SIZE, (page + 1) * BATCH_SIZE - 1)
+        // .range(page * BATCH_SIZE, (page + 1) * BATCH_SIZE - 1)
 
 
         if (error) console.error(error);
@@ -103,7 +130,7 @@ const Home = () => {
             setMaxReached(false)
         }
 
-        setPage(prevPage => prevPage + 1);
+        // setPage(prevPage => prevPage + 1);
         return data || [] // array of questions
     }
 
@@ -117,10 +144,10 @@ const Home = () => {
                 entries.forEach(async entry => {
                     if (entry.isIntersecting) {
                         if (user) {
-                            const nextQuestions = await fetchFiltered(user.id);
+                            const nextQuestions = await fetchFiltered(user.id) || []
                             setQuestions(prev => [...prev, ...nextQuestions]);
                         } else {
-                            const nextQuestions = await fetchQuestions();
+                            const nextQuestions = await fetchQuestions() || []
                             setQuestions(prev => [...prev, ...nextQuestions]);
                         }
                     }
@@ -158,10 +185,10 @@ const Home = () => {
         //popups
         // isCorrect ? toast.success("✅ Right answer") : toast.error("❌ Wrong answer");
 
-         // save the answer
-         setAnswers(prev => [...prev, { id: q.id, selectedOption: opt, isCorrect }]);
+        // save the answer
+        setAnswers(prev => [...prev, { id: q.id, selectedOption: opt, isCorrect }]);
 
-         //Increase the points and insert into user answers
+        //Increase the points and insert into user answers
         if (user) {
             const scoreDelta = isCorrect ? 5 : -5;
 
@@ -180,9 +207,11 @@ const Home = () => {
     };
 
     if (maxReached) {
-        return (
-            <CompletedAll />
-        );
+        // toast.success("completed all the questions")
+        // alert("done")
+        // return (
+        //     // <CompletedAll />
+        // );
     }
 
     // Loading state
