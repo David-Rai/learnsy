@@ -1,5 +1,6 @@
 import CompletedAll from '../components/CompletedAll.jsx'
 import React, { useState, useEffect, useRef } from 'react';
+import Loader from '../components/Loader.jsx';
 import { Suspense, lazy } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import supabase from '../config/supabase.js'
@@ -178,22 +179,10 @@ const Home = () => {
         );
     }
 
-
-
-
     // Loading state
     if (questions.length === 0) {
         return (
-            // <main className='home h-[calc(100% - 80px)] bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 overflow-y-auto'>
-            <main className='home'>
-                <div className="flex items-center justify-center h-64">
-                    <div className="relative">
-                        <div className="w-12 h-12 border-4 border-indigo-200 dark:border-indigo-800 rounded-full animate-spin"></div>
-                        <div className="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin absolute top-0 left-0"></div>
-                    </div>
-                </div>
-                <BottomNav />
-            </main>
+          <Loader />
         )
     }
     return (

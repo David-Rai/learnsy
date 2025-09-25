@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Loader from '../components/Loader';
 import { Search, Home, User, BarChart3, Compass } from 'lucide-react'; // replace Explore with Compass
 import BottomNav from '../components/BottomNav';
 
