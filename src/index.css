@@ -1,12 +1,11 @@
 @import "tailwindcss";
 
 :root {
-    --bg: #000000;
+    --bg: oklch(12.9% 0.042 264.695);
     --text: #FFFFFF;
     --right: #48FF00;
     --wrong: #FF385A;
-    --secondary: #2C2C36;
-    --primary: oklch(58.5% 0.233 277.117);
+    --secondary: oklch(20.8% 0.042 265.755);
 }
 
 @theme {
@@ -38,5 +37,10 @@
     .question-text {
         @apply text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mb-6
          text-center text-text drop-shadow-lg w-[80%] leading-snug break-words overflow-hidden
+    }
+    .social-contain{
+        @apply bg-secondary backdrop-blur-sm p-3
+        cursor-pointer rounded-full
+         transition-all mb-1
     }
 }

@@ -63,9 +63,7 @@ const SocialIcons = ({ q, setUserLikes, userLikes }) => {
             <div className="absolute w-full bottom-24 right-0 flex justify-center items-center gap-4 z-20">
                 {/* like */}
                 <div className="flex flex-col items-center" onClick={handleLike}>
-                    <button className="bg-black/40 backdrop-blur-sm p-3
-                     cursor-pointer rounded-full hover:bg-black/60
-                      transition-all mb-1">
+                    <button className="social-contain">
                         {isLiked ? (<FaHeart className="w-6 h-6 text-red-500" />)
                             :
                             (<FaHeart className="w-6 h-6 text-white" />)
@@ -76,7 +74,7 @@ const SocialIcons = ({ q, setUserLikes, userLikes }) => {
                 <div className="flex flex-col items-center cursor-pointer"
                     onClick={handleShare}
                 >
-                    <button className="bg-black/40 backdrop-blur-sm p-3 rounded-full hover:bg-black/60 transition-all mb-1">
+                    <button className='social-contain' >
                         <Share2 className='cursor-pointer' />
                     </button>
                 </div>
@@ -85,7 +83,7 @@ const SocialIcons = ({ q, setUserLikes, userLikes }) => {
                 <div className="flex flex-col items-center cursor-pointer"
                 // onClick={handleShare}
                 >
-                    <button className="bg-black/40 backdrop-blur-sm p-3 rounded-full hover:bg-black/60 transition-all mb-1">
+                    <button className='social-contain' >
                         <Lightbulb className='cursor-pointer' />
                     </button>
                 </div>

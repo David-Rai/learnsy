@@ -16,10 +16,10 @@ const ExploreComponent = () => {
 
 
   return (
-    <div className="relative flex h-auto min-h-screen w-full flex-col bg-gray-900 text-white">
+    <div className="relative flex h-auto min-h-screen w-full flex-col bg-bg text-text">
       <div className="flex-grow">
         {/* Header */}
-        <header className="sticky top-0 z-10 bg-gray-900/80 backdrop-blur-sm">
+        <header className="sticky top-0 z-10 bg-bg backdrop-blur-sm">
           <div className="flex items-center p-4 pb-2 justify-between">
             <div className="flex w-12"></div>
             <h1 className="text-white text-xl font-bold leading-tight tracking-tight flex-1 text-center">
