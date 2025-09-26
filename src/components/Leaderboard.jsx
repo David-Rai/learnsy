@@ -9,16 +9,6 @@ const Leaderboard = () => {
   const [leaders, setLeaders] = useState([])
   const [loading, setLoading] = useState(true)
 
-  // CSS color palette variables
-  const colorVariables = {
-    '--bg': 'oklch(12.9% 0.042 264.695)',
-    '--text': '#FFFFFF',
-    '--right': '#48FF00',
-    '--wrong': '#FF385A',
-    '--secondary': 'oklch(20.8% 0.042 265.755)',
-    '--primary': 'oklch(58.5% 0.233 277.117)'
-  }
-
   useEffect(() => {
     async function getLeaders() {
       try {
@@ -47,10 +37,10 @@ const Leaderboard = () => {
 
   if (!leaders.length) {
     return (
-      <main className="min-h-screen flex flex-col" style={colorVariables}>
-        <div className="bg-[var(--bg)] flex flex-col items-center justify-center min-h-[calc(100vh-80px)] text-[var(--text)] px-4">
+      <main className="min-h-screen flex flex-col">
+        <div className="bg-bg flex flex-col items-center justify-center min-h-[calc(100vh-80px)] text-text px-4">
           <div className="w-24 h-24 bg-gradient-to-br from-[var(--secondary)] to-[var(--primary)] rounded-full flex items-center justify-center mb-6 shadow-2xl">
-            <Users className="w-12 h-12 text-[var(--text)] opacity-80" />
+            <Users className="w-12 h-12 text-text opacity-80" />
           </div>
           <h2 className="text-2xl font-bold mb-3">No players yet</h2>
           <p className="text-base opacity-70 text-center max-w-sm">Be the first to join the leaderboard and claim your spot!</p>
@@ -64,19 +54,19 @@ const Leaderboard = () => {
   const otherPlayers = leaders.slice(3)
 
   return (
-    <main className="min-h-screen bg-[var(--bg)] text-[var(--text)] pb-20" style={colorVariables}>
+    <main className="min-h-screen bg-bg text-text pb-20">
       <div className="min-h-[calc(100vh-80px)] pb-6">
         {/* Header */}
-        <header className="text-center py-6 px-4 bg-gradient-to-b from-[var(--secondary)]/30 to-transparent">
+        <header className="text-center py-6 px-4">
           <div className="flex items-center justify-center gap-3 mb-3">
-            <div className="p-2 bg-gradient-to-br from-[var(--primary)]/30 to-[var(--secondary)] rounded-full">
+            <div className="p-2 bg-[var(--secondary)] rounded-full border border-[var(--primary)]/20">
               <Trophy className="w-8 h-8 md:w-10 md:h-10 text-[var(--primary)]" />
             </div>
-            <h1 className="text-2xl md:text-4xl font-bold bg-gradient-to-r from-[var(--primary)] via-[var(--right)] to-[var(--primary)] bg-clip-text text-transparent">
+            <h1 className="text-2xl md:text-4xl font-bold text-[var(--primary)]">
               Leaderboard
             </h1>
           </div>
-          <p className="text-sm md:text-base opacity-80 text-[var(--text)]">Top performers this season</p>
+          <p className="text-sm md:text-base opacity-80 text-text">Top performers this season</p>
           <div className="flex items-center justify-center gap-2 mt-3 text-sm opacity-70">
             <Target className="w-4 h-4" />
             <span>{leaders.length} Players</span>
@@ -85,17 +75,17 @@ const Leaderboard = () => {
 
         {/* Top Three Podium */}
         {topThree.length > 0 && (
-          <section className="px-4 mb-8">
+          <section className="px-4 mb-4">
             <div className="max-w-6xl mx-auto">
-              {/* Mobile: Row layout with closer spacing */}
-              <div className="flex items-end justify-center gap-2 md:hidden">
+              {/* Mobile: Row layout with no spacing */}
+              <div className="flex items-end justify-center md:hidden">
                 {topThree[1] && <TopPlayer leader={topThree[1]} position={2} isMobile />}
                 {topThree[0] && <TopPlayer leader={topThree[0]} position={1} isMobile />}
                 {topThree[2] && <TopPlayer leader={topThree[2]} position={3} isMobile />}
               </div>
 
               {/* Desktop: Podium layout */}
-              <div className="hidden md:flex items-end justify-center gap-4 lg:gap-8">
+              <div className="hidden md:flex items-end justify-center">
                 {topThree[1] && <TopPlayer leader={topThree[1]} position={2} />}
                 {topThree[0] && <TopPlayer leader={topThree[0]} position={1} />}
                 {topThree[2] && <TopPlayer leader={topThree[2]} position={3} />}
@@ -108,11 +98,11 @@ const Leaderboard = () => {
         {otherPlayers.length > 0 && (
           <section className="px-4">
             <div className="max-w-4xl mx-auto">
-              <h2 className="text-xl font-semibold text-[var(--text)] mb-4 text-center md:text-left">
+              <h2 className="text-xl font-semibold text-text mb-2 text-center md:text-left">
                 Other Players
               </h2>
-              <div className="bg-gradient-to-br from-[var(--secondary)] via-[var(--secondary)] to-[var(--bg)] rounded-2xl p-4 shadow-lg border border-[var(--primary)]/20">
-                <div className="space-y-3 max-h-96 overflow-y-auto custom-scrollbar">
+              <div className="bg-[var(--secondary)] rounded-2xl p-2 shadow-lg border border-[var(--primary)]/20">
+                <div className="max-h-96 overflow-y-auto custom-scrollbar">
                   {otherPlayers.map((leader, index) => (
                     <OtherPlayer key={leader.user_id} leader={leader} position={index + 4} />
                   ))}
@@ -150,8 +140,8 @@ const getPositionConfig = (position) => {
     },
     3: {
       heights: { mobile: 'h-24', desktop: 'h-28 md:h-36 lg:h-44' },
-      avatars: { mobile: 'w-12 h-12', desktop: 'w-14 h-14 md:w-18 md:h-18 lg:w-20 lg:h-20' },
-      widths: { mobile: 'w-18', desktop: 'w-24 lg:w-32' },
+      avatars: { mobile: 'w-12 h-12', desktop: 'w-14 h-14 md:w-20 md:h-20 lg:w-20 lg:h-20' },
+      widths: { mobile: 'w-20', desktop: 'w-24 lg:w-32' },
       icon: Medal,
       iconColor: 'text-amber-600',
       gradient: 'from-amber-600/20 via-amber-700/15 to-amber-800/20',
@@ -182,47 +172,54 @@ const TopPlayer = ({ leader, position, isMobile = false }) => {
   const getAccuracyColor = (accuracy) => {
     if (accuracy >= 80) return 'text-[var(--right)]'
     if (accuracy < 50) return 'text-[var(--wrong)]'
-    return 'text-[var(--text)]'
+    return 'text-text'
   }
 
   return (
     <div className="flex flex-col items-center relative">
       {/* Position Crown/Medal */}
       <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
-        <div className={`bg-gradient-to-br ${config.gradient} bg-[var(--secondary)] rounded-full p-2 border-2 ${config.border} shadow-lg`}>
+        <div className={`bg-[var(--secondary)] rounded-full p-2 border border-[var(--primary)]/30 shadow`}> 
           <IconComponent className={`w-4 h-4 ${isMobile ? '' : 'md:w-5 md:h-5'} ${config.iconColor}`} />
         </div>
       </div>
 
+      {/* Avatar - Outside the card */}
+      <div className={`${
+        isMobile ? config.avatars.mobile : config.avatars.desktop
+      } rounded-full border-2 border-[var(--primary)] overflow-hidden mb-2 bg-bg shadow-lg`}>
+        <img 
+          src={leader.avatar} 
+          alt={leader.username}
+          className="w-full h-full object-cover"
+        />
+      </div>
+
       {/* Player Card */}
-      <div className={`bg-gradient-to-b ${config.gradient} bg-[var(--secondary)] rounded-t-2xl ${
+      <div className={`bg-[var(--secondary)] rounded-t-2xl ${
         isMobile ? config.heights.mobile : config.heights.desktop
       } ${
         isMobile ? config.widths.mobile : config.widths.desktop
-      } flex flex-col items-center justify-start pt-6 relative overflow-hidden border-2 ${config.border} shadow-xl hover:shadow-2xl transition-all duration-300`}>
+      } flex flex-col items-center justify-center relative overflow-hidden border border-[var(--primary)]/30 shadow-sm`}>
         
-        {/* Avatar */}
-        <div className={`${
-          isMobile ? config.avatars.mobile : config.avatars.desktop
-        } rounded-full border-2 border-[var(--primary)] overflow-hidden mb-2 bg-[var(--bg)] shadow-lg`}>
-          <img 
-            src={leader.avatar} 
-            alt={leader.username}
-            className="w-full h-full object-cover"
-          />
+        {/* Rank Number - Center of div */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className={`${isMobile ? 'text-2xl' : 'text-3xl md:text-4xl'} font-bold text-[var(--primary)] opacity-80`}>
+            {position}
+          </span>
         </div>
 
-        {/* Username and Points - Same column on mobile */}
-        <div className="text-center px-1 space-y-1">
-          <h3 className={`${isMobile ? 'text-xs' : 'text-sm md:text-base'} font-bold text-[var(--text)] leading-tight`}>
+        {/* Username and Points */}
+        <div className="text-center px-1 z-10">
+          <h3 className={`${isMobile ? 'text-xs' : 'text-sm md:text-base'} font-bold text-text leading-tight mb-1`}>
             {leader.username.split(' ')[0]}
           </h3>
 
-          {/* Points with Fire Icon */}
+          {/* Points with Fire Icon - Bigger */}
           {stats && (
             <div className="flex items-center justify-center gap-1">
-              <Flame className={`${isMobile ? 'w-3 h-3' : 'w-4 h-4'} text-orange-400`} />
-              <p className={`${isMobile ? 'text-xs' : 'text-sm md:text-base'} font-bold text-[var(--primary)]`}>
+              <Flame className={`${isMobile ? 'w-4 h-4' : 'w-5 h-5'} text-orange-400`} />
+              <p className={`${isMobile ? 'text-lg' : 'text-xl md:text-2xl'} font-bold text-[var(--primary)]`}>
                 {stats.point}
               </p>
             </div>
@@ -230,7 +227,7 @@ const TopPlayer = ({ leader, position, isMobile = false }) => {
 
           {/* Accuracy */}
           {stats && stats.total_questions > 0 && (
-            <div className="flex items-center justify-center gap-1">
+            <div className="flex items-center justify-center gap-1 mt-1">
               <Target className={`w-3 h-3 ${getAccuracyColor(accuracy)}`} />
               <span className={`text-xs font-semibold ${getAccuracyColor(accuracy)}`}>
                 {accuracy.toFixed(1)}%
@@ -243,10 +240,7 @@ const TopPlayer = ({ leader, position, isMobile = false }) => {
       {/* Podium Base */}
       <div className={`${
         isMobile ? config.widths.mobile : config.widths.desktop
-      } h-6 bg-gradient-to-b from-[var(--secondary)] to-[var(--bg)] rounded-b-lg border-t-2 border-[var(--primary)]/30 flex items-center justify-center shadow-lg`}>
-        <span className={`${isMobile ? 'text-sm' : 'text-lg md:text-xl'} font-bold text-[var(--text)]`}>
-          #{position}
-        </span>
+      } h-6 bg-[var(--secondary)] rounded-b-lg border-t border-[var(--primary)]/30 flex items-center justify-center shadow-sm`}>
       </div>
     </div>
   )
@@ -270,18 +264,18 @@ const OtherPlayer = ({ leader, position }) => {
   const getAccuracyColor = (accuracy) => {
     if (accuracy >= 80) return 'text-[var(--right)]'
     if (accuracy < 50) return 'text-[var(--wrong)]'
-    return 'text-[var(--text)]'
+    return 'text-text'
   }
 
   return (
-    <div className="bg-gradient-to-r from-[var(--bg)] to-[var(--secondary)]/50 rounded-xl p-4 flex items-center gap-4 border border-[var(--primary)]/30 hover:border-[var(--primary)]/60 transition-all duration-200 hover:shadow-lg hover:scale-[1.02]">
+    <div className="bg-[var(--secondary)] rounded-xl p-3 flex items-center gap-3 border border-[var(--primary)]/30 hover:border-[var(--primary)]/60 transition-all duration-200">
       {/* Rank Badge */}
-      <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-[var(--primary)]/20 to-[var(--secondary)] rounded-full flex items-center justify-center border border-[var(--primary)]/30">
-        <span className="text-sm font-bold text-[var(--primary)]">#{position}</span>
+      <div className="flex-shrink-0 w-10 h-10 bg-[var(--bg)]/40 rounded-full flex items-center justify-center border border-[var(--primary)]/30">
+        <span className="text-sm font-bold text-[var(--primary)]">{position}</span>
       </div>
 
       {/* Avatar */}
-      <div className="flex-shrink-0 w-12 h-12 rounded-full border-2 border-[var(--primary)]/40 overflow-hidden bg-[var(--secondary)] shadow-md">
+      <div className="flex-shrink-0 w-12 h-12 rounded-full border border-[var(--primary)]/30 overflow-hidden bg-[var(--secondary)]">
         <img 
           src={leader.avatar} 
           alt={leader.username}
@@ -291,13 +285,13 @@ const OtherPlayer = ({ leader, position }) => {
 
       {/* User Info */}
       <div className="flex-grow min-w-0">
-        <h3 className="font-semibold text-[var(--text)] truncate text-base mb-1">
+        <h3 className="font-semibold text-text truncate text-base mb-1">
           {leader.username}
         </h3>
         {stats && (
           <div className="flex items-center gap-2">
             <Flame className="w-3 h-3 text-orange-400" />
-            <span className="text-sm text-[var(--text)] opacity-80">{stats.point}</span>
+            <span className="text-sm text-text opacity-80">{stats.point}</span>
           </div>
         )}
       </div>
@@ -311,7 +305,7 @@ const OtherPlayer = ({ leader, position }) => {
               {accuracy.toFixed(1)}%
             </span>
           </div>
-          <p className="text-xs text-[var(--text)] opacity-70">accuracy</p>
+          <p className="text-xs text-text opacity-70">accuracy</p>
         </div>
       )}
     </div>
