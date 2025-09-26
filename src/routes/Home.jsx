@@ -246,6 +246,7 @@ const Home = () => {
                                 <h2 className="question-text">{q.q}</h2>
 
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full justify-items-center">
+                               
                                     {q.options && q.options.length > 0 ? (
                                         q.options.map((opt, i) => {
                                             const answer = answers.find(ans => ans.id === q.id);
