@@ -74,8 +74,6 @@ const Home = () => {
         if (maxReached) return []
 
         const fetchedIds = questions.map(q => q.id); // get array of q_id
-        // console.log("total questions", questions)
-        // console.log("already fteched data are", fetchedIds)
 
         if (fetchedIds.length > 0) {
             // console.log(fetchedIds)
@@ -102,6 +100,7 @@ const Home = () => {
             const { data, error, count } = await supabase
                 .from('questions')
                 .select('*', { count: 'exact' })
+                .limit(5)
 
             if (questions.length === count) {
                 console.log("max reached")
