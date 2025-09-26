@@ -4,12 +4,17 @@ import React, { useEffect, useState } from 'react'
 import { FaHeart } from 'react-icons/fa';
 import { Share2, Lightbulb } from 'lucide-react';
 
-const SocialIcons = ({ q, setUserLikes, userLikes, hints, setHints }) => {
+const SocialIcons = ({ q, setUserLikes, userLikes, hint, setHint ,setCurrentHint }) => {
     const { user, setUser } = useUser()
     const { id } = q
     const [isLiking, setIsLiking] = useState(false)
     const isLiked = userLikes.some(l => l.q_id === id);
 
+    //settting the hint
+    // useEffect(() => {
+    //     setCurrentHint(q.hint)
+    //   }, [q.hint])
+      
     //Handling like question
     const handleLike = async () => {
         if (isLiking) return
@@ -57,20 +62,9 @@ const SocialIcons = ({ q, setUserLikes, userLikes, hints, setHints }) => {
         console.log("sharing", url)
     }
 
-    const handleShowHint = () => {
-        //Adding new like
-        setHints((prev) => {
-            if (prev.some(l => l.q_id === id)) {
-                const hint=prev.find(l=> l.q_id === id)
-                console.log("hide hint",hint)
-                
-                // return [...prev, { q_id:id,show: }]
-
-            }
-            console.log("added new hint",prev)
-            return [...prev, { q_id:id,show:true }]
-        })
-
+    const handleHint=()=>{
+        setCurrentHint(q.hint)
+        setHint(!hint)
     }
 
     return (
@@ -97,7 +91,7 @@ const SocialIcons = ({ q, setUserLikes, userLikes, hints, setHints }) => {
 
                 {/* Hint */}
                 <div className="flex flex-col items-center cursor-pointer"
-                    onClick={handleShowHint}
+                    onClick={handleHint}
                 >
                     <button className='social-contain' >
                         <Lightbulb className='cursor-pointer' />

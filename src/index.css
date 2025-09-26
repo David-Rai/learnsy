@@ -49,3 +49,27 @@
         @apply bg-secondary backdrop-blur-sm p-3 cursor-pointer rounded-full transition-all mb-1
     }
 }
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: oklch(20.8% 0.042 265.755); /* secondary */
+    border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: oklch(58.5% 0.233 277.117); /* primary */
+    border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: oklch(58.5% 0.233 277.117 / 0.8);
+}
+
+.custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: oklch(58.5% 0.233 277.117) oklch(20.8% 0.042 265.755);
+}
+

@@ -1,4 +1,5 @@
 import CompletedAll from '../components/CompletedAll.jsx'
+import Hintsection from '../components/Hintsection.jsx';
 import React, { useState, useEffect, useRef } from 'react';
 import Loader from '../components/Loader.jsx';
 import { Suspense, lazy } from 'react'
@@ -21,7 +22,21 @@ const Home = () => {
     const [answers, setAnswers] = useState([]);
     const [userLikes, setUserLikes] = useState([])
     const [hints, setHints] = useState([])
+    const [hint, setHint] = useState(false)
+    const scrollContain=useRef(null)
+    const [currentHint, setCurrentHint] = useState("no hint")
 
+
+    //Stoping scrolling on hint container toggle
+    useEffect(()=>{
+        // console.log(scrollContain)
+        if(scrollContain.current === null) return
+        if(hint){
+        scrollContain.current.style.overflow="hidden"
+        }else{
+            scrollContain.current.style.overflow="auto"
+        }
+    },[hint])//dependency
 
     //checking user
     useEffect(() => {
@@ -171,16 +186,6 @@ const Home = () => {
     const checkAnswer = async (q, opt) => {
         if (answers.find(ans => ans.id === q.id)) return; // prevent re-clicking
 
-        //checking if already choosed
-        // if (user) {
-        //     const { data, count } = await supabase.from('user_answer')
-        //         .select("*", { count: 'exact', head: true })
-        //         .eq("user_id", user.id)
-        //         .eq("q_id", q.id)
-
-        //     if (count !== 0) return
-        // }
-
         const isCorrect = q.a === opt;
 
         //popups
@@ -224,9 +229,11 @@ const Home = () => {
 
     return (
         <>
-            <div className="home">
+            <div className="home custom-scrollbar">
                 {/* Main Content */}
-                <main className="w-full h-[calc(100% - 80px)] overflow-y-scroll snap-y snap-mandatory">
+                <main 
+                ref={scrollContain}
+                className="w-full h-[calc(100% - 80px)] overflow-y-scroll snap-y snap-mandatory">
 
                     {questions.map((q, index) => (
                         <div key={index} className="question-container overflow-hidden">
@@ -302,16 +309,13 @@ const Home = () => {
                             </div>
 
                             {/* Socials icons */}
-                            <SocialIcons q={q} userLikes={userLikes} hint={hints} setHints={setHints} setUserLikes={setUserLikes} />
-
-                            {/* Hint section */}
-                            <div className='bg-red-100 rounded-[5px]
-                             mx-5 w-full py-5 px-8 h-[200px] absolute z-20
-                               left-0
-                               bottom-[-100%]
-                               '>
-                            <h2>{q.hint}</h2>
-                            </div>
+                            <SocialIcons q={q}
+                                userLikes={userLikes}
+                                hint={hint}
+                                currentHint={currentHint}
+                                setCurrentHint={setCurrentHint}
+                                setHint={setHint}
+                                setUserLikes={setUserLikes} />
 
                             {/* Observer */}
                             {index === questions.length - 2 && <div ref={targetRef}></div>}
@@ -319,6 +323,9 @@ const Home = () => {
                     ))}
 
                 </main>
+
+                {/* hint section */}
+                <Hintsection hint={hint} setHint={setHint} currentHint={currentHint}/>
 
                 {/* Bottom navigation */}
                 <BottomNav />
