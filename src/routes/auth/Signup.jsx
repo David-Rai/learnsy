@@ -112,7 +112,7 @@ const Signup = () => {
   }
 
   return (
-    <main className="h-[calc(100% - 80px)] bg-bg flex flex-col items-center justify-center">
+    <main className="h-screen bg-bg flex flex-col items-center justify-center">
    
       <div className="w-full max-w-md">
         {/* Main Form Container */}
@@ -322,14 +322,12 @@ const Signup = () => {
             </button>
           </p>
         </div>
-</div>
+         </div>
         </div>
-
       </div>
 
 
       <ToastContainer autoClose={100} />
-
       {/* Bottom Navigation */}
       <BottomNav />
     </main>
