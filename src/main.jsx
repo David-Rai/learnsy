@@ -8,6 +8,7 @@ import Signin from './routes/auth/Signin.jsx'
 import Profile from './routes/Profile.jsx'
 import Home from './routes/Home'
 import Explore from './routes/Explore.jsx'
+import Leaderboard from './components/Leaderboard.jsx'
 import Signup from './routes/auth/Signup.jsx'
 
 const router = createBrowserRouter([
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
   {
     path: '/progress',
     element: <Progress />
+  },
+  {
+    path: '/leaderboard',
+    element: <Leaderboard />
   }
 ])
 createRoot(document.getElementById('root')).render(

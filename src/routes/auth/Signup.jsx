@@ -112,7 +112,7 @@ const Signup = () => {
   }
 
   return (
-    <main className="h-screen bg-bg flex flex-col items-center justify-center">
+    <main className="h-screen bg-bg flex flex-col items-center justify-center overflow-hidden">
    
       <div className="w-full max-w-md">
         {/* Main Form Container */}
