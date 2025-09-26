@@ -150,7 +150,6 @@ const getPositionConfig = (position) => {
   }
   return configs[position] || configs[1]
 }
-
 const TopPlayer = ({ leader, position, isMobile = false }) => {
   const [stats, setStats] = useState(null)
 
@@ -176,7 +175,7 @@ const TopPlayer = ({ leader, position, isMobile = false }) => {
   }
 
   return (
-    <div className="flex flex-col items-center relative">
+    <main className="flex flex-col items-center relative">
       {/* Position Crown/Medal */}
       <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
         <div className={`bg-[var(--secondary)] rounded-full p-2 border border-[var(--primary)]/30 shadow`}> 
@@ -184,10 +183,10 @@ const TopPlayer = ({ leader, position, isMobile = false }) => {
         </div>
       </div>
 
-      {/* Avatar - Outside the card */}
+      {/* Avatar */}
       <div className={`${
         isMobile ? config.avatars.mobile : config.avatars.desktop
-      } rounded-full border-2 border-[var(--primary)] overflow-hidden mb-2 bg-bg shadow-lg`}>
+      } rounded-full overflow-hidden mb-2 bg-bg shadow-lg`}>
         <img 
           src={leader.avatar} 
           alt={leader.username}
@@ -195,54 +194,47 @@ const TopPlayer = ({ leader, position, isMobile = false }) => {
         />
       </div>
 
-      {/* Player Card */}
+      {/* Username below avatar */}
+      <h3 className={`text-center font-bold ${isMobile ? 'text-sm' : 'text-base'} text-white mb-2`}>
+        {leader.username.split(' ')[0]}
+      </h3>
+
+      {/* Points below card */}
+      {stats && (
+        <div className="flex items-center justify-center gap-1 mt-2">
+          <Flame className={`${isMobile ? 'w-4 h-4' : 'w-5 h-5'} text-orange-400 `} />
+          <p className={`${isMobile ? 'text-lg' : 'text-xl md:text-2xl'} font-bold text-white`}>
+            {stats.point}
+          </p>
+        </div>
+      )}
+
+      {/* Player Card (just the empty podium block now) */}
       <div className={`bg-[var(--secondary)] rounded-t-2xl ${
         isMobile ? config.heights.mobile : config.heights.desktop
       } ${
         isMobile ? config.widths.mobile : config.widths.desktop
       } flex flex-col items-center justify-center relative overflow-hidden border border-[var(--primary)]/30 shadow-sm`}>
         
-        {/* Rank Number - Center of div */}
+        {/* Rank Number */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className={`${isMobile ? 'text-2xl' : 'text-3xl md:text-4xl'} font-bold text-[var(--primary)] opacity-80`}>
+          <span className={`${isMobile ? 'text-2xl' : 'text-3xl md:text-4xl'} font-bold text-white opacity-90`}>
             {position}
           </span>
         </div>
+      </div>
 
-        {/* Username and Points */}
-        <div className="text-center px-1 z-10">
-          <h3 className={`${isMobile ? 'text-xs' : 'text-sm md:text-base'} font-bold text-text leading-tight mb-1`}>
-            {leader.username.split(' ')[0]}
-          </h3>
 
-          {/* Points with Fire Icon - Bigger */}
-          {stats && (
-            <div className="flex items-center justify-center gap-1">
-              <Flame className={`${isMobile ? 'w-4 h-4' : 'w-5 h-5'} text-orange-400`} />
-              <p className={`${isMobile ? 'text-lg' : 'text-xl md:text-2xl'} font-bold text-[var(--primary)]`}>
-                {stats.point}
-              </p>
-            </div>
-          )}
-
-          {/* Accuracy */}
-          {stats && stats.total_questions > 0 && (
-            <div className="flex items-center justify-center gap-1 mt-1">
-              <Target className={`w-3 h-3 ${getAccuracyColor(accuracy)}`} />
-              <span className={`text-xs font-semibold ${getAccuracyColor(accuracy)}`}>
-                {accuracy.toFixed(1)}%
-              </span>
-            </div>
-          )}
+      {/* Accuracy */}
+      {stats && stats.total_questions > 0 && (
+        <div className="flex items-center justify-center gap-1 mt-1 accuracy">
+          <Target className={`w-3 h-3 ${getAccuracyColor(accuracy)}`} />
+          <span className={`text-xs font-semibold ${getAccuracyColor(accuracy)}`}>
+            {accuracy.toFixed(1)}%
+          </span>
         </div>
-      </div>
-
-      {/* Podium Base */}
-      <div className={`${
-        isMobile ? config.widths.mobile : config.widths.desktop
-      } h-6 bg-[var(--secondary)] rounded-b-lg border-t border-[var(--primary)]/30 flex items-center justify-center shadow-sm`}>
-      </div>
-    </div>
+      )}
+    </main>
   )
 }
 
