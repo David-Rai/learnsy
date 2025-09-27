@@ -39,7 +39,7 @@ const Explore = () => {
           </header>
 
           {/* Main categories here */}
-          <section className='w-full flex gap-2 md:gap-4 p-4 items-center'>
+          <section className='w-full flex gap-2 md:gap-4 p-4 items-center cursor-pointer overflow-y-scroll custom-scrollbar'>
             {
               categories.length > 0 ?
                 categories.map((c, index) => {

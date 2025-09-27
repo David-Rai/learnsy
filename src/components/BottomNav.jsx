@@ -28,7 +28,7 @@ const BottomNav = () => {
                         setActiveTab("home")
                         navigate("/")
                     }}
-                    className={`flex flex-col items-center py-2 px-3 rounded-lg transition-colors ${activeTab === "home"
+                    className={`flex flex-col  cursor-pointer items-center py-2 px-3 rounded-lg transition-colors ${activeTab === "home"
                         ? "text-primary"
                         : "text-gray-400 hover:text-white"
                         }`}
@@ -43,7 +43,7 @@ const BottomNav = () => {
                         setActiveTab("explore")
                         navigate("/explore")
                     }}
-                    className={`flex flex-col items-center py-2 px-3 rounded-lg transition-colors ${activeTab === "explore"
+                    className={`flex flex-col cursor-pointer items-center py-2 px-3 rounded-lg transition-colors ${activeTab === "explore"
                         ? "text-primary"
                         : "text-gray-400 hover:text-white"
                         }`}
@@ -58,7 +58,7 @@ const BottomNav = () => {
                         setActiveTab("leaderboard")
                         navigate("/leaderboard")
                     }}
-                    className={`flex flex-col items-center py-2 px-3 rounded-lg transition-colors ${activeTab === "leaderboard"
+                    className={`flex flex-col cursor-pointer items-center py-2 px-3 rounded-lg transition-colors ${activeTab === "leaderboard"
                         ? "text-primary"
                         : "text-gray-400 hover:text-white"
                         }`}
@@ -73,7 +73,7 @@ const BottomNav = () => {
                         setActiveTab("profile")
                         navigate("/profile")
                     }}
-                    className={`flex flex-col items-center py-2 px-3 rounded-lg transition-colors ${activeTab === "profile"
+                    className={`flex flex-col cursor-pointer items-center py-2 px-3 rounded-lg transition-colors ${activeTab === "profile"
                         ? "text-primary"
                         : "text-gray-400 hover:text-white"
                         }`}
