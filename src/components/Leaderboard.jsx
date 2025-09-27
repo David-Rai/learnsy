@@ -112,6 +112,8 @@ const Leaderboard = () => {
           </section>
         )}
       </div>
+
+      {/* Bottom navigation */}
       <BottomNav />
     </main>
   )

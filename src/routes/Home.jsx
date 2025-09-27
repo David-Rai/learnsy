@@ -239,7 +239,7 @@ const Home = () => {
                             {/* <HomeTop category={q.category} /> */}
 
                             {/* Question */}
-                            <div className="flex flex-col items-center justify-center h-full
+                            <div className="flex flex-col items-center justify-center h-[calc(100% - 80px)]
                              flex-1 relative z-10 max-w-lg w-full px-4">
 
                                 <h2 className="question-text">{q.q}</h2>

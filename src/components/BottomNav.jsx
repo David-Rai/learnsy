@@ -1,4 +1,4 @@
-import { useState ,useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router';
 import React from 'react'
 import { useNavigate } from 'react-router'
@@ -10,18 +10,17 @@ import {
 } from 'react-icons/fa';
 
 const BottomNav = () => {
-    const location=useLocation()
+    const location = useLocation()
     const navigate = useNavigate()
     const [activeTab, setActiveTab] = useState('home');
 
     useEffect(() => {
         const path = location.pathname.replace("/", "") // remove leading slash
         setActiveTab(path || "home") // default to home if empty
-      }, [location.pathname])
+    }, [location.pathname])
 
     return (
-      <div className="absolute w-full bottom-0 left-0 right-0 bg-secondary z-30 h-[80px]">
-{/* // +        <div className="w-full m-0 p-0 bg-secondary h-[80px]"> */}
+        <div className="w-full m-0 p-0 bg-secondary h-[80px]">
             <div className="flex items-center justify-around py-2 px-4">
                 {/* Home */}
                 <button
@@ -40,7 +39,7 @@ const BottomNav = () => {
 
                 {/* Explore */}
                 <button
-                       onClick={() => {
+                    onClick={() => {
                         setActiveTab("explore")
                         navigate("/explore")
                     }}
@@ -55,7 +54,7 @@ const BottomNav = () => {
 
                 {/* Progress */}
                 <button
-                     onClick={() => {
+                    onClick={() => {
                         setActiveTab("leaderboard")
                         navigate("/leaderboard")
                     }}
@@ -70,7 +69,7 @@ const BottomNav = () => {
 
                 {/* Profile */}
                 <button
-                       onClick={() => {
+                    onClick={() => {
                         setActiveTab("profile")
                         navigate("/profile")
                     }}
