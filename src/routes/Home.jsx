@@ -232,14 +232,15 @@ const Home = () => {
                 {/* Main Content */}
                 <main 
                 ref={scrollContain}
-                className="w-full h-[calc(100% - 80px)] overflow-y-scroll snap-y snap-mandatory">
+                className="w-full h-[calc(100% - 80px)] overflow-y-scroll snap-y snap-mandatory"
+                >
 
                     {questions.map((q, index) => (
                         <div key={index} className="question-container overflow-hidden">
                             {/* <HomeTop category={q.category} /> */}
 
                             {/* Question */}
-                            <div className="flex flex-col items-center justify-center h-full
+                            <div className="flex flex-col items-center justify-center h-[calc(100% - 80px)]
                              flex-1 relative z-10 max-w-lg w-full px-4">
 
                                 <h2 className="question-text">{q.q}</h2>
@@ -324,11 +325,13 @@ const Home = () => {
 
                 </main>
 
+
                 {/* hint section */}
                 <Hintsection hint={hint} setHint={setHint} currentHint={currentHint}/>
 
                 {/* Bottom navigation */}
                 <BottomNav />
+
                 <ToastContainer autoClose={100} />
             </div>
         </>

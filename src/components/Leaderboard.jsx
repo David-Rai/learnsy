@@ -229,7 +229,7 @@ const TopPlayer = ({ leader, position, isMobile = false }) => {
       {stats && stats.total_questions > 0 && (
         <div className="flex items-center justify-center gap-1 mt-1 accuracy">
           <Target className={`w-3 h-3 ${getAccuracyColor(accuracy)}`} />
-          <span className={`text-xs font-semibold ${getAccuracyColor(accuracy)}`}>
+          <span className={`text-xs font-semiboldgit ${getAccuracyColor(accuracy)}`}>
             {accuracy.toFixed(1)}%
           </span>
         </div>
