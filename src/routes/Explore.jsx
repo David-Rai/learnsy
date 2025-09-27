@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Book } from 'lucide-react';
 import supabase from '../config/supabase.js'
+import SelectedCategory from '../components/SelectedCategory.jsx';
 import { useUser } from '../context/userContext.jsx';
 import BottomNav from '../components/BottomNav.jsx';
 
@@ -32,12 +33,12 @@ const Explore = () => {
       <div className="h-screen w-full bg-bg flex flex-col custom-scrollbar justify-end items-center">
 
         {/* Main Content */}
-        <main className="w-full h-full flex flex-col">
+        <main className="w-full h-[calc(100-80px)] flex flex-col">
           {
             isSelected? (
               <>
                 <div>
-
+                  {/* <SelectedCategory /> */}
                 </div>
               </>
             )
