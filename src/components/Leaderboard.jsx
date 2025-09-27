@@ -54,8 +54,10 @@ const Leaderboard = () => {
   const otherPlayers = leaders.slice(3)
 
   return (
-    <main className="min-h-screen bg-bg text-text pb-20">
-      <div className="min-h-[calc(100vh-80px)] pb-6">
+    <main className="h-screen bg-bg text-text pb-20">
+
+      {/* Main container */}
+      <div className="h-[calc(100vh-80px)] pb-6 overflow-x-hidden custom-scrollbar">
         {/* Header */}
         <header className="text-center py-6 px-4">
           <div className="flex items-center justify-center gap-3 mb-3">
