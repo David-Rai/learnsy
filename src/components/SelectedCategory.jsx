@@ -228,7 +228,7 @@ const SelectedCategory = () => {
             {/* Main Content */}
             <main
                 ref={scrollContain}
-                className="w-full h-full overflow-y-scroll snap-y snap-mandatory">
+                className="w-full h-overflow-y-scroll snap-y snap-mandatory">
 
                 {questions.map((q, index) => (
                     <div key={index} className="question-container overflow-hidden">
