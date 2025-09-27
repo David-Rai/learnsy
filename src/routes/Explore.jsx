@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Book } from 'lucide-react';
 import supabase from '../config/supabase.js'
 import { useUser } from '../context/userContext.jsx';
 import BottomNav from '../components/BottomNav.jsx';
@@ -33,25 +34,25 @@ const Explore = () => {
 
           {/* contain the search bar */}
           <header className='flex items-center justify-center w-full h-[80px] bg-secondary px-4 '>
-            <input type="text" placeholder='Search' className='pl-4 rounded-md py-2 
+            <input type="text" placeholder='Search' className='pl-4 rounded-md py-2  md:w-1/2
             w-full border border-gray-600 text-white' />
           </header>
 
           {/* Main categories here */}
-          <section className='w-full'>
+          <section className='w-full flex gap-2 md:gap-4 p-4 items-center'>
             {
               categories.length > 0 ?
-                categories.map((c,index) => {
-                  return <Category c={c}  key={index}/>
+                categories.map((c, index) => {
+                  return <Category c={c} key={index} />
                 })
 
                 :
 
-              (
-                <div>
-                  No categories left
-                </div>
-              )
+                (
+                  <div>
+                    No categories left
+                  </div>
+                )
             }
           </section>
         </main>
@@ -66,16 +67,37 @@ const Explore = () => {
 
 export default Explore;
 
+
+
 const Category = ({ c }) => {
- const {name,image,totalQuestion}=c
+  const { name, image, totalquestion } = c;
 
   return (
-    <>
-      <div className='flex h-[200px] w-[30%]'>
-        <img src={image} alt="" />
-        <h1>{name}</h1>
-        <p>{totalQuestion}</p>
+    <div className="flex flex-col w-full md:w-[20%]
+     h-[250px] overflow-hidden rounded-2xl
+      bg-gray-800 shadow-lg transition-transform hover:scale-105">
+
+      {/* Image */}
+      <img
+        src={image}
+        alt={name}
+        className="h-[60%] w-full object-cover"
+      />
+
+      {/* Details */}
+      <div className="flex flex-col justify-center p-4 w-full bg-gray-900">
+        {/* Category Name */}
+        <h2 className="text-white text-lg md:text-xl font-bold mb-2 truncate">
+          {name}
+        </h2>
+
+        {/* Questions Count */}
+        <div className="flex items-center gap-2 text-white font-medium">
+          <Book className="w-5 h-5 text-green-400" />
+          <span>{totalquestion || 0} Questions</span>
+        </div>
       </div>
-    </>
-  )
-}
+
+    </div>
+  );
+};
