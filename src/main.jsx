@@ -32,6 +32,10 @@ const router = createBrowserRouter([
   {
     path: '/explore',
     element: <Explore />
+  }  ,
+  {
+    path: '/explore/:category',
+    element: <Explore />
   },
   {
     path: '/progress',
