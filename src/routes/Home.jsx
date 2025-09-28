@@ -1,56 +1,58 @@
 import { observe } from '../utils/observe.jsx';
 import getQuestions from '../utils/getQuestions.jsx';
 import removePreviousQuestions from '../utils/removePreviousQuestions.jsx';
-import { checkAnswer } from '../utils/checkAnswer.jsx';
 import Hintsection from '../components/Hintsection.jsx';
 import React, { useState, useEffect, useRef } from 'react';
 import Loader from '../components/Loader.jsx';
 import { Suspense, lazy } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import supabase from '../config/supabase.js'
-import { useUser } from '../context/userContext.jsx';
 import SocialIcons from "../components/SocialIcons";
 import Question from '../utils/Question.jsx';
+import useHomeStore from '../context/store.js'
 
 const BottomNav = lazy(() => import("../components/BottomNav"));
 
 const Home = () => {
-    const { user, setUser } = useUser()
-    const BATCH_SIZE = 5; // number of questions per batch
-    const [questions, setQuestions] = useState([]);
+    const {
+        questions = [],
+        maxReached,
+        hintVisible,
+        setHintVisible,
+        currentHint,
+        setCurrentHint,
+        setUser
+    } = useHomeStore(state => state)
+
     const targetRef = useRef(null);
-    const [maxReached, setMaxReached] = useState(false)
-    const [answers, setAnswers] = useState([]);
     const [userLikes, setUserLikes] = useState([])
-    const [hints, setHints] = useState([])
-    const [hint, setHint] = useState(false)
     const scrollContain = useRef(null)
-    const [currentHint, setCurrentHint] = useState("no hint")
+
 
 
     //Stoping scrolling on hint container toggle
     useEffect(() => {
         // console.log(scrollContain)
         if (scrollContain.current === null) return
-        if (hint) {
+        if (hintVisible) {
             scrollContain.current.style.overflow = "hidden"
         } else {
             scrollContain.current.style.overflow = "auto"
         }
-    }, [hint])//dependency
+    }, [hintVisible])//dependency
 
     //checking user
     useEffect(() => {
         async function start() {
             async function checkUser() {
                 const { data: { user } } = await supabase.auth.getUser()
-                if (user) {
+                if (user?.id) {
                     setUser(user)
                     console.log("user existed")
-                    removePreviousQuestions(user.id, setQuestions, maxReached, setMaxReached, questions, BATCH_SIZE)
+                    removePreviousQuestions()
                 } else {
                     console.log("new user raixa")
-                    getQuestions(setQuestions, maxReached, setMaxReached, questions)
+                    getQuestions()
                 }
             }
             await checkUser()
@@ -61,7 +63,7 @@ const Home = () => {
     // Intersection Observer
     useEffect(() => {
         if (maxReached) return
-        const observer = observe(user, setQuestions, maxReached, setMaxReached, BATCH_SIZE, questions)
+        const observer = observe()
         if (targetRef.current) {
             observer.observe(targetRef.current)
         }
@@ -90,19 +92,19 @@ const Home = () => {
                     ref={scrollContain}
                     className="w-full h-[calc(100% - 80px)] overflow-y-scroll snap-y snap-mandatory">
 
-                    {questions.map((q, index) => (
+                    {Array.isArray(questions) && questions.map((q,index) => (
                         <div key={index} className="question-container overflow-hidden">
 
                             {/* Question */}
-                            <Question answers={answers} setAnswers={setAnswers} q={q} />
+                            <Question q={q} />
 
                             {/* Socials icons */}
                             <SocialIcons q={q}
                                 userLikes={userLikes}
-                                hint={hint}
+                                hintVisible={hintVisible}
                                 currentHint={currentHint}
                                 setCurrentHint={setCurrentHint}
-                                setHint={setHint}
+                                setHintVisible={setHintVisible}
                                 setUserLikes={setUserLikes} />
 
                             {/* Observer */}
@@ -113,7 +115,7 @@ const Home = () => {
                 </main>
 
                 {/* hint section */}
-                <Hintsection hint={hint} setHint={setHint} currentHint={currentHint} />
+                <Hintsection hint={hintVisible} setHintVisible={setHintVisible} currentHint={currentHint} />
 
                 {/* Bottom navigation */}
                 <BottomNav />

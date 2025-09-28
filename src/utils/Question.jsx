@@ -1,10 +1,11 @@
 import { checkAnswer } from './checkAnswer';
-import { useUser } from '../context/userContext';
 import React from 'react'
+import useHomeStore from '../context/store';
 
-const Question = ({ answers, setAnswers,q}) => {
-    const {user,setUser}=useUser()
 
+const Question = ({ q}) => {
+    const {answers=[],setAnswers,user,setUser}=useHomeStore()
+    
     return (
         <>
             <div className="flex flex-col items-center justify-center h-[calc(100% - 80px)]
@@ -16,11 +17,13 @@ const Question = ({ answers, setAnswers,q}) => {
 
                     {q.options && q.options.length > 0 ? (
                         q.options.map((opt, i) => {
-                            const answer = answers.find(ans => ans.id === q.id);
-                            let buttonClass = "option-button";
+                            const answer = Array.isArray(answers)
+                            ? answers.find((ans) => ans.id === q.id) || false
+                            : false;
+                          
+                            let buttonClass = "option-button"; 
 
                             if (answer) {
-
                                 if (answer.selectedOption === opt) {
                                     //showing the users answer
                                     buttonClass += answer.isCorrect ? " bg-right text-bg" : " bg-wrong text-bg";
@@ -37,7 +40,7 @@ const Question = ({ answers, setAnswers,q}) => {
                                 <button
                                     key={i}
                                     className={buttonClass}
-                                    onClick={() => checkAnswer(q, opt, answers, setAnswers, user)}
+                                    onClick={() => checkAnswer(q, opt)}
                                     disabled={!!answer} // disable after answering
                                 >
                                     {opt}
@@ -47,7 +50,10 @@ const Question = ({ answers, setAnswers,q}) => {
                     ) : (
                         <>
                             {["true", "false"].map((opt, i) => {
-                                const answer = answers.find(ans => ans.id === q.id);
+                                  const answer = Array.isArray(answers)
+                                  ? answers.find((ans) => ans.id === q.id) || false
+                                  : false;
+
                                 let buttonClass = "option-button";
 
                                 if (answer) {

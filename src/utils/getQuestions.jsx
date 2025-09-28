@@ -1,8 +1,11 @@
+import useHomeStore from "../context/store"
 import fetchQuestions from "./fetchQuestions"
 
-export default async function getQuestions(setQuestions,maxReached,setMaxReached) {
-        console.log("started fetching data....")
-        const data = await fetchQuestions(maxReached,setMaxReached)
+const {setQuestions,maxReached,setMaxReached}=useHomeStore.getState()
+export default async function getQuestions() {
+        const data = await fetchQuestions()
         setQuestions(data)
+        console.log("started fetching data....",data)
+
     }
 

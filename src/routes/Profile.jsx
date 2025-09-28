@@ -2,15 +2,15 @@ import { useState } from 'react'
 import avatar from '../../public/profiles/1.jpg'
 import Loader from '../components/Loader'
 import React from 'react'
-import { useUser } from '.././context/userContext'
 import supabase from '../config/supabase'
 import BottomNav from '../components/BottomNav'
 import { useNavigate } from 'react-router'
 import { useEffect } from 'react'
 import { getStats } from '../utils/getStats'
+import useHomeStore from '../context/store'
 
 const Profile = () => {
-    const { user, setUser } = useUser()
+    const { user, setUser } = useHomeStore()
     const navigate = useNavigate()
     const [stats, setStats] = useState(null); // null initially
 

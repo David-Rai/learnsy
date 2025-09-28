@@ -1,8 +1,8 @@
 import supabase from "../config/supabase";
+import useHomeStore from "../context/store";
 
-const BATCH_SIZE = 5; // define batch size here
-
-export default async function fetchQuestions(maxReached, setMaxReached, questions = []) {
+const { BATCH_SIZE, maxReached, setMaxReached, questions = [] } = useHomeStore.getState()
+export default async function fetchQuestions() {
   if (maxReached) return [];
 
   // Always safe because we default questions = []

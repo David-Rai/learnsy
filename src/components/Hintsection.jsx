@@ -1,6 +1,10 @@
 import React from 'react'
+import useHomeStore from '../context/store'
 
-const Hintsection = ({ hint, currentHint, setHint }) => {
+
+const Hintsection = ({ }) => {
+const {hintVisible, currentHint, setHintVisible }=useHomeStore()
+
     return (
         <>
             <div className={`
@@ -8,17 +12,17 @@ const Hintsection = ({ hint, currentHint, setHint }) => {
     bg-secondary rounded-lg
     w-full py-5 px-4 md:px-8 absolute z-50
     left-0 shadow-lg
-    ${hint ? "bottom-0 opacity-100" : "bottom-[-100%] opacity-0"}
+    ${hintVisible ? "bottom-0 opacity-100" : "bottom-[-100%] opacity-0"}
     max-h-[50vh] md:max-h-[200px] overflow-y-auto
 `}>
                 {/* Toggle */}
                 <div
-                    onClick={() => setHint(!hint)}
+                    onClick={() => setHintVisible(!hintVisible)}
                     className='cursor-pointer flex items-center justify-end gap-2 text-primary hover:text-text transition-colors duration-300 group mb-3'
                 >
                     <span className='text-sm font-medium'>Close Hint</span>
                     <svg
-                        className={`w-5 h-5 transform transition-transform duration-300 ${hint ? "rotate-0" : "rotate-180"}`}
+                        className={`w-5 h-5 transform transition-transform duration-300 ${hintVisible ? "rotate-0" : "rotate-180"}`}
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"

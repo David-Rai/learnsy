@@ -1,7 +1,10 @@
 import supabase from "../config/supabase";
+import useHomeStore from "../context/store";
 
 //Handling Answering
-export const checkAnswer = async (q, opt,answers,setAnswers,user) => {
+export const checkAnswer = async (q, opt) => {
+
+    const { answers=[], setAnswers ,user} = useHomeStore.getState()
 
     if (answers.find(ans => ans.id === q.id)) return; // prevent re-clicking
 
@@ -11,10 +14,10 @@ export const checkAnswer = async (q, opt,answers,setAnswers,user) => {
     // isCorrect ? toast.success("✅ Right answer") : toast.error("❌ Wrong answer");
 
     // save the answer
-    setAnswers(prev => [...prev, { id: q.id, selectedOption: opt, isCorrect }]);
+    setAnswers([...answers, { id: q.id, selectedOption: opt, isCorrect }]);
 
     //Increase the points and insert into user answers
-    if (user) {
+    if (user?.id) {
         const scoreDelta = isCorrect ? 5 : -5;
 
         await supabase.rpc("increment_points", {

@@ -1,7 +1,6 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 import Progress from './routes/Progress.jsx'
-import { UserProvider } from './context/userContext.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router'
 import './index.css'
 import Signin from './routes/auth/Signin.jsx'
@@ -10,6 +9,8 @@ import Home from './routes/Home'
 import Explore from './routes/Explore.jsx'
 import Leaderboard from './components/Leaderboard.jsx'
 import Signup from './routes/auth/Signup.jsx'
+import SelectedCategory from './components/SelectedCategory.jsx'
+
 
 const router = createBrowserRouter([
   {
@@ -35,7 +36,7 @@ const router = createBrowserRouter([
   }  ,
   {
     path: '/explore/:category',
-    element: <Explore />
+    element: <SelectedCategory />
   },
   {
     path: '/progress',
@@ -46,8 +47,8 @@ const router = createBrowserRouter([
     element: <Leaderboard />
   }
 ])
+
+
 createRoot(document.getElementById('root')).render(
-  <UserProvider>
     <RouterProvider router={router} />
-  </UserProvider>
 )

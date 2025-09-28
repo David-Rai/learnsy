@@ -1,20 +1,16 @@
 import supabase from '../config/supabase'
-import { useUser } from '../context/userContext'
 import React, { useEffect, useState } from 'react'
 import { FaHeart } from 'react-icons/fa';
 import { Share2, Lightbulb } from 'lucide-react';
+import useHomeStore from '../context/store';
 
-const SocialIcons = ({ q, setUserLikes, userLikes, hint, setHint ,setCurrentHint }) => {
-    const { user, setUser } = useUser()
+const SocialIcons = ({ q }) => {
+    const { user, setUser, hintVisible, setHintVisible, userLikes = [], setUserLikes, setCurrentHint } = useHomeStore()
     const { id } = q
     const [isLiking, setIsLiking] = useState(false)
-    const isLiked = userLikes.some(l => l.q_id === id);
+    const isLiked = Array.isArray(userLikes) && userLikes.some(l => l.q_id === id);
 
-    //settting the hint
-    // useEffect(() => {
-    //     setCurrentHint(q.hint)
-    //   }, [q.hint])
-      
+
     //Handling like question
     const handleLike = async () => {
         if (isLiking) return
@@ -24,25 +20,26 @@ const SocialIcons = ({ q, setUserLikes, userLikes, hint, setHint ,setCurrentHint
         const q_id = id
 
         //Adding new like
-        setUserLikes((prev) => {
-            if (prev.some(l => l.q_id === id)) {
+        setUserLikes((userLikes) => {
+            if (userLikes.some(l => l.q_id === id)) {
                 console.log("remove like")
                 return userLikes.filter(l => l.q_id !== id)
 
             }
             console.log("added new like")
-            return [...prev, { q_id }]
+            return [...userLikes, { q_id }]
         })
 
         try {
             // checking if liked
+            if (!user.id) return
             const res = await supabase.from('likes')
                 .select()
                 .eq("user_id", user_id)
                 .eq("q_id", q_id)
 
             //no liked
-            if (res.data.length === 0) {
+            if (res.data?.length === 0) {
                 await supabase.from('likes').insert({ user_id, q_id })
             } else {
                 //liked
@@ -56,15 +53,9 @@ const SocialIcons = ({ q, setUserLikes, userLikes, hint, setHint ,setCurrentHint
         }
     }
 
-    //Handling share features
-    const handleShare = () => {
-        const url = `${window.location.href}/${id}`
-        console.log("sharing", url)
-    }
-
-    const handleHint=()=>{
+    const handleHint = () => {
         setCurrentHint(q.hint)
-        setHint(!hint)
+        setHintVisible(!hintVisible)
     }
 
     return (
@@ -80,14 +71,6 @@ const SocialIcons = ({ q, setUserLikes, userLikes, hint, setHint ,setCurrentHint
                         }
                     </button>
                 </div>
-                {/* comment */}
-                {/* <div className="flex flex-col items-center cursor-pointer"
-                    onClick={handleShare}
-                >
-                    <button className='social-contain' >
-                        <Share2 className='cursor-pointer' />
-                    </button>
-                </div> */}
 
                 {/* Hint */}
                 <div className="flex flex-col items-center cursor-pointer"

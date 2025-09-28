@@ -1,7 +1,12 @@
+import useHomeStore from '../context/store'
 import fetchFilteredQuestions from './fetchFilteredQuestions'
 
-export default async function removePreviousQuestions(id,setQuestions,maxReached,setMaxReached,questions,BATCH_SIZE) {
+const {  user,setQuestions, maxReached, setMaxReached, questions=[], BATCH_SIZE } = useHomeStore.getState()
+
+const {id}=user
+//function
+export default async function removePreviousQuestions() {
     console.log("started filtered fetching data....")
-    const data = await fetchFilteredQuestions(id,maxReached,setMaxReached,questions,BATCH_SIZE)
+    const data = await fetchFilteredQuestions()
     setQuestions(data)
 }

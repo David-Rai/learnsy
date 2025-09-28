@@ -6,11 +6,11 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import supabase from '../../config/supabase.js'
 import { useForm } from 'react-hook-form'
-import { useUser } from '../../context/userContext.jsx'
 import { Eye, EyeOff, Mail, Lock } from 'lucide-react'
+import useHomeStore from '../../context/store.js'
 
 const Signin = () => {
-  const { user, setUser } = useUser()
+  const { user, setUser } = useHomeStore()
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = React.useState(false)
 

@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react'
 import BottomNav from '../../components/BottomNav';
 import { checkUser } from '../../utils/checkUser';
-import { useUser } from '../../context/userContext'
 import { toast, ToastContainer } from 'react-toastify'
 import { useNavigate } from 'react-router'
 import supabase from '../../config/supabase'
 import { useForm } from 'react-hook-form'
 import { Eye, EyeOff, Mail, Lock, User, Check, X } from 'lucide-react'
+import useHomeStore from '../../context/store';
 
 const Signup = () => {
-  const { user, setUser } = useUser()
+  const { user, setUser } = useHomeStore()
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = React.useState(false)
   const [passwordStrength, setPasswordStrength] = React.useState(0)

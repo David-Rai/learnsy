@@ -2,12 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Book } from 'lucide-react';
 import supabase from '../config/supabase.js'
 import SelectedCategory from '../components/SelectedCategory.jsx';
-import { useUser } from '../context/userContext.jsx';
 import BottomNav from '../components/BottomNav.jsx';
+import useHomeStore from '../context/store.js';
 
 
 const Explore = () => {
-  const { user, setUser } = useUser()
+  const { user, setUser } = useHomeStore()
   const [categories, setCategories] = useState([])
   const [isSelected, setIsSelected] = useState(false)
   const [selectedCategory,setSelectedCategory]=useState("")
@@ -30,10 +30,10 @@ const Explore = () => {
 
   return (
     <>
-      <div className="h-screen w-full bg-bg flex flex-col custom-scrollbar justify-end items-center">
+      <div className="h-screen w-full bg-bg flex flex-col custom-scrollbar">
 
         {/* Main Content */}
-        <main className="w-full h-[calc(100-80px)] flex flex-col">
+        <main className="w-full h-screen flex flex-col">
           {
             isSelected? (
               <>
