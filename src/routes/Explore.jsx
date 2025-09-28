@@ -33,7 +33,7 @@ const Explore = () => {
       <div className="h-screen w-full bg-bg flex flex-col custom-scrollbar">
 
         {/* Main Content */}
-        <main className="w-full h-screen flex flex-col">
+        <main className="w-full flex-1 flex flex-col">
           {
             isSelected? (
               <>

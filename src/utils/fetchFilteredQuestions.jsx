@@ -2,10 +2,11 @@ import supabase from "../config/supabase";
 import useHomeStore from "../context/store";
 
 
-const { maxReached, setMaxReached, questions, BATCH_SIZE, user } = useHomeStore.getState()
-const { id } = user
 
 export default async function fetchFilteredQuestions() {
+    const { maxReached, setMaxReached, questions=[], BATCH_SIZE, user } = useHomeStore.getState()
+    const { id } = user
+    
     if (maxReached) return
 
     const notQuestions = await supabase.from("user_answer").select().eq("user_id", id)
@@ -26,7 +27,7 @@ export default async function fetchFilteredQuestions() {
 
     if (error) console.error(error);
 
-    if (questions.length === count) {
+    if (questions.length === count || count === 0) {
         console.log("max reached")
         setMaxReached(true)
     } else {

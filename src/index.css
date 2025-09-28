@@ -34,7 +34,7 @@
       
 
     .home {
-        @apply relative h-screen w-full bg-bg text-gray-800 dark:text-gray-100 overflow-hidden flex flex-col
+        @apply   h-screen w-full bg-bg text-gray-800 dark:text-gray-100 overflow-hidden flex flex-col
     }
 
     .question-container {

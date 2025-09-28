@@ -29,7 +29,6 @@ const Home = () => {
     const scrollContain = useRef(null)
 
 
-
     //Stoping scrolling on hint container toggle
     useEffect(() => {
         // console.log(scrollContain)
@@ -73,6 +72,7 @@ const Home = () => {
         };
     }, [questions, maxReached]);
 
+    
     if (maxReached) {
         // alert("done")
     }
@@ -86,11 +86,11 @@ const Home = () => {
 
     return (
         <>
-            <div className="home custom-scrollbar">
+            <div className="home custom-scrollbar fixed">
                 {/* Main Content */}
                 <main
                     ref={scrollContain}
-                    className="w-full h-[calc(100% - 80px)] overflow-y-scroll snap-y snap-mandatory">
+                    className="flex-1 w-full overflow-y-scroll snap-y snap-mandatory">
 
                     {Array.isArray(questions) && questions.map((q,index) => (
                         <div key={index} className="question-container overflow-hidden">

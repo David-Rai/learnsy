@@ -4,6 +4,7 @@ import { create } from 'zustand';
 const useHomeStore = create((set) => ({
   BATCH_SIZE: 5,
   questions: [],
+  // setQuestions: (qs) => set((state)=> ({ questions: [...state.questions,qs] })),
   setQuestions: (qs) => set({ questions: qs }),
   maxReached: false,
   setMaxReached: (val) => set({ maxReached: val }),
