@@ -67,8 +67,14 @@ const Explore = () => {
                 </header>
 
                 {/* Main categories */}
-                <section className='w-full flex gap-2 md:gap-4 p-4 items-center cursor-pointer overflow-x-auto overflow-y-hidden custom-scrollbar flex-shrink-0'>
-                  {categories.length > 0 ?
+                <section
+                  className="
+    w-full flex gap-2 md:gap-4 p-4 items-center cursor-pointer
+    overflow-y-scroll custom-scrollbar flex-shrink-0
+    flex-nowrap md:flex-wrap
+  "
+                >
+                  {categories.length > 0 ? (
                     categories.map((c, index) => (
                       <Category
                         c={c}
@@ -76,11 +82,12 @@ const Explore = () => {
                         setSelectedCategory={setSelectedCategory}
                         setIsSelected={setIsSelected}
                       />
-                    )) : (
-                      <div>No categories left</div>
-                    )
-                  }
+                    ))
+                  ) : (
+                    <div>No categories left</div>
+                  )}
                 </section>
+
               </main>
             )
         }

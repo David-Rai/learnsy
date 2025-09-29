@@ -69,7 +69,7 @@ const Question = ({ q}) => {
                                     <button
                                         key={i}
                                         className={buttonClass}
-                                        onClick={() => checkAnswer(q, opt, answers, setAnswers, user)}
+                                        onClick={() => checkAnswer(q, opt)}
                                         disabled={!!answer}
                                     >
                                         {opt === "true" ? "Yes" : "No"}
