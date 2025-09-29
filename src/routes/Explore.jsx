@@ -6,6 +6,7 @@ import Hintsection from '../components/Hintsection.jsx';
 import BottomNav from '../components/BottomNav.jsx';
 import { ChevronLeft } from 'lucide-react'
 import useHomeStore from '../context/store.js';
+import filterAnsweredQuestions from '../utils/filterAnsweredQuestions.jsx';
 
 const SelectedCategory = lazy(() => import("../components/SelectedCategory.jsx"));
 
@@ -16,6 +17,7 @@ const Explore = () => {
 
   //get the categories
   useEffect(() => {
+    filterAnsweredQuestions()
     const get = async () => {
       const { error, data } = await supabase.rpc('get_categories_with_count')
 

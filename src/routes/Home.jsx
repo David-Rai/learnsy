@@ -9,6 +9,7 @@ import SocialIcons from "../components/SocialIcons";
 import Question from '../utils/Question.jsx';
 import useHomeStore from '../context/store.js'
 import checkUserForQuestions from '../utils/checkUserForQuestions.jsx';
+import filterAnsweredQuestions from '../utils/filterAnsweredQuestions.jsx';
 
 const BottomNav = lazy(() => import("../components/BottomNav"));
 
@@ -39,6 +40,7 @@ const Home = () => {
     //checking user
     useEffect(() => {
         setCategory({ isCategory: false, value: null })
+        filterAnsweredQuestions()
         checkUserForQuestions()
     }, [])
 
