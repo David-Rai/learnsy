@@ -21,8 +21,8 @@ export default async function fetchQuestions() {
   }
 
   if (category.isCategory) {
-    console.log("yes apppying filter of",category.value)
-    query=query.eq("category",category.value)
+    console.log("yes apppying filter of", category.value)
+    query = query.eq("category", category.value)
   }
 
   const { data, error, count } = await query

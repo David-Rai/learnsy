@@ -4,7 +4,7 @@ import useHomeStore from "../context/store";
 
 
 export default async function fetchFilteredQuestions() {
-    const { maxReached, setMaxReached, questions=[], BATCH_SIZE, user } = useHomeStore.getState()
+    const { maxReached, setMaxReached, questions=[], BATCH_SIZE, user,category } = useHomeStore.getState()
     const { id } = user
     
     if (maxReached) return
@@ -16,13 +16,18 @@ export default async function fetchFilteredQuestions() {
     const fetchedIds = questions.map(q => q.id); // get array of q_id
     const idsString2 = `(${fetchedIds.join(',')})`;
 
-    const { data, error, count } = await supabase
-        .from('questions')
-        .select('*', { count: 'exact' })
-        .not('id', 'in', idsString)
-        .not('id', 'in', idsString2)
-        .limit(BATCH_SIZE)
+    let query=supabase
+    .from('questions')
+    .select('*', { count: 'exact' })
+    .not('id', 'in', idsString)
+    .not('id', 'in', idsString2)
+    .limit(BATCH_SIZE)
 
+    if(category.isCategory){
+        query=query.not('category',category.value)
+    }
+
+    const { data, error, count } = await query
 
     if (error) console.error(error);
 

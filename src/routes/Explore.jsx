@@ -10,7 +10,7 @@ import useHomeStore from '../context/store.js';
 const SelectedCategory = lazy(() => import("../components/SelectedCategory.jsx"));
 
 const Explore = () => {
-  const { setCategory, setMaxReached } = useHomeStore()
+  const { setCategory, setMaxReached , maxReached} = useHomeStore()
   const [categories, setCategories] = useState([])
   const [isSelected, setIsSelected] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState("")
@@ -19,6 +19,8 @@ const Explore = () => {
   //get the categories
   useEffect(() => {
     setMaxReached(false)
+    console.log("baby lets see your max reach",maxReached)
+
     const get = async () => {
       const { error, data } = await supabase.rpc('get_categories_with_count')
 

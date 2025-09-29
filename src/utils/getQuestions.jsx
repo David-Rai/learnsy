@@ -6,6 +6,5 @@ export default async function getQuestions() {
     const { setQuestions } = useHomeStore.getState()
     const data = await fetchQuestions()
     setQuestions(data)
-    // console.log("started fetching data....", data)
 }
 

@@ -29,6 +29,7 @@ const SelectedCategory = ({ selectedCategory }) => {
 
   //checking user
   useEffect(() => {
+    setMaxReached(false)
     setCategory({ isCategory: true, value: selectedCategory })
     checkUserForQuestions()
   }, [])
