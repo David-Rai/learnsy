@@ -6,6 +6,7 @@ import Question from '../utils/Question'
 import { useState, useEffect, useRef } from 'react'
 import SocialIcons from './SocialIcons'
 import checkUserForQuestions from '../utils/checkUserForQuestions'
+import filterAnsweredQuestions from '../utils/filterAnsweredQuestions'
 
 const SelectedCategory = () => {
   const {
@@ -19,7 +20,9 @@ const SelectedCategory = () => {
 
   const targetRef = useRef(null);
   const scrollContain = useRef(null)
-
+  const currentCategory = categories.find(c => c.name === selectedCategory);
+  const currentQuestions = currentCategory?.questions || [];
+  
   //Stoping scrolling on hint container toggle
   useEffect(() => {
     // console.log(scrollContain)
@@ -33,16 +36,13 @@ const SelectedCategory = () => {
 
   //checking user
   useEffect(() => {
-    checkUserForQuestions()
+    filterAnsweredQuestions()
+    checkUserForQuestions()//changes the categories
   }, [])
-
-  useEffect(() => {
-    console.log("categories", categories[selectedCategory])
-  }, [categories])
 
   // Intersection Observer
   useEffect(() => {
-    if (maxReached) return
+    if (currentCategory.maxReached) return
     const observer = observe()
     if (targetRef.current) {
       observer.observe(targetRef.current)
@@ -52,25 +52,25 @@ const SelectedCategory = () => {
       if (targetRef.current) observer.unobserve(targetRef.current);
     };
 
-  }, [questions, maxReached]);
+  }, [currentQuestions, currentCategory.maxReached]);
 
 
-  if (maxReached) {
-    // alert("done")
-  }
+  // if (maxReached) {
+  //   // alert("done")
+  // }
 
   // Loading state
-  if (questions.length === 0) {
+  if (currentQuestions.length === 0) {
     return (
       <Loader />
     )
   }
   return (
     <>
-      {Array.isArray(categories[selectedCategory]) &&
-        categories[selectedCategory].map((q, index) => (
+      {Array.isArray(currentQuestions) &&
+        currentQuestions.map((q, index) => (
           <div
-            key={q.id || index} // Use unique ID if available
+            key={index} // Use unique ID if available
             className="question-container snap-start flex flex-col justify-center items-center h-full"
           >
             {/* Question */}
@@ -82,7 +82,7 @@ const SelectedCategory = () => {
             <SocialIcons q={q} />
 
             {/* Intersection Observer trigger */}
-            {index === questions.length - 2 && (
+            {index === currentCategory?.questions.length - 2 && (
               <div
                 ref={targetRef}
                 className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-1 h-1 opacity-0"

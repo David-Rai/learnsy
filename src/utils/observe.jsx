@@ -3,13 +3,14 @@ import fetchFilteredQuestions from "./fetchFilteredQuestions";
 import fetchQuestions from "./fetchQuestions";
 
 export const observe = () => {
-const {maxReached}=useHomeStore.getState()
+    const { categories, isCategorySelected, activeTab, selectedCategory } = useHomeStore.getState()
+    const currentCategory = categories.find(c => c.name === selectedCategory);
 
     const observer = new IntersectionObserver(
         (entries) => {
             entries.forEach(async (entry) => {
                 if (entry.isIntersecting) {
-                    const { user, setQuestions,questions } = useHomeStore.getState(); // always latest
+                    const { user, setQuestions, questions } = useHomeStore.getState(); // always latest
                     let nextQuestions = [];
 
                     if (user?.id) {
@@ -18,9 +19,11 @@ const {maxReached}=useHomeStore.getState()
                         nextQuestions = await fetchQuestions() || [];
                     }
 
-                    // console.log("next",nextQuestions)
-                    const final=[...questions,...nextQuestions]
-                    setQuestions(final);
+                    if (!isCategorySelected && activeTab === "home") {
+                        const final = [...questions, ...nextQuestions]
+                        setQuestions(final);
+
+                    }
                 }
             });
         },

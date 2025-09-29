@@ -2,27 +2,62 @@ import supabase from "../config/supabase";
 import useHomeStore from "../context/store";
 
 export default async function fetchQuestions() {
-  const { BATCH_SIZE, maxReached, setMaxReached, questions = [], answers = [], addQuestions, isCategorySelected, activeTab, selectedCategory } = useHomeStore.getState()
+  const { BATCH_SIZE,
+    maxReached,
+    setMaxReached,
+    questions = [],
+    answers = [],
+    addNewCategory,
+    updateCategoryQuestions,
+    isCategorySelected,
+    activeTab,
+    selectedCategory,
+    updateCategoryMaxReached,
+    categories
+  } = useHomeStore.getState()
 
   //when category is selected
-  if (isCategorySelected) {
+  if (isCategorySelected && activeTab === "explore") {
+
     let query = supabase
       .from("questions")
       .select("*", { count: "exact" })
       .limit(BATCH_SIZE)
       .eq('category', selectedCategory)
 
+    const currentCategory = categories.find(c => c.name === selectedCategory);
+    const fetchedIds = currentCategory?.questions?.map(q => q.id) || [];
+
+    if (currentCategory?.maxReached) return []
+
+    if (fetchedIds.length > 0) {
+      const idsString = `(${fetchedIds.join(',')})`;
+      query = query.not("id", "in", idsString)
+    }
+
+
     const { data, error, count } = await query
     if (error) {
       console.log(error)
       return []
     }
-    await addQuestions(selectedCategory, data)
-    console.log("fetched", data)
+
+    console.log("fetched data",data)
+
+    if (currentCategory?.questions.length === count || count === 0) {
+      console.log("max reached");
+      updateCategoryMaxReached(selectedCategory, true);
+    } else {
+      updateCategoryMaxReached(selectedCategory, false);
+    }
+
+
+    await updateCategoryQuestions(selectedCategory, data)
     return
   }
 
   if (maxReached) return [];
+
 
   let totalquestions = [...questions, ...answers]
   // Always safe because we default questions = []
@@ -32,12 +67,6 @@ export default async function fetchQuestions() {
     .from("questions")
     .select("*", { count: "exact" })
     .limit(BATCH_SIZE)
-
-  // if (isCategorySelected && activeTab === "explore") {
-  //   console.log('active tab', activeTab)
-  //   console.log('category is selected buddy', selectedCategory)
-  //   query = query.eq('category', selectedCategory)
-  // }
 
   if (fetchedIds.length > 0) {
     const idsString2 = `(${fetchedIds.join(',')})`;

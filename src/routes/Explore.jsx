@@ -117,7 +117,7 @@ export default Explore;
 
 
 const Category = ({ c }) => {
-  const { setSelectedCategory, setIsCategorySelected, addCategory } = useHomeStore()
+  const { setSelectedCategory, setIsCategorySelected, addNewCategory } = useHomeStore()
 
   const { name, image, totalquestion } = c;
 
@@ -126,8 +126,8 @@ const Category = ({ c }) => {
     setSelectedCategory(name)//settinng category
 
     //add new categories
-    addCategory(name)
-
+    addNewCategory(name)
+    
     setIsCategorySelected(true) //toggle
 
 

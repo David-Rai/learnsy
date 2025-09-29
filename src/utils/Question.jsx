@@ -4,9 +4,9 @@ import useHomeStore from '../context/store';
 
 
 const Question = ({ q}) => {
-    const {answers=[],setAnswers,user,setUser}=useHomeStore()
+    const {answers=[]}=useHomeStore()
     // console.log(answers)
-
+    
     return (
         <>
             <div className="flex flex-col items-center justify-center h-[calc(100% - 80px)]

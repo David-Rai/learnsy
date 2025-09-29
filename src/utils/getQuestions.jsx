@@ -3,14 +3,19 @@ import fetchQuestions from "./fetchQuestions"
 import filterAnsweredQuestions from "./filterAnsweredQuestions.jsx"
 
 export default async function getQuestions() {
-    const { setQuestions, answers = [], questions = [], isCategorySelected, SelectedCategory, addQuestions } = useHomeStore.getState()
+    const { setQuestions, answers = [], questions = [], isCategorySelected,
+        selectedCategory, categories, addQuestions, activeTab } = useHomeStore.getState()
 
-    if (isCategorySelected) {
+    if (isCategorySelected && activeTab === "explore") {
+        const currentCategory = categories.find(c => c.name === selectedCategory)
+        if (currentCategory?.questions.length > 0) return
         fetchQuestions()
         return
     }
 
     if (questions.length > 0) return
+
+    console.log("for home la sathy")
 
     const data = await fetchQuestions()
     if (answers.length === 0) return setQuestions(data)

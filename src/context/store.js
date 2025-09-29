@@ -15,33 +15,40 @@ const useHomeStore = create((set) => ({
 
 
   //categories
+  categories: [],
+
+  addNewCategory: (name, questions = []) =>
+    set((state) => ({
+      categories: [...state.categories, { name, questions, maxReached: false }],
+    })),
+
+  updateCategoryQuestions: (name, newQuestions) =>
+    set((state) => ({
+      categories: state.categories.map((c) =>
+        c.name === name
+          ? { ...c, questions: [...c.questions, ...newQuestions] }
+          : c
+      ),
+    })),
+
+    updateCategoryQuestionsCompletely: (name, newQuestions) =>
+      set((state) => ({
+        categories: state.categories.map((c) =>
+          c.name === name
+            ? { ...c, questions:newQuestions }
+            : c
+        ),
+      })),
   
-  // categories: [],
-  // addNewCategories:(c)=> set([...categories,c]),
-  // updateCategoryQuestions:(q)=> set([...categories,q]),
-
-  categories: {}, // store categories here
-  addCategory: (categoryName, questions = []) =>
+  updateCategoryMaxReached: (name, status) =>
     set((state) => ({
-      categories: {
-        ...state.categories,
-        [categoryName]: questions,
-      },
+      categories: state.categories.map((c) =>
+        c.name === name
+          ? { ...c, maxReached: status }  // update maxReached
+          : c
+      ),
     })),
-
-  // Add multiple questions to a specific category
-  addQuestions: (categoryName, questionsArray) =>
-    set((state) => ({
-      categories: {
-        ...state.categories,
-        [categoryName]: [
-          ...(state.categories[categoryName] || []),
-          ...questionsArray,
-        ],
-      },
-    })),
-
-
+    
   //User answers
   answers: [],
   setAnswers: (ans) => set({ answers: ans }),
