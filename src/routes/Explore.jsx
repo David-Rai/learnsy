@@ -10,7 +10,7 @@ import useHomeStore from '../context/store.js';
 const SelectedCategory = lazy(() => import("../components/SelectedCategory.jsx"));
 
 const Explore = () => {
-  const { setCategory, setMaxReached , maxReached,isCategorySelected,setIsCategorySelected,setSelectedCategory,selectedCategory} = useHomeStore()
+  const { setCategory, isCategorySelected,setIsCategorySelected,setSelectedCategory,selectedCategory} = useHomeStore()
   const [categories, setCategories] = useState([])
 
 

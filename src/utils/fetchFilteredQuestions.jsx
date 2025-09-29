@@ -9,6 +9,7 @@ export default async function fetchFilteredQuestions() {
     
     if (maxReached) return
 
+    //previous
     const notQuestions = await supabase.from("user_answer").select().eq("user_id", id)
     const ids = notQuestions.data.map(q => q.q_id); // get array of q_id
     const idsString = `(${ids.join(',')})`;

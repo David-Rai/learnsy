@@ -7,13 +7,14 @@ const filterAnsweredQuestions = (data) => {
     if (answers.length === 0) return console.log("nothing to filter")
 
     //filtering the questions
-    const answeredIds = answers.map(a => a.id)
-    const unanswered = data.filter(q => !answeredIds.includes(q.id))
+    const answeredIds = new Set(answers.map(a => a.id));
+    const unanswered = data.filter(q => !answeredIds.has(q.id));
+
 
     if (unanswered.length > 0) {
-    setQuestions(unanswered)
-    console.log("already", answeredIds)
-    console.log("unanswered",unanswered)
+        setQuestions(unanswered)
+        console.log("already", answeredIds)
+        console.log("unanswered", unanswered)
     }
 }
 
