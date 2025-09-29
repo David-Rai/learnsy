@@ -8,10 +8,20 @@ import { useState, useEffect, useRef } from 'react'
 import SocialIcons from './SocialIcons'
 import checkUserForQuestions from '../utils/checkUserForQuestions'
 
-const SelectedCategory = ({ selectedCategory }) => {
-  const { userLikes, hintVisible, currentHint,
-    setCurrentHint, setHintVisible,
-    setUserLikes, questions = [], maxReached, setMaxReached, setCategory } = useHomeStore()
+const SelectedCategory = () => {
+  const {
+    userLikes,
+    hintVisible,
+    currentHint,
+    setCurrentHint,
+    setHintVisible,
+    setUserLikes,
+    questions = [],
+    maxReached,
+    selectedCategory,
+    setMaxReached,
+    setCategory } 
+    = useHomeStore()
 
   const targetRef = useRef(null);
   const scrollContain = useRef(null)
@@ -29,7 +39,6 @@ const SelectedCategory = ({ selectedCategory }) => {
 
   //checking user
   useEffect(() => {
-    setMaxReached(false)
     setCategory({ isCategory: true, value: selectedCategory })
     checkUserForQuestions()
   }, [])
@@ -75,12 +84,6 @@ const SelectedCategory = ({ selectedCategory }) => {
             {/* Socials icons */}
             <SocialIcons
               q={q}
-              userLikes={userLikes}
-              hintVisible={hintVisible}
-              currentHint={currentHint}
-              setCurrentHint={setCurrentHint}
-              setHintVisible={setHintVisible}
-              setUserLikes={setUserLikes}
             />
 
             {/* Intersection Observer trigger */}

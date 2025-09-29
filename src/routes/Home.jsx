@@ -1,6 +1,4 @@
 import { observe } from '../utils/observe.jsx';
-import getQuestions from '../utils/getQuestions.jsx';
-import removePreviousQuestions from '../utils/removePreviousQuestions.jsx';
 import Hintsection from '../components/Hintsection.jsx';
 import React, { useState, useEffect, useRef } from 'react';
 import Loader from '../components/Loader.jsx';
@@ -20,12 +18,12 @@ const Home = () => {
         maxReached,
         hintVisible,
         setCategory,
-        setMaxReached
+        setMaxReached,
+        answers = []
     } = useHomeStore(state => state)
 
     const targetRef = useRef(null);
     const scrollContain = useRef(null)
-
 
     //Stoping scrolling on hint container toggle
     useEffect(() => {
@@ -40,7 +38,6 @@ const Home = () => {
 
     //checking user
     useEffect(() => {
-        setMaxReached(false)
         setCategory({ isCategory: false, value: null })
         checkUserForQuestions()
     }, [])

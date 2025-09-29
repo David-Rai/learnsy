@@ -1,14 +1,15 @@
 import supabase from "../config/supabase";
+import filterAnsweredQuestions from "./FilterAnsweredQuestions";
 import useHomeStore from "../context/store";
 
 export default async function fetchQuestions() {
-  const { BATCH_SIZE, maxReached, setMaxReached, questions = [], category } = useHomeStore.getState()
+  const { BATCH_SIZE, maxReached, setMaxReached, questions = [], answers = [] } = useHomeStore.getState()
 
   if (maxReached) return [];
 
+  let totalquestions = [...questions, ...answers]
   // Always safe because we default questions = []
-  const fetchedIds = questions.map(q => q.id);
-  // console.log(category)
+  const fetchedIds = totalquestions.map(q => q.id);
 
   let query = supabase
     .from("questions")
@@ -20,10 +21,6 @@ export default async function fetchQuestions() {
     query = query.not("id", "in", idsString2)
   }
 
-  if (category.isCategory) {
-    console.log("yes apppying filter of", category.value)
-    query = query.eq("category", category.value)
-  }
 
   const { data, error, count } = await query
 

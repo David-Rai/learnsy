@@ -4,7 +4,7 @@ import useHomeStore from "../context/store";
 
 
 export default async function fetchFilteredQuestions() {
-    const { maxReached, setMaxReached, questions=[], BATCH_SIZE, user,category } = useHomeStore.getState()
+    const { maxReached, setMaxReached, questions=[], BATCH_SIZE, user } = useHomeStore.getState()
     const { id } = user
     
     if (maxReached) return
@@ -22,10 +22,6 @@ export default async function fetchFilteredQuestions() {
     .not('id', 'in', idsString)
     .not('id', 'in', idsString2)
     .limit(BATCH_SIZE)
-
-    if(category.isCategory){
-        query=query.not('category',category.value)
-    }
 
     const { data, error, count } = await query
 

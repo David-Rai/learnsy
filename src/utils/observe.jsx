@@ -4,7 +4,6 @@ import fetchQuestions from "./fetchQuestions";
 
 export const observe = () => {
 const {maxReached}=useHomeStore.getState()
-// console
 
     const observer = new IntersectionObserver(
         (entries) => {
@@ -22,7 +21,6 @@ const {maxReached}=useHomeStore.getState()
                     // console.log("next",nextQuestions)
                     const final=[...questions,...nextQuestions]
                     setQuestions(final);
-                    // console.log("end questions",final)
                 }
             });
         },

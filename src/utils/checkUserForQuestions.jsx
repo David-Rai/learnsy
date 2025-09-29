@@ -8,11 +8,6 @@ const checkUserForQuestions = async () => {
   const { setUser  } = useHomeStore.getState()
   const { data: { user }, error } = await supabase.auth.getUser()
 
-  // if (error) {
-  //   console.error("Auth error:", error)
-  //   return
-  // }
-
   if (user?.id) {
     setUser(user)
     console.log("user existed")

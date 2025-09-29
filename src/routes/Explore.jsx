@@ -10,17 +10,12 @@ import useHomeStore from '../context/store.js';
 const SelectedCategory = lazy(() => import("../components/SelectedCategory.jsx"));
 
 const Explore = () => {
-  const { setCategory, setMaxReached , maxReached} = useHomeStore()
+  const { setCategory, setMaxReached , maxReached,isCategorySelected,setIsCategorySelected,setSelectedCategory,selectedCategory} = useHomeStore()
   const [categories, setCategories] = useState([])
-  const [isSelected, setIsSelected] = useState(false)
-  const [selectedCategory, setSelectedCategory] = useState("")
 
 
   //get the categories
   useEffect(() => {
-    setMaxReached(false)
-    console.log("baby lets see your max reach",maxReached)
-
     const get = async () => {
       const { error, data } = await supabase.rpc('get_categories_with_count')
 
@@ -36,15 +31,14 @@ const Explore = () => {
 
   //getting out of the category
   const handleOutCategory = () => {
-    setIsSelected(false)
-    setMaxReached(false)
+    setIsCategorySelected(false)
     setCategory({ isCategory: false, value: null })
   }
 
   return (
     <>
       <main className="h-screen w-full bg-bg flex flex-col overflow-hidden">
-        {isSelected ? (
+        {isCategorySelected ? (
           // Selected Category View
           <div className="flex-1 flex flex-col relative overflow-hidden">
             {/* Top Navigation */}
@@ -57,7 +51,7 @@ const Explore = () => {
 
             {/* Selected Category Content */}
             <div className="flex-1 overflow-y-auto snap-y snap-mandatory custom-scrollbar">
-              <SelectedCategory selectedCategory={selectedCategory} />
+              <SelectedCategory  />
             </div>
           </div>
         ) : (
@@ -83,8 +77,6 @@ const Explore = () => {
                       <Category
                         c={c}
                         key={c.id || index}
-                        setSelectedCategory={setSelectedCategory}
-                        setIsSelected={setIsSelected}
                       />
                     ))}
                   </div>
@@ -119,12 +111,14 @@ export default Explore;
 
 
 
-const Category = ({ c, setSelectedCategory, setIsSelected }) => {
+const Category = ({c}) => {
+const {setSelectedCategory,setIsCategorySelected}=useHomeStore()
+
   const { name, image, totalquestion } = c;
   const handleStart = () => {
     console.log("selected category", name)
     setSelectedCategory(name)//settinng category
-    setIsSelected(true) //toggle
+    setIsCategorySelected(true) //toggle
   }
 
   return (

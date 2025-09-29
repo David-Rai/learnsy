@@ -1,10 +1,14 @@
 import useHomeStore from "../context/store"
 import fetchQuestions from "./fetchQuestions"
+import filterAnsweredQuestions from "./FilterAnsweredQuestions"
 
 export default async function getQuestions() {
+    console.log("overriding it mfs")
 
-    const { setQuestions } = useHomeStore.getState()
+    const { setQuestions , answers } = useHomeStore.getState()
     const data = await fetchQuestions()
-    setQuestions(data)
+    if (answers.length === 0) return setQuestions(data)
+    filterAnsweredQuestions(data)
+
 }
 
