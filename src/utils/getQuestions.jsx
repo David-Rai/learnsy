@@ -8,6 +8,5 @@ export default async function getQuestions() {
     const data = await fetchQuestions()
     if (answers.length === 0) return setQuestions(data)
     filterAnsweredQuestions(data)
-
 }
 

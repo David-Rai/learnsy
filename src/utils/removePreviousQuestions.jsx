@@ -3,8 +3,10 @@ import fetchFilteredQuestions from './fetchFilteredQuestions'
 
 //function
 export default async function removePreviousQuestions() {
-    const { user, setQuestions, answers } = useHomeStore.getState()
+    const { user, setQuestions, answers = [], questions = [] } = useHomeStore.getState()
     const { id } = user
+
+    if (questions.length > 0) return
 
     console.log("started filtered fetching data....")
     const data = await fetchFilteredQuestions()
