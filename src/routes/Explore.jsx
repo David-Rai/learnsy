@@ -42,62 +42,71 @@ const Explore = () => {
   return (
     <>
       <main className="h-screen w-full bg-bg flex flex-col overflow-hidden">
+        {isSelected ? (
+          // Selected Category View
+          <div className="flex-1 flex flex-col relative overflow-hidden">
+            {/* Top Navigation */}
+            <nav className="absolute top-4 left-4 z-10 md:top-6 md:left-6">
+              <ChevronLeft
+                className="text-text cursor-pointer w-6 h-6 md:w-8 md:h-8"
+                onClick={handleOutCategory}
+              />
+            </nav>
 
-        {
-          isSelected ? (
-            <main className="flex-1 w-full overflow-y-scroll snap-y snap-mandatory custom-scrollbar">
+            {/* Selected Category Content */}
+            <div className="flex-1 overflow-y-auto snap-y snap-mandatory custom-scrollbar">
               <SelectedCategory selectedCategory={selectedCategory} />
+            </div>
+          </div>
+        ) : (
+          // Main Categories View
+          <div className="flex-1 flex flex-col overflow-hidden">
+            {/* Search Bar */}
+            <header className="flex-shrink-0 bg-secondary px-4 py-4 md:py-6">
+              <div className="max-w-2xl mx-auto">
+                <input
+                  type="text"
+                  placeholder="Search"
+                  className="w-full px-4 py-3 rounded-md border border-gray-600 text-white bg-bg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                />
+              </div>
+            </header>
 
-              {/* top navigation */}
-              <nav className='w-full h-[40px] absolute top-[5%] flex items-center justify-start pl-6'>
-                <ChevronLeft className='text-text cursor-pointer' onClick={handleOutCategory} />
-              </nav>
-            </main>
-          )
-            :
-            (
-              <main className='w-full flex flex-col flex-1 overflow-hidden'>
-                {/* Search bar */}
-                <header className='flex items-center justify-center w-full h-[80px] bg-secondary px-4 flex-shrink-0'>
-                  <input
-                    type="text"
-                    placeholder='Search'
-                    className='pl-4 rounded-md py-2 md:w-1/2 w-full border border-gray-600 text-white'
-                  />
-                </header>
-
-                {/* Main categories */}
-                <section
-                  className="
-    w-full flex gap-2 md:gap-4 p-4 items-center cursor-pointer
-    overflow-y-scroll custom-scrollbar flex-shrink-0
-    flex-nowrap md:flex-wrap
-  "
-                >
-                  {categories.length > 0 ? (
-                    categories.map((c, index) => (
+            {/* Categories Section */}
+            <section className="flex-1 overflow-y-auto custom-scrollbar">
+              <div className="p-4 md:p-6">
+                {categories.length > 0 ? (
+                  <div className="flex flex-wrap gap-3 md:gap-4 justify-center max-w-6xl mx-auto">
+                    {categories.map((c, index) => (
                       <Category
                         c={c}
-                        key={index}
+                        key={c.id || index}
                         setSelectedCategory={setSelectedCategory}
                         setIsSelected={setIsSelected}
                       />
-                    ))
-                  ) : (
-                    <div>No categories left</div>
-                  )}
-                </section>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-center h-32 md:h-40">
+                    <div className="text-center text-gray-500 text-lg md:text-xl">
+                      No categories left
+                    </div>
+                  </div>
+                )}
+              </div>
+            </section>
+          </div>
+        )}
 
-              </main>
-            )
-        }
+        {/* Hint Section */}
+        <div className="flex-shrink-0">
+          <Hintsection />
+        </div>
 
-        {/* hint section */}
-        <Hintsection />
-
-
-        {/* Bottom navigation */}
-        <BottomNav />
+        {/* Bottom Navigation */}
+        <div className="flex-shrink-0">
+          <BottomNav />
+        </div>
       </main>
     </>
   );
