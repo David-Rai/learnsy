@@ -25,8 +25,13 @@ export default async function fetchQuestions() {
       .limit(BATCH_SIZE)
       .eq('category', selectedCategory)
 
+
     const currentCategory = categories.find(c => c.name === selectedCategory);
-    const fetchedIds = currentCategory?.questions?.map(q => q.id) || [];
+    const questionsIds = currentCategory?.questions
+
+    let totalquestions = [...questionsIds, ...answers]
+    // Always safe because we default questions = []
+    const fetchedIds = totalquestions.map(q => q.id);
 
     if (currentCategory?.maxReached) return []
 
@@ -42,7 +47,6 @@ export default async function fetchQuestions() {
       return []
     }
 
-    console.log("fetched data",data)
 
     if (currentCategory?.questions.length === count || count === 0) {
       console.log("max reached");
@@ -57,6 +61,8 @@ export default async function fetchQuestions() {
   }
 
   if (maxReached) return [];
+
+  // console.log('fetching for home')
 
 
   let totalquestions = [...questions, ...answers]

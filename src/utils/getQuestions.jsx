@@ -15,8 +15,6 @@ export default async function getQuestions() {
 
     if (questions.length > 0) return
 
-    console.log("for home la sathy")
-
     const data = await fetchQuestions()
     if (answers.length === 0) return setQuestions(data)
     filterAnsweredQuestions(data)

@@ -18,8 +18,8 @@ const filterAnsweredQuestions = (data = []) => {
         let unanswered = data.length > 0 ? data.filter(q => !answeredIds.has(q.id)) 
         :  currentCategory?.questions.filter(q => !answeredIds.has(q.id))
 
-        console.log("ansswerd ids",answeredIds)
-        console.log("unanswers",unanswered)
+        // console.log("ansswerd ids",answeredIds)
+        // console.log("unanswers",unanswered)
 
         if (unanswered.length > 0) {
             updateCategoryQuestionsCompletely(selectedCategory, unanswered)
