@@ -265,8 +265,12 @@ const OtherPlayer = ({ leader, position }) => {
   }
 
   return (
-    <div className="bg-[var(--secondary)] rounded-xl p-3 flex items-center gap-3 border border-[var(--primary)]/30 hover:border-[var(--primary)]/60 transition-all duration-200">
+    <div className="bg-[var(--secondary)] 
+    rounded-xl p-3 flex items-center gap-3 
+    border border-[var(--primary)]/30
+     hover:border-[var(--primary)]/60 transition-all duration-200">
       {/* Rank Badge */}
+
       <div className="flex-shrink-0 w-10 h-10 bg-[var(--bg)]/40 rounded-full flex items-center justify-center border border-[var(--primary)]/30">
         <span className="text-sm font-bold text-[var(--primary)]">{position}</span>
       </div>

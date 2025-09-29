@@ -7,18 +7,16 @@ import Hintsection from '../components/Hintsection.jsx';
 import BottomNav from '../components/BottomNav.jsx';
 import { ChevronLeft } from 'lucide-react'
 import useHomeStore from '../context/store.js';
-import filterAnsweredQuestions from '../utils/filterAnsweredQuestions.jsx';
 
 const SelectedCategory = lazy(() => import("../components/SelectedCategory.jsx"));
 
 const Explore = () => {
-  const { isCategorySelected, setIsCategorySelected, setSelectedCategory,setQuestions } = useHomeStore()
+  const { isCategorySelected, setIsCategorySelected, setSelectedCategory ,setQuestions,setMaxReached} = useHomeStore()
   const [categories, setCategories] = useState([])
-
 
   //get the categories
   useEffect(() => {
-    filterAnsweredQuestions()
+    // filterAnsweredQuestions()
     const get = async () => {
       const { error, data } = await supabase.rpc('get_categories_with_count')
 
@@ -34,9 +32,11 @@ const Explore = () => {
 
   //getting out of the category
   const handleOutCategory = () => {
-    console.log('xodeko la yo category ab')
-    // setQuestions([])
+    console.log('remove category')
+    setQuestions([])
+    setMaxReached(false)
     setIsCategorySelected(false)
+    setSelectedCategory(null)
   }
 
   return (
@@ -119,12 +119,12 @@ export default Explore;
 
 
 const Category = ({ c }) => {
-  const { setSelectedCategory, setIsCategorySelected ,selectedCategory} = useHomeStore()
+  const { setSelectedCategory, setIsCategorySelected } = useHomeStore()
 
   const { name, image, totalquestion } = c;
 
   const handleStart = () => {
-    console.log("selected category from category",name)
+    console.log("selected", name)
     setSelectedCategory(name)//settinng category
     setIsCategorySelected(true) //toggle
   }

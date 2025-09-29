@@ -13,7 +13,7 @@ const checkUserForQuestions = async () => {
     console.log("user existed")
     removePreviousQuestions()
   } else {
-    console.log("new user raixa")
+    console.log("new user")
     getQuestions()
   }
 }

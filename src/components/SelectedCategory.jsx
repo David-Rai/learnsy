@@ -1,5 +1,4 @@
 import React from 'react'
-import supabase from '../config/supabase'
 import { observe } from '../utils/observe'
 import useHomeStore from '../context/store'
 import Loader from './Loader'
@@ -10,16 +9,9 @@ import checkUserForQuestions from '../utils/checkUserForQuestions'
 
 const SelectedCategory = () => {
   const {
-    userLikes,
     hintVisible,
-    currentHint,
-    setCurrentHint,
-    setHintVisible,
-    setUserLikes,
     questions = [],
     maxReached,
-    selectedCategory,
-    setMaxReached,
   } 
     = useHomeStore()
 
@@ -42,7 +34,6 @@ const SelectedCategory = () => {
     checkUserForQuestions()
   }, [])
 
-
   // Intersection Observer
   useEffect(() => {
     if (maxReached) return
@@ -54,6 +45,7 @@ const SelectedCategory = () => {
     return () => {
       if (targetRef.current) observer.unobserve(targetRef.current);
     };
+
   }, [questions, maxReached]);
 
 
@@ -81,9 +73,7 @@ const SelectedCategory = () => {
             </div>
 
             {/* Socials icons */}
-            <SocialIcons
-              q={q}
-            />
+            <SocialIcons q={q} />
 
             {/* Intersection Observer trigger */}
             {index === questions.length - 2 && (

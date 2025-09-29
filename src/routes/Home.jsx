@@ -19,6 +19,7 @@ const Home = () => {
         questions = [],
         maxReached,
         hintVisible,
+        setQuestions,
         setMaxReached,
         setIsCategorySelected,
         answers = []
@@ -40,7 +41,8 @@ const Home = () => {
 
     //checking user
     useEffect(() => {
-        // setIsCategorySelected(false)
+        setQuestions([])
+        setMaxReached(false)
         filterAnsweredQuestions()
         checkUserForQuestions()
     }, [])
@@ -73,7 +75,7 @@ const Home = () => {
     return (
         <>
             <div className="home custom-scrollbar fixed md:flex-row">
-            <Sidebar />
+                <Sidebar />
                 {/* Main Content */}
                 <main
                     ref={scrollContain}
