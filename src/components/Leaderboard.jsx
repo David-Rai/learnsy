@@ -107,7 +107,7 @@ const Leaderboard = () => {
               <h2 className="text-xl font-semibold text-text mb-4 text-center md:text-left">
                 Other Players
               </h2>
-              <div className="max-h-96 overflow-y-auto custom-scrollbar space-y-2">
+              <div className="max-h-96 overflow-y-auto overflow-x-hidden custom-scrollbar space-y-2">
                 {otherPlayers.map((leader, index) => (
                   <OtherPlayer key={leader.user_id} leader={leader} position={index + 4} />
                 ))}
@@ -222,9 +222,12 @@ const OtherPlayer = ({ leader, position }) => {
   }, [leader.user_id])
 
   return (
-    <div className="bg-[var(--secondary)] rounded-xl p-3 md:p-4 flex items-center gap-3 md:gap-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]">
+    <div className="bg-[var(--secondary)] rounded-xl p-3 md:p-4
+     flex items-center gap-3 md:gap-4 shadow-lg hover:shadow-xl
+      transition-all duration-300 hover:scale-[1.02]">
       {/* Rank Badge */}
-      <div className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-[var(--primary)] to-[var(--primary)]/70 rounded-full flex items-center justify-center shadow-md">
+      <div className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 
+      bg-gradient-to-br from-[var(--primary)] to-[var(--primary)]/70 rounded-full flex items-center justify-center shadow-md">
         <span className="text-sm md:text-base font-bold text-white">{position}</span>
       </div>
 
