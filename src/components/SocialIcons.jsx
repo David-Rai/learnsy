@@ -77,7 +77,7 @@ const SocialIcons = ({ q }) => {
                     onClick={handleHint}
                 >
                     <button className='social-contain' >
-                        <Lightbulb className='cursor-pointer' />
+                        <Lightbulb className='cursor-pointer text-white' />
                     </button>
                 </div>
             </div>

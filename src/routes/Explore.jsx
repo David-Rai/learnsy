@@ -2,15 +2,15 @@ import React, { useState, useEffect, useRef } from 'react';
 import { lazy } from 'react';
 import { Book } from 'lucide-react';
 import supabase from '../config/supabase.js'
-// import SelectedCategory from '../components/SelectedCategory.jsx';
+import Hintsection from '../components/Hintsection.jsx';
 import BottomNav from '../components/BottomNav.jsx';
+import { ChevronLeft } from 'lucide-react'
 import useHomeStore from '../context/store.js';
 
 const SelectedCategory = lazy(() => import("../components/SelectedCategory.jsx"));
 
-
 const Explore = () => {
-  const { user, setUser } = useHomeStore()
+  const { setCategory, setMaxReached } = useHomeStore()
   const [categories, setCategories] = useState([])
   const [isSelected, setIsSelected] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState("")
@@ -18,6 +18,7 @@ const Explore = () => {
 
   //get the categories
   useEffect(() => {
+    setMaxReached(false)
     const get = async () => {
       const { error, data } = await supabase.rpc('get_categories_with_count')
 
@@ -31,48 +32,66 @@ const Explore = () => {
     get()
   }, [])
 
+  //getting out of the category
+  const handleOutCategory = () => {
+    setIsSelected(false)
+    setMaxReached(false)
+    setCategory({ isCategory: false, value: null })
+  }
+
   return (
     <>
-      <div className="h-screen w-full bg-bg flex flex-col overflow-hidden">
-        {/* Main Content */}
-        <main className="w-full flex-1 flex flex-col min-h-0">
-          {isSelected ? (
-            <section className="flex-1 w-full h-full overflow-y-auto snap-y snap-mandatory custom-scrollbar">
-              <SelectedCategory selectedCategory={selectedCategory} />
-            </section>
-          ) : (
-            <>
-              {/* Search bar */}
-              <header className='flex items-center justify-center w-full h-[80px] bg-secondary px-4 flex-shrink-0'>
-                <input
-                  type="text"
-                  placeholder='Search'
-                  className='pl-4 rounded-md py-2 md:w-1/2 w-full border border-gray-600 text-white'
-                />
-              </header>
+      <main className="h-screen w-full bg-bg flex flex-col overflow-hidden">
 
-              {/* Main categories */}
-              <section className='w-full flex gap-2 md:gap-4 p-4 items-center cursor-pointer overflow-x-auto overflow-y-hidden custom-scrollbar flex-shrink-0'>
-                {categories.length > 0 ?
-                  categories.map((c, index) => (
-                    <Category
-                      c={c}
-                      key={index}
-                      setSelectedCategory={setSelectedCategory}
-                      setIsSelected={setIsSelected}
-                    />
-                  )) : (
-                    <div>No categories left</div>
-                  )
-                }
-              </section>
-            </>
-          )}
-        </main>
+        {
+          isSelected ? (
+            <main className="flex-1 w-full overflow-y-scroll snap-y snap-mandatory custom-scrollbar">
+              <SelectedCategory selectedCategory={selectedCategory} />
+
+              {/* top navigation */}
+              <nav className='w-full h-[40px] absolute top-[5%] flex items-center justify-start pl-6'>
+                <ChevronLeft className='text-text cursor-pointer' onClick={handleOutCategory} />
+              </nav>
+            </main>
+          )
+            :
+            (
+              <main className='w-full flex flex-col flex-1 overflow-hidden'>
+                {/* Search bar */}
+                <header className='flex items-center justify-center w-full h-[80px] bg-secondary px-4 flex-shrink-0'>
+                  <input
+                    type="text"
+                    placeholder='Search'
+                    className='pl-4 rounded-md py-2 md:w-1/2 w-full border border-gray-600 text-white'
+                  />
+                </header>
+
+                {/* Main categories */}
+                <section className='w-full flex gap-2 md:gap-4 p-4 items-center cursor-pointer overflow-x-auto overflow-y-hidden custom-scrollbar flex-shrink-0'>
+                  {categories.length > 0 ?
+                    categories.map((c, index) => (
+                      <Category
+                        c={c}
+                        key={index}
+                        setSelectedCategory={setSelectedCategory}
+                        setIsSelected={setIsSelected}
+                      />
+                    )) : (
+                      <div>No categories left</div>
+                    )
+                  }
+                </section>
+              </main>
+            )
+        }
+
+        {/* hint section */}
+        <Hintsection />
+
 
         {/* Bottom navigation */}
         <BottomNav />
-      </div>
+      </main>
     </>
   );
 };

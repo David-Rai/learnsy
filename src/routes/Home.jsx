@@ -10,6 +10,7 @@ import supabase from '../config/supabase.js'
 import SocialIcons from "../components/SocialIcons";
 import Question from '../utils/Question.jsx';
 import useHomeStore from '../context/store.js'
+import checkUserForQuestions from '../utils/checkUserForQuestions.jsx';
 
 const BottomNav = lazy(() => import("../components/BottomNav"));
 
@@ -18,10 +19,8 @@ const Home = () => {
         questions = [],
         maxReached,
         hintVisible,
-        setHintVisible,
-        currentHint,
-        setCurrentHint,
-        setUser
+        setCategory,
+        setMaxReached
     } = useHomeStore(state => state)
 
     const targetRef = useRef(null);
@@ -41,21 +40,9 @@ const Home = () => {
 
     //checking user
     useEffect(() => {
-        async function start() {
-            async function checkUser() {
-                const { data: { user } } = await supabase.auth.getUser()
-                if (user?.id) {
-                    setUser(user)
-                    console.log("user existed")
-                    removePreviousQuestions()
-                } else {
-                    console.log("new user raixa")
-                    getQuestions()
-                }
-            }
-            await checkUser()
-        }
-        start()
+        setMaxReached(false)
+        setCategory({ isCategory: false, value: null })
+        checkUserForQuestions()
     }, [])
 
     // Intersection Observer
@@ -71,7 +58,7 @@ const Home = () => {
         };
     }, [questions, maxReached]);
 
-    
+
     if (maxReached) {
         // alert("done")
     }
@@ -91,19 +78,14 @@ const Home = () => {
                     ref={scrollContain}
                     className="flex-1 w-full overflow-y-scroll snap-y snap-mandatory">
 
-                    {Array.isArray(questions) && questions.map((q,index) => (
+                    {Array.isArray(questions) && questions.map((q, index) => (
                         <div key={index} className="question-container overflow-hidden">
 
                             {/* Question */}
                             <Question q={q} />
 
                             {/* Socials icons */}
-                            <SocialIcons q={q}
-                                hintVisible={hintVisible}
-                                currentHint={currentHint}
-                                setCurrentHint={setCurrentHint}
-                                setHintVisible={setHintVisible}
-                                 />
+                            <SocialIcons q={q} />
 
                             {/* Observer */}
                             {index === questions.length - 2 && <div ref={targetRef}></div>}
@@ -113,7 +95,7 @@ const Home = () => {
                 </main>
 
                 {/* hint section */}
-                <Hintsection hint={hintVisible} setHintVisible={setHintVisible} currentHint={currentHint} />
+                <Hintsection />
 
                 {/* Bottom navigation */}
                 <BottomNav />

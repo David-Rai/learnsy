@@ -24,11 +24,14 @@ const useHomeStore = create((set) => ({
   setUser: (userData => set({ user: userData })),
   
   //for explore page
-  isSelected:false,
-  setIsSelected:(a)=> set({isSelected:a}),
-  SelectedCategory:"",
-  setSelectedCategory:(cat)=> set({SelectedCategory:cat})
+  // isSelected:false,
+  // setIsSelected:(a)=> set({isSelected:a}),
+  // SelectedCategory:"",
+  // setSelectedCategory:(cat)=> set({SelectedCategory:cat})
 
+  //category
+  category:{isCategory:false,value:null},
+  setCategory:(v)=> set({category:v})
 
 }));
 

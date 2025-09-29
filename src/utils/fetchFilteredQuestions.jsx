@@ -22,7 +22,6 @@ export default async function fetchFilteredQuestions() {
         .not('id', 'in', idsString)
         .not('id', 'in', idsString2)
         .limit(BATCH_SIZE)
-    // .range(page * BATCH_SIZE, (page + 1) * BATCH_SIZE - 1)
 
 
     if (error) console.error(error);

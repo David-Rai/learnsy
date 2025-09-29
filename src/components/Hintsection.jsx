@@ -3,7 +3,7 @@ import useHomeStore from '../context/store'
 
 
 const Hintsection = ({ }) => {
-const {hintVisible, currentHint, setHintVisible }=useHomeStore()
+    const { hintVisible, currentHint, setHintVisible } = useHomeStore()
 
     return (
         <>
