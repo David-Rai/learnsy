@@ -1,16 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { lazy } from 'react';
 import { Book } from 'lucide-react';
 import supabase from '../config/supabase.js'
-import SelectedCategory from '../components/SelectedCategory.jsx';
+// import SelectedCategory from '../components/SelectedCategory.jsx';
 import BottomNav from '../components/BottomNav.jsx';
 import useHomeStore from '../context/store.js';
+
+const SelectedCategory = lazy(() => import("../components/SelectedCategory.jsx"));
 
 
 const Explore = () => {
   const { user, setUser } = useHomeStore()
   const [categories, setCategories] = useState([])
   const [isSelected, setIsSelected] = useState(false)
-  const [selectedCategory,setSelectedCategory]=useState("")
+  const [selectedCategory, setSelectedCategory] = useState("")
 
 
   //get the categories
@@ -30,53 +33,46 @@ const Explore = () => {
 
   return (
     <>
-      <div className="h-screen w-full bg-bg flex flex-col custom-scrollbar">
-
+      <div className="h-screen w-full bg-bg flex flex-col overflow-hidden">
         {/* Main Content */}
-        <main className="w-full flex-1 flex flex-col">
-          {
-            isSelected? (
-              <>
-                <div>
-                  {/* <SelectedCategory /> */}
-                </div>
-              </>
-            )
-              :
-              (
+        <main className="w-full flex-1 flex flex-col min-h-0">
+          {isSelected ? (
+            <section className="flex-1 w-full h-full overflow-y-auto snap-y snap-mandatory custom-scrollbar">
+              <SelectedCategory selectedCategory={selectedCategory} />
+            </section>
+          ) : (
+            <>
+              {/* Search bar */}
+              <header className='flex items-center justify-center w-full h-[80px] bg-secondary px-4 flex-shrink-0'>
+                <input
+                  type="text"
+                  placeholder='Search'
+                  className='pl-4 rounded-md py-2 md:w-1/2 w-full border border-gray-600 text-white'
+                />
+              </header>
 
-                <>
-                  {/* contain the search bar */}
-                  <header className='flex items-center justify-center w-full h-[80px] bg-secondary px-4 '>
-                    <input type="text" placeholder='Search' className='pl-4 rounded-md py-2  md:w-1/2
-                   w-full border border-gray-600 text-white' />
-                  </header>
-
-                  {/* Main categories here */}
-                  <section className='w-full flex gap-2 md:gap-4 p-4 items-center cursor-pointer overflow-y-scroll custom-scrollbar'>
-                    {
-                      categories.length > 0 ?
-                        categories.map((c, index) => {
-                          return <Category c={c} key={index} setSelectedCategory={setSelectedCategory} setIsSelected={setIsSelected}/>
-                        })
-
-                        :
-
-                        (
-                          <div>
-                            No categories left
-                          </div>
-                        )
-                    }
-                  </section>
-                </>
-              )
-          }
+              {/* Main categories */}
+              <section className='w-full flex gap-2 md:gap-4 p-4 items-center cursor-pointer overflow-x-auto overflow-y-hidden custom-scrollbar flex-shrink-0'>
+                {categories.length > 0 ?
+                  categories.map((c, index) => (
+                    <Category
+                      c={c}
+                      key={index}
+                      setSelectedCategory={setSelectedCategory}
+                      setIsSelected={setIsSelected}
+                    />
+                  )) : (
+                    <div>No categories left</div>
+                  )
+                }
+              </section>
+            </>
+          )}
         </main>
 
         {/* Bottom navigation */}
         <BottomNav />
-      </div >
+      </div>
     </>
   );
 };
@@ -86,10 +82,11 @@ export default Explore;
 
 
 
-const Category = ({ c , setSelectedCategory,setIsSelected}) => {
-  const { name, image, totalquestion  } = c;
-  const handleStart=()=>{
-    setSelectedCategory(name)//settingn category
+const Category = ({ c, setSelectedCategory, setIsSelected }) => {
+  const { name, image, totalquestion } = c;
+  const handleStart = () => {
+    console.log("selected category", name)
+    setSelectedCategory(name)//settinng category
     setIsSelected(true) //toggle
   }
 
@@ -98,7 +95,7 @@ const Category = ({ c , setSelectedCategory,setIsSelected}) => {
      h-[250px] overflow-hidden rounded-2xl
       bg-gray-800 shadow-lg transition-transform hover:scale-105"
       onClick={handleStart}
-      >
+    >
 
       {/* Image */}
       <img

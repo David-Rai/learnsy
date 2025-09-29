@@ -1,5 +1,6 @@
 // store/homeStore.js
 import { create } from 'zustand';
+import SelectedCategory from '../components/SelectedCategory';
 
 const useHomeStore = create((set) => ({
   BATCH_SIZE: 5,
@@ -20,7 +21,14 @@ const useHomeStore = create((set) => ({
       userLikes: typeof updater === 'function' ? updater(state.userLikes) : updater,
     })),
   user: {},
-  setUser: (userData => set({ user: userData }))
+  setUser: (userData => set({ user: userData })),
+  
+  //for explore page
+  isSelected:false,
+  setIsSelected:(a)=> set({isSelected:a}),
+  SelectedCategory:"",
+  setSelectedCategory:(cat)=> set({SelectedCategory:cat})
+
 
 }));
 

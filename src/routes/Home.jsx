@@ -25,7 +25,6 @@ const Home = () => {
     } = useHomeStore(state => state)
 
     const targetRef = useRef(null);
-    const [userLikes, setUserLikes] = useState([])
     const scrollContain = useRef(null)
 
 
@@ -100,12 +99,11 @@ const Home = () => {
 
                             {/* Socials icons */}
                             <SocialIcons q={q}
-                                userLikes={userLikes}
                                 hintVisible={hintVisible}
                                 currentHint={currentHint}
                                 setCurrentHint={setCurrentHint}
                                 setHintVisible={setHintVisible}
-                                setUserLikes={setUserLikes} />
+                                 />
 
                             {/* Observer */}
                             {index === questions.length - 2 && <div ref={targetRef}></div>}
