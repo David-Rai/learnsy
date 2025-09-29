@@ -12,7 +12,9 @@ const SelectedCategory = () => {
     hintVisible,
     questions = [],
     maxReached,
-  } 
+    categories,
+    selectedCategory
+  }
     = useHomeStore()
 
   const targetRef = useRef(null);
@@ -33,6 +35,10 @@ const SelectedCategory = () => {
   useEffect(() => {
     checkUserForQuestions()
   }, [])
+
+  useEffect(() => {
+    console.log("categories", categories[selectedCategory])
+  }, [categories])
 
   // Intersection Observer
   useEffect(() => {
@@ -61,8 +67,8 @@ const SelectedCategory = () => {
   }
   return (
     <>
-      {Array.isArray(questions) &&
-        questions.map((q, index) => (
+      {Array.isArray(categories[selectedCategory]) &&
+        categories[selectedCategory].map((q, index) => (
           <div
             key={q.id || index} // Use unique ID if available
             className="question-container snap-start flex flex-col justify-center items-center h-full"

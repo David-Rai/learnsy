@@ -11,7 +11,7 @@ import useHomeStore from '../context/store.js';
 const SelectedCategory = lazy(() => import("../components/SelectedCategory.jsx"));
 
 const Explore = () => {
-  const { isCategorySelected, setIsCategorySelected, setSelectedCategory ,setQuestions,setMaxReached} = useHomeStore()
+  const { isCategorySelected, setIsCategorySelected, setSelectedCategory, setQuestions, setMaxReached } = useHomeStore()
   const [categories, setCategories] = useState([])
 
   //get the categories
@@ -33,8 +33,6 @@ const Explore = () => {
   //getting out of the category
   const handleOutCategory = () => {
     console.log('remove category')
-    setQuestions([])
-    setMaxReached(false)
     setIsCategorySelected(false)
     setSelectedCategory(null)
   }
@@ -119,14 +117,20 @@ export default Explore;
 
 
 const Category = ({ c }) => {
-  const { setSelectedCategory, setIsCategorySelected } = useHomeStore()
+  const { setSelectedCategory, setIsCategorySelected, addCategory } = useHomeStore()
 
   const { name, image, totalquestion } = c;
 
   const handleStart = () => {
     console.log("selected", name)
     setSelectedCategory(name)//settinng category
+
+    //add new categories
+    addCategory(name)
+
     setIsCategorySelected(true) //toggle
+
+
   }
 
   return (

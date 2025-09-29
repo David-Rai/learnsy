@@ -15,8 +15,32 @@ const useHomeStore = create((set) => ({
 
 
   //categories
-  categories: [],
-  // setCategories,
+  
+  // categories: [],
+  // addNewCategories:(c)=> set([...categories,c]),
+  // updateCategoryQuestions:(q)=> set([...categories,q]),
+
+  categories: {}, // store categories here
+  addCategory: (categoryName, questions = []) =>
+    set((state) => ({
+      categories: {
+        ...state.categories,
+        [categoryName]: questions,
+      },
+    })),
+
+  // Add multiple questions to a specific category
+  addQuestions: (categoryName, questionsArray) =>
+    set((state) => ({
+      categories: {
+        ...state.categories,
+        [categoryName]: [
+          ...(state.categories[categoryName] || []),
+          ...questionsArray,
+        ],
+      },
+    })),
+
 
   //User answers
   answers: [],
@@ -40,14 +64,14 @@ const useHomeStore = create((set) => ({
 
 
   //Explore page category selection
-  isCategorySelected:false,
-  setIsCategorySelected:(v)=> set({isCategorySelected:v}),
-  selectedCategory:null,
-  setSelectedCategory:(v)=> set({selectedCategory:v}),
+  isCategorySelected: false,
+  setIsCategorySelected: (v) => set({ isCategorySelected: v }),
+  selectedCategory: null,
+  setSelectedCategory: (v) => set({ selectedCategory: v }),
 
   //tabs
-  activeTab:"home",
-  setActiveTab:(t)=> set({activeTab:t})
+  activeTab: "home",
+  setActiveTab: (t) => set({ activeTab: t })
 
 }));
 

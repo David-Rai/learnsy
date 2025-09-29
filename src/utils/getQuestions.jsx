@@ -3,13 +3,15 @@ import fetchQuestions from "./fetchQuestions"
 import filterAnsweredQuestions from "./FilterAnsweredQuestions"
 
 export default async function getQuestions() {
-    const { setQuestions, answers = [], questions = [], isCategorySelected } = useHomeStore.getState()
-   
+    const { setQuestions, answers = [], questions = [], isCategorySelected, SelectedCategory, addQuestions } = useHomeStore.getState()
+
     if (isCategorySelected) {
-        // setQuestions([])
+        fetchQuestions()
+        return
     }
 
     if (questions.length > 0) return
+
     const data = await fetchQuestions()
     if (answers.length === 0) return setQuestions(data)
     filterAnsweredQuestions(data)

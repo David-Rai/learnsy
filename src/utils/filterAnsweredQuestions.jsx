@@ -4,7 +4,7 @@ import useHomeStore from "../context/store"
 const filterAnsweredQuestions = (data = []) => {
     const { questions = [], answers, setQuestions } = useHomeStore.getState()
 
-    if (questions.length === 0) return setQuestions(data)
+    if (questions.length === 0) return 
 
 
     //filtering the questions

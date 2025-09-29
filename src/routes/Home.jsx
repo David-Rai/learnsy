@@ -41,8 +41,6 @@ const Home = () => {
 
     //checking user
     useEffect(() => {
-        setQuestions([])
-        setMaxReached(false)
         filterAnsweredQuestions()
         checkUserForQuestions()
     }, [])
