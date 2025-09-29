@@ -17,7 +17,7 @@ export default async function fetchFilteredQuestions() {
     const ids = notQuestions.data.map(q => q.q_id); // get array of q_id
 
     let totalIds=[...fetchedIds,...ids] || []
-    console.log("total ids to filter down",totalIds)
+    // console.log("total ids to filter down",totalIds)
 
     // const idsString2 = `(${fetchedIds.join(',')})`;
     const idsString2 = `(${totalIds.join(',')})`;

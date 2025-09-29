@@ -20,7 +20,7 @@ const SelectedCategory = () => {
     maxReached,
     selectedCategory,
     setMaxReached,
-    setCategory } 
+  } 
     = useHomeStore()
 
   const targetRef = useRef(null);
@@ -39,7 +39,6 @@ const SelectedCategory = () => {
 
   //checking user
   useEffect(() => {
-    setCategory({ isCategory: true, value: selectedCategory })
     checkUserForQuestions()
   }, [])
 

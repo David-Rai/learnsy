@@ -18,8 +18,8 @@ const Home = () => {
         questions = [],
         maxReached,
         hintVisible,
-        setCategory,
         setMaxReached,
+        setIsCategorySelected,
         answers = []
     } = useHomeStore(state => state)
 
@@ -39,7 +39,7 @@ const Home = () => {
 
     //checking user
     useEffect(() => {
-        setCategory({ isCategory: false, value: null })
+        // setIsCategorySelected(false)
         filterAnsweredQuestions()
         checkUserForQuestions()
     }, [])

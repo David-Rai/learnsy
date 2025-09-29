@@ -8,11 +8,13 @@ import {
     FaUser,
     FaChartLine,
 } from 'react-icons/fa';
+import useHomeStore from '../context/store';
 
 const BottomNav = () => {
     const location = useLocation()
     const navigate = useNavigate()
-    const [activeTab, setActiveTab] = useState('home');
+    const {activeTab,setActiveTab}=useHomeStore()
+    // const [activeTab, setActiveTab] = useState('home');
 
     useEffect(() => {
         const path = location.pathname.replace("/", "") // remove leading slash

@@ -11,7 +11,7 @@ import filterAnsweredQuestions from '../utils/filterAnsweredQuestions.jsx';
 const SelectedCategory = lazy(() => import("../components/SelectedCategory.jsx"));
 
 const Explore = () => {
-  const { setCategory, isCategorySelected,setIsCategorySelected,setSelectedCategory,selectedCategory} = useHomeStore()
+  const { isCategorySelected, setIsCategorySelected, setSelectedCategory,setQuestions } = useHomeStore()
   const [categories, setCategories] = useState([])
 
 
@@ -33,8 +33,9 @@ const Explore = () => {
 
   //getting out of the category
   const handleOutCategory = () => {
+    console.log('xodeko la yo category ab')
+    // setQuestions([])
     setIsCategorySelected(false)
-    setCategory({ isCategory: false, value: null })
   }
 
   return (
@@ -53,7 +54,7 @@ const Explore = () => {
 
             {/* Selected Category Content */}
             <div className="flex-1 overflow-y-auto snap-y snap-mandatory custom-scrollbar">
-              <SelectedCategory  />
+              <SelectedCategory />
             </div>
           </div>
         ) : (
@@ -85,7 +86,7 @@ const Explore = () => {
                 ) : (
                   <div className="flex items-center justify-center h-32 md:h-40">
                     <div className="text-center text-gray-500 text-lg md:text-xl">
-                      No categories left
+                      <Loader />
                     </div>
                   </div>
                 )}
@@ -113,12 +114,13 @@ export default Explore;
 
 
 
-const Category = ({c}) => {
-const {setSelectedCategory,setIsCategorySelected}=useHomeStore()
+const Category = ({ c }) => {
+  const { setSelectedCategory, setIsCategorySelected ,selectedCategory} = useHomeStore()
 
   const { name, image, totalquestion } = c;
+
   const handleStart = () => {
-    console.log("selected category", name)
+    console.log("selected category from category",name)
     setSelectedCategory(name)//settinng category
     setIsCategorySelected(true) //toggle
   }
@@ -154,3 +156,16 @@ const {setSelectedCategory,setIsCategorySelected}=useHomeStore()
     </div>
   );
 };
+
+
+
+const Loader = () => {
+  return (
+    <div className="flex items-center justify-center h-full">
+      <div className="relative">
+        <div className="w-12 h-12 border-4 border-indigo-200 dark:border-indigo-800 rounded-full animate-spin"></div>
+        <div className="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin absolute top-0 left-0"></div>
+      </div>
+    </div>
+  )
+}

@@ -3,7 +3,7 @@ import filterAnsweredQuestions from "./FilterAnsweredQuestions";
 import useHomeStore from "../context/store";
 
 export default async function fetchQuestions() {
-  const { BATCH_SIZE, maxReached, setMaxReached, questions = [], answers = [] } = useHomeStore.getState()
+  const { BATCH_SIZE, maxReached, setMaxReached, questions = [], answers = [], isCategorySelected, activeTab, selectedCategory } = useHomeStore.getState()
 
   if (maxReached) return [];
 
@@ -15,6 +15,12 @@ export default async function fetchQuestions() {
     .from("questions")
     .select("*", { count: "exact" })
     .limit(BATCH_SIZE)
+
+  if (isCategorySelected && activeTab === "explore") {
+    console.log('active tab', activeTab)
+    console.log('category is selected buddy', selectedCategory)
+    query = query.eq('category', selectedCategory)
+  }
 
   if (fetchedIds.length > 0) {
     const idsString2 = `(${fetchedIds.join(',')})`;

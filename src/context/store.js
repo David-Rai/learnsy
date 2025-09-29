@@ -18,7 +18,6 @@ const useHomeStore = create((set) => ({
   categories: [],
   // setCategories,
 
-
   //User answers
   answers: [],
   setAnswers: (ans) => set({ answers: ans }),
@@ -46,9 +45,9 @@ const useHomeStore = create((set) => ({
   selectedCategory:null,
   setSelectedCategory:(v)=> set({selectedCategory:v}),
 
-  //Current Category
-  category: { isCategory: false, value: null },
-  setCategory: (v) => set({ category: v })
+  //tabs
+  activeTab:"home",
+  setActiveTab:(t)=> set({activeTab:t})
 
 }));
 
