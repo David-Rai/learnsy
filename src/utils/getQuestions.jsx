@@ -1,6 +1,6 @@
 import useHomeStore from "../context/store"
 import fetchQuestions from "./fetchQuestions"
-import filterAnsweredQuestions from "./FilterAnsweredQuestions"
+import filterAnsweredQuestions from "./filterAnsweredQuestions.jsx"
 
 export default async function getQuestions() {
     const { setQuestions, answers = [], questions = [], isCategorySelected, SelectedCategory, addQuestions } = useHomeStore.getState()
