@@ -37,7 +37,7 @@ const Home = () => {
 
     //checking user
     useEffect(() => {
-        filterAnsweredQuestions()
+        filterAnsweredQuestions()//when questions are present
         checkUserForQuestions()
     }, [])
 

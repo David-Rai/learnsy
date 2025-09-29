@@ -11,7 +11,10 @@ import useHomeStore from '../context/store.js';
 const SelectedCategory = lazy(() => import("../components/SelectedCategory.jsx"));
 
 const Explore = () => {
-  const { isCategorySelected, setIsCategorySelected, setSelectedCategory, setQuestions, setMaxReached } = useHomeStore()
+  const { isCategorySelected,
+    setIsCategorySelected,
+    setSelectedCategory,
+  } = useHomeStore()
   const [categories, setCategories] = useState([])
 
   //get the categories
@@ -123,11 +126,10 @@ const Category = ({ c }) => {
 
   const handleStart = () => {
     console.log("selected", name)
-    setSelectedCategory(name)//settinng category
-
     //add new categories
     addNewCategory(name)
     
+    setSelectedCategory(name)//settinng category
     setIsCategorySelected(true) //toggle
 
 

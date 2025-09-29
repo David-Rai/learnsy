@@ -14,9 +14,10 @@ const useHomeStore = create((set) => ({
   setMaxReached: (val) => set({ maxReached: val }),
 
 
-  //categories
+  //Holds all the categories
   categories: [],
 
+  //Add a new category if not exist here
   addNewCategory: (name, questions = []) =>
     set((state) => {
       if (state.categories.some((c) => c.name === name)) return {};
@@ -28,6 +29,7 @@ const useHomeStore = create((set) => ({
       };
     }),  
 
+    //Update the questions of particular category basis of category.name
   updateCategoryQuestions: (name, newQuestions) =>
     set((state) => ({
       categories: state.categories.map((c) =>
@@ -37,6 +39,7 @@ const useHomeStore = create((set) => ({
       ),
     })),
 
+    //Completely overriding the questions of particular category
   updateCategoryQuestionsCompletely: (name, newQuestions) =>
     set((state) => ({
       categories: state.categories.map((c) =>
@@ -46,6 +49,7 @@ const useHomeStore = create((set) => ({
       ),
     })),
 
+    //Updating the maxReached of particular category
   updateCategoryMaxReached: (name, status) =>
     set((state) => ({
       categories: state.categories.map((c) =>

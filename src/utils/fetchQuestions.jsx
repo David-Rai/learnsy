@@ -7,7 +7,6 @@ export default async function fetchQuestions() {
     setMaxReached,
     questions = [],
     answers = [],
-    addNewCategory,
     updateCategoryQuestions,
     isCategorySelected,
     activeTab,
@@ -16,7 +15,7 @@ export default async function fetchQuestions() {
     categories
   } = useHomeStore.getState()
 
-  //when category is selected
+  //checking if category is selected
   if (isCategorySelected && activeTab === "explore") {
 
     let query = supabase
@@ -41,7 +40,10 @@ export default async function fetchQuestions() {
     }
 
 
+    //Quering into database
     const { data, error, count } = await query
+
+    //error handling
     if (error) {
       console.log(error)
       return []
@@ -55,11 +57,13 @@ export default async function fetchQuestions() {
       updateCategoryMaxReached(selectedCategory, false);
     }
 
-
+     //updating the category
     await updateCategoryQuestions(selectedCategory, data)
     return
   }
 
+
+  //*****if no category is selected*** */
   if (maxReached) return [];
 
 
