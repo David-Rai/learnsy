@@ -1,5 +1,6 @@
 import { checkUser } from '../../utils/checkUser.jsx'
 import React from 'react'
+import Sidebar from '../../components/Sidebar.jsx'
 import BottomNav from '../../components/BottomNav.jsx'
 import { toast, ToastContainer } from 'react-toastify'
 import { useEffect } from 'react'
@@ -53,10 +54,13 @@ const Signin = () => {
   }
 
   return (
-    <main className="h-screen bg-bg flex flex-col justify-center items-center overflow-hidden">
-      
-      <div className="w-full h-[calc(100%-80px)] max-w-md overflow-hidden">
-        {/* Main Form Container */}
+    <main className="h-screen bg-bg flex flex-col md:flex-row justify-center md:justify-start items-center overflow-hidden">
+
+      <Sidebar />
+
+      <main className='w-full h-[calc(100%-80px)] md:h-full md:w-screen md:flex md:items-center md:justify-center'>
+        <div className="w-full h-full max-w-md overflow-hidden">
+          {/* Main Form Container */}
           <div className="p-8">
 
             {/* Logo/Brand */}
@@ -192,11 +196,12 @@ const Signin = () => {
             </div>
 
           </div>
-      </div>
+        </div>
+      </main>
 
 
       {/* <BottomNav/> */}
-      <BottomNav/>
+      <BottomNav />
       <ToastContainer autoClose={100} />
     </main>
   )

@@ -1,4 +1,5 @@
 import { observe } from '../utils/observe.jsx';
+import Sidebar from '../components/Sidebar.jsx';
 import Hintsection from '../components/Hintsection.jsx';
 import React, { useState, useEffect, useRef } from 'react';
 import Loader from '../components/Loader.jsx';
@@ -71,11 +72,12 @@ const Home = () => {
 
     return (
         <>
-            <div className="home custom-scrollbar fixed">
+            <div className="home custom-scrollbar fixed md:flex-row">
+            <Sidebar />
                 {/* Main Content */}
                 <main
                     ref={scrollContain}
-                    className="flex-1 w-full overflow-y-scroll snap-y snap-mandatory">
+                    className="flex-1 md:h-full w-full overflow-y-scroll snap-y snap-mandatory md:w-[calc(100% - 64)]">
 
                     {Array.isArray(questions) && questions.map((q, index) => (
                         <div key={index} className="question-container overflow-hidden">

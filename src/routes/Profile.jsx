@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Sidebar from '../components/Sidebar'
 import avatar from '../../public/profiles/1.jpg'
 import Loader from '../components/Loader'
 import React from 'react'

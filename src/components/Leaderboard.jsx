@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Sidebar from './Sidebar'
 import { Crown, Medal, Trophy, Star, Users, Target, Flame } from 'lucide-react'
 import { getStats } from '../utils/getStats'
 import supabase from '../config/supabase'
@@ -54,10 +55,13 @@ const Leaderboard = () => {
   const otherPlayers = leaders.slice(3)
 
   return (
-    <main className="h-screen bg-bg text-text pb-20">
+    <main className="h-screen bg-bg text-text pb-20 md:flex md:pb-0">
+
+      {/* Sidebar */}
+      <Sidebar />
 
       {/* Main container */}
-      <div className="h-[calc(100vh-80px)] pb-6 overflow-x-hidden custom-scrollbar">
+      <div className="h-[calc(100vh-80px)] md:h-full pb-6 overflow-x-hidden custom-scrollbar w-full">
         {/* Header */}
         <header className="text-center py-6 px-4">
           <div className="flex items-center justify-center gap-3 mb-3">
@@ -182,17 +186,16 @@ const TopPlayer = ({ leader, position, isMobile = false }) => {
     <main className="flex flex-col items-center relative">
       {/* Position Crown/Medal */}
       <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
-        <div className={`bg-[var(--secondary)] rounded-full p-2 border border-[var(--primary)]/30 shadow`}> 
+        <div className={`bg-[var(--secondary)] rounded-full p-2 border border-[var(--primary)]/30 shadow`}>
           <IconComponent className={`w-4 h-4 ${isMobile ? '' : 'md:w-5 md:h-5'} ${config.iconColor}`} />
         </div>
       </div>
 
       {/* Avatar */}
-      <div className={`${
-        isMobile ? config.avatars.mobile : config.avatars.desktop
-      } rounded-full overflow-hidden mb-2 bg-bg shadow-lg`}>
-        <img 
-          src={leader.avatar} 
+      <div className={`${isMobile ? config.avatars.mobile : config.avatars.desktop
+        } rounded-full overflow-hidden mb-2 bg-bg shadow-lg`}>
+        <img
+          src={leader.avatar}
           alt={leader.username}
           className="w-full h-full object-cover"
         />
@@ -214,12 +217,10 @@ const TopPlayer = ({ leader, position, isMobile = false }) => {
       )}
 
       {/* Player Card (just the empty podium block now) */}
-      <div className={`bg-[var(--secondary)] rounded-t-2xl ${
-        isMobile ? config.heights.mobile : config.heights.desktop
-      } ${
-        isMobile ? config.widths.mobile : config.widths.desktop
-      } flex flex-col items-center justify-center relative overflow-hidden border border-[var(--primary)]/30 shadow-sm`}>
-        
+      <div className={`bg-[var(--secondary)] rounded-t-2xl ${isMobile ? config.heights.mobile : config.heights.desktop
+        } ${isMobile ? config.widths.mobile : config.widths.desktop
+        } flex flex-col items-center justify-center relative overflow-hidden border border-[var(--primary)]/30 shadow-sm`}>
+
         {/* Rank Number */}
         <div className="absolute inset-0 flex items-center justify-center">
           <span className={`${isMobile ? 'text-2xl' : 'text-3xl md:text-4xl'} font-bold text-white opacity-90`}>
@@ -253,8 +254,8 @@ const OtherPlayer = ({ leader, position }) => {
     getDetails()
   }, [leader.user_id])
 
-  const accuracy = stats && stats.total_questions > 0 
-    ? (stats.correct_answers / stats.total_questions) * 100 
+  const accuracy = stats && stats.total_questions > 0
+    ? (stats.correct_answers / stats.total_questions) * 100
     : 0
 
   const getAccuracyColor = (accuracy) => {
@@ -272,8 +273,8 @@ const OtherPlayer = ({ leader, position }) => {
 
       {/* Avatar */}
       <div className="flex-shrink-0 w-12 h-12 rounded-full border border-[var(--primary)]/30 overflow-hidden bg-[var(--secondary)]">
-        <img 
-          src={leader.avatar} 
+        <img
+          src={leader.avatar}
           alt={leader.username}
           className="w-full h-full object-cover"
         />

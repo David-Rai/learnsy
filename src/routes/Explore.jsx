@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { lazy } from 'react';
 import { Book } from 'lucide-react';
+import Sidebar from '../components/Sidebar.jsx';
 import supabase from '../config/supabase.js'
 import Hintsection from '../components/Hintsection.jsx';
 import BottomNav from '../components/BottomNav.jsx';
@@ -40,7 +41,10 @@ const Explore = () => {
 
   return (
     <>
-      <main className="h-screen w-full bg-bg flex flex-col overflow-hidden">
+      <main className="h-screen w-full bg-bg flex flex-col overflow-hidden md:flex-row">
+
+        <Sidebar />
+
         {isCategorySelected ? (
           // Selected Category View
           <div className="flex-1 flex flex-col relative overflow-hidden">
