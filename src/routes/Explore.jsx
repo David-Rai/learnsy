@@ -39,7 +39,7 @@ const Explore = () => {
 
   return (
     <>
-      <main className="h-screen w-full bg-bg flex flex-col overflow-hidden md:flex-row">
+      <main className="home custom-scrollbar fixed md:flex-row">
 
         <Sidebar />
 

@@ -11,8 +11,6 @@ import filterAnsweredQuestions from '../utils/filterAnsweredQuestions'
 const SelectedCategory = () => {
   const {
     hintVisible,
-    questions = [],
-    maxReached,
     categories,
     selectedCategory
   }
@@ -36,6 +34,7 @@ const SelectedCategory = () => {
 
   //checking user
   useEffect(() => {
+    console.log("categories",categories)
     filterAnsweredQuestions()
     checkUserForQuestions()//changes the categories
   }, [])

@@ -18,9 +18,15 @@ const useHomeStore = create((set) => ({
   categories: [],
 
   addNewCategory: (name, questions = []) =>
-    set((state) => ({
-      categories: [...state.categories, { name, questions, maxReached: false }],
-    })),
+    set((state) => {
+      if (state.categories.some((c) => c.name === name)) return {};
+      return {
+        categories: [
+          ...state.categories,
+          { name, questions, maxReached: false },
+        ],
+      };
+    }),  
 
   updateCategoryQuestions: (name, newQuestions) =>
     set((state) => ({
@@ -31,15 +37,15 @@ const useHomeStore = create((set) => ({
       ),
     })),
 
-    updateCategoryQuestionsCompletely: (name, newQuestions) =>
-      set((state) => ({
-        categories: state.categories.map((c) =>
-          c.name === name
-            ? { ...c, questions:newQuestions }
-            : c
-        ),
-      })),
-  
+  updateCategoryQuestionsCompletely: (name, newQuestions) =>
+    set((state) => ({
+      categories: state.categories.map((c) =>
+        c.name === name
+          ? { ...c, questions: newQuestions }
+          : c
+      ),
+    })),
+
   updateCategoryMaxReached: (name, status) =>
     set((state) => ({
       categories: state.categories.map((c) =>
@@ -48,7 +54,7 @@ const useHomeStore = create((set) => ({
           : c
       ),
     })),
-    
+
   //User answers
   answers: [],
   setAnswers: (ans) => set({ answers: ans }),

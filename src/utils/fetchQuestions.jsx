@@ -62,8 +62,6 @@ export default async function fetchQuestions() {
 
   if (maxReached) return [];
 
-  // console.log('fetching for home')
-
 
   let totalquestions = [...questions, ...answers]
   // Always safe because we default questions = []

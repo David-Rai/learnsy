@@ -4,7 +4,7 @@ import filterAnsweredQuestions from "./filterAnsweredQuestions.jsx"
 
 export default async function getQuestions() {
     const { setQuestions, answers = [], questions = [], isCategorySelected,
-        selectedCategory, categories, addQuestions, activeTab } = useHomeStore.getState()
+        selectedCategory, categories,  activeTab } = useHomeStore.getState()
 
     if (isCategorySelected && activeTab === "explore") {
         const currentCategory = categories.find(c => c.name === selectedCategory)

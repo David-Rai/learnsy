@@ -18,11 +18,7 @@ const Home = () => {
     const {
         questions = [],
         maxReached,
-        hintVisible,
-        setQuestions,
-        setMaxReached,
-        setIsCategorySelected,
-        answers = []
+        hintVisible
     } = useHomeStore(state => state)
 
     const targetRef = useRef(null);
