@@ -42,7 +42,6 @@ const filterAnsweredQuestions = (data = []) => {
     let unanswered = data.length > 0 ? data.filter(q => !answeredIds.has(q.id)) :
         questions.filter(q => !answeredIds.has(q.id))
 
-        console.log("filtered questions ",answeredIds)
 
     if (unanswered.length > 0) {
         setQuestions(unanswered)

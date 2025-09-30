@@ -4,7 +4,6 @@ import fetchFilteredQuestions from './fetchFilteredQuestions'
 //function
 export default async function removePreviousQuestions() {
     const { user, setQuestions, answers = [], questions = [] } = useHomeStore.getState()
-    const { id } = user
 
     if (questions.length > 0) return
 

@@ -87,8 +87,8 @@ export default async function fetchQuestions() {
   }
 
 
-  console.log("previous data",questions)
-  console.log("fetched data for homie",data)
+  // console.log("previous data",questions)
+  // console.log("fetched data for homie",data)
 
   if (data) return data;
 
