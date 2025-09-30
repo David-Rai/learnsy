@@ -14,6 +14,8 @@ const Explore = () => {
   const { isCategorySelected,
     setIsCategorySelected,
     setSelectedCategory,
+     setHintVisible,
+    hintVisible
   } = useHomeStore()
   const [categories, setCategories] = useState([])
 
@@ -35,7 +37,9 @@ const Explore = () => {
 
   //getting out of the category
   const handleOutCategory = () => {
-    console.log('remove category')
+    if(hintVisible){
+      setHintVisible(false)
+    }
     setIsCategorySelected(false)
     setSelectedCategory(null)
   }
@@ -125,10 +129,8 @@ const Category = ({ c }) => {
   const { name, image, totalquestion } = c;
 
   const handleStart = () => {
-    console.log("selected", name)
     //add new categories
     addNewCategory(name)
-    
     setSelectedCategory(name)//settinng category
     setIsCategorySelected(true) //toggle
 
@@ -138,7 +140,9 @@ const Category = ({ c }) => {
   return (
     <div className="flex flex-col w-full md:w-[20%]
      h-[250px] overflow-hidden rounded-2xl
-      bg-gray-800 shadow-lg transition-transform hover:scale-105"
+      bg-gray-800 shadow-lg transition-transform hover:scale-105
+      cursor-pointer
+      "
       onClick={handleStart}
     >
 

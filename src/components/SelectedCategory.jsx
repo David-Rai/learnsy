@@ -7,6 +7,7 @@ import { useState, useEffect, useRef } from 'react'
 import SocialIcons from './SocialIcons'
 import checkUserForQuestions from '../utils/checkUserForQuestions'
 import filterAnsweredQuestions from '../utils/filterAnsweredQuestions'
+import CompletedAll from './CompletedAll'
 
 const SelectedCategory = () => {
   const {
@@ -20,7 +21,7 @@ const SelectedCategory = () => {
   const scrollContain = useRef(null)
   const currentCategory = categories.find(c => c.name === selectedCategory);
   const currentQuestions = currentCategory?.questions || [];
-  
+
   //Stoping scrolling on hint container toggle
   useEffect(() => {
     // console.log(scrollContain)
@@ -34,7 +35,7 @@ const SelectedCategory = () => {
 
   //checking user
   useEffect(() => {
-    console.log("categories",categories)
+    console.log("categories", categories)
     filterAnsweredQuestions()
     checkUserForQuestions()//changes the categories
   }, [])
@@ -53,17 +54,18 @@ const SelectedCategory = () => {
 
   }, [currentQuestions, currentCategory.maxReached]);
 
-
-  // if (maxReached) {
-  //   // alert("done")
-  // }
-
   // Loading state
   if (currentQuestions.length === 0) {
+    if (currentCategory?.maxReached) {
+      return (
+        <CompletedAll />
+      )
+    }
     return (
       <Loader />
     )
   }
+
   return (
     <>
       {Array.isArray(currentQuestions) &&

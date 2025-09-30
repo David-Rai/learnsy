@@ -27,9 +27,7 @@ const filterAnsweredQuestions = (data = []) => {
         let unanswered = data.length > 0 ? data.filter(q => !answeredIds.has(q.id))
             : currentCategory?.questions.filter(q => !answeredIds.has(q.id))
 
-
             updateCategoryQuestionsCompletely(selectedCategory, unanswered);
-
         return
     }
 
@@ -40,11 +38,12 @@ const filterAnsweredQuestions = (data = []) => {
         return
     }
 
-
     //filtering the questions
     const answeredIds = new Set(answers.map(a => a.id));
     let unanswered = data.length > 0 ? data.filter(q => !answeredIds.has(q.id)) :
         questions.filter(q => !answeredIds.has(q.id))
+
+        console.log("filtered questions ",answeredIds)
 
     if (unanswered.length > 0) {
         setQuestions(unanswered)

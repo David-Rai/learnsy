@@ -85,11 +85,13 @@ export default async function fetchQuestions() {
   const { data, error, count } = await query
 
   if (questions.length === count || count === 0) {
-    console.log("max reached");
+    console.log("max reached for questions");
     setMaxReached(true);
   } else {
     setMaxReached(false);
   }
+
+  console.log("fetched data for homie",data)
 
   if (data) return data;
 

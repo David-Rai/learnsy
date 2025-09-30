@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+*{
+    /* font-family: "Inter"; */
+}
 :root {
     /* --bg: #000000; */
     --bg: oklch(12.9% 0.042 264.695);
