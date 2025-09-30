@@ -35,7 +35,7 @@ const SelectedCategory = () => {
 
   //checking user
   useEffect(() => {
-    console.log("categories", categories)
+    // console.log("categories", categories)
     filterAnsweredQuestions()
     checkUserForQuestions()//changes the categories
   }, [])

@@ -121,8 +121,6 @@ const Category = ({ c }) => {
     addNewCategory(name)
     setSelectedCategory(name)//settinng category
     setIsCategorySelected(true) //toggle
-
-
   }
 
   return (

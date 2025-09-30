@@ -19,11 +19,8 @@ export const observe = () => {
                         nextQuestions = await fetchQuestions() || [];
                     }
 
-                    if (!isCategorySelected && activeTab === "home") {
                         const final = [...questions, ...nextQuestions]
                         setQuestions(final);
-
-                    }
                 }
             });
         },

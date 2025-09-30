@@ -32,7 +32,6 @@ const filterAnsweredQuestions = (data = []) => {
     }
 
     //No category selected
-
     if (questions.length === 0) {
         setQuestions(data)
         return

@@ -17,7 +17,7 @@ export default async function getQuestions() {
     if (isCategorySelected && activeTab === "explore") {
         const currentCategory = categories.find(c => c.name === selectedCategory)
         if (currentCategory?.questions.length > 0) return
-        fetchQuestions()
+       await fetchQuestions()
         return
     }
 

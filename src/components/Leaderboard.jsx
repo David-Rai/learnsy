@@ -5,7 +5,7 @@ import { getStats } from '../utils/getStats'
 import supabase from '../config/supabase'
 import BottomNav from './BottomNav'
 import Loader from './Loader'
-import LeaderboardLoader from './LeaderBoardLeader'
+import LeaderboardLoader from './LeaderBoardLoader'
 
 const Leaderboard = () => {
   const [leaders, setLeaders] = useState([])

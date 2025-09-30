@@ -24,7 +24,6 @@ export default async function fetchQuestions() {
       .limit(BATCH_SIZE)
       .eq('category', selectedCategory)
 
-
     const currentCategory = categories.find(c => c.name === selectedCategory);
     const questionsIds = currentCategory?.questions
 
@@ -50,13 +49,11 @@ export default async function fetchQuestions() {
     }
 
 
-    if (currentCategory?.questions.length === count || count === 0) {
-      console.log("max reached");
+    if (data.length < BATCH_SIZE) {
+      console.log('max reached from category')
       updateCategoryMaxReached(selectedCategory, true);
-    } else {
-      updateCategoryMaxReached(selectedCategory, false);
     }
-
+    
      //updating the category
     await updateCategoryQuestions(selectedCategory, data)
     return
@@ -84,13 +81,13 @@ export default async function fetchQuestions() {
 
   const { data, error, count } = await query
 
-  if (questions.length === count || count === 0) {
+  if(data.length < BATCH_SIZE){
     console.log("max reached for questions");
     setMaxReached(true);
-  } else {
-    setMaxReached(false);
   }
 
+
+  console.log("previous data",questions)
   console.log("fetched data for homie",data)
 
   if (data) return data;

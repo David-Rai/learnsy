@@ -35,12 +35,13 @@ const Home = () => {
         }
     }, [hintVisible])//dependency
 
-    //checking user
     useEffect(() => {
-        filterAnsweredQuestions()//when questions are present
-        checkUserForQuestions()
-    }, [])
-
+        console.log("again home")
+        const { questions, selectedCategory } = useHomeStore.getState();
+        filterAnsweredQuestions(questions);
+        checkUserForQuestions();
+    }, [useHomeStore(state => state.selectedCategory)])
+    
     // Intersection Observer
     useEffect(() => {
         if (maxReached) return
