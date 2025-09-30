@@ -5,7 +5,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import Loader from '../components/Loader.jsx';
 import { Suspense, lazy } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
-import supabase from '../config/supabase.js'
 import SocialIcons from "../components/SocialIcons";
 import Question from '../utils/Question.jsx';
 import useHomeStore from '../context/store.js'
@@ -36,11 +35,10 @@ const Home = () => {
     }, [hintVisible])//dependency
 
     useEffect(() => {
-        console.log("again home")
-        const { questions, selectedCategory } = useHomeStore.getState();
+        const { questions=[] } = useHomeStore.getState();
+        if(questions.length===0) return checkUserForQuestions();
         filterAnsweredQuestions(questions);
-        checkUserForQuestions();
-    }, [useHomeStore(state => state.selectedCategory)])
+    },[])
     
     // Intersection Observer
     useEffect(() => {
@@ -54,11 +52,6 @@ const Home = () => {
             if (targetRef.current) observer.unobserve(targetRef.current);
         };
     }, [questions, maxReached]);
-
-
-    if (maxReached) {
-        // alert("done")
-    }
 
     // Loading state
     if (questions.length === 0) {

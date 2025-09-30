@@ -49,7 +49,7 @@ const CompletedAll = () => {
         </div>
       </main>
       
-      <BottomNav />
+      {/* <BottomNav /> */}
       <ToastContainer />
     </div>
   );
