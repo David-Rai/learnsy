@@ -15,14 +15,39 @@ const BottomNav = lazy(() => import("../components/BottomNav"));
 
 const Home = () => {
     const {
-        questions = [],
-        maxReached,
-        hintVisible
+        hintVisible,
+        categories = [],
+        addNewCategory,
+        setSelectedCategory,
+        answers=[],
+        selectedCategory,
+        setIsCategorySelected,
+        updateCategoryQuestions,
+        updateCategoryQuestionsCompletely
     } = useHomeStore(state => state)
 
     const targetRef = useRef(null);
     const scrollContain = useRef(null)
+    const currentCategory = categories.find(c => c.name === "home");
+    const currentQuestions = currentCategory?.questions || [];
 
+
+    
+    useEffect(() => {
+        //adding new category if not exist yet
+        addNewCategory('home')
+        setSelectedCategory('home')//home is selected now
+
+        //checking if answered
+        if(answers.length > 0){
+        filterAnsweredQuestions(currentQuestions)
+        }
+
+        //fetching the questions
+        checkUserForQuestions()
+    }, [])
+
+    
     //Stoping scrolling on hint container toggle
     useEffect(() => {
         // console.log(scrollContain)
@@ -34,15 +59,10 @@ const Home = () => {
         }
     }, [hintVisible])//dependency
 
-    useEffect(() => {
-        const { questions=[] } = useHomeStore.getState();
-        if(questions.length===0) return checkUserForQuestions();
-        filterAnsweredQuestions(questions);
-    },[])
-    
+
     // Intersection Observer
     useEffect(() => {
-        if (maxReached) return
+        if (currentCategory?.maxReached) return
         const observer = observe()
         if (targetRef.current) {
             observer.observe(targetRef.current)
@@ -51,10 +71,10 @@ const Home = () => {
         return () => {
             if (targetRef.current) observer.unobserve(targetRef.current);
         };
-    }, [questions, maxReached]);
+    }, [currentQuestions, currentCategory?.maxReached]);
 
     // Loading state
-    if (questions.length === 0) {
+    if (currentQuestions.length === 0) {
         return (
             <Loader />
         )
@@ -69,7 +89,7 @@ const Home = () => {
                     ref={scrollContain}
                     className="flex-1 md:h-full w-full overflow-y-scroll snap-y snap-mandatory md:w-[calc(100% - 64)]">
 
-                    {Array.isArray(questions) && questions.map((q, index) => (
+                    {Array.isArray(currentQuestions) && currentQuestions.map((q, index) => (
                         <div key={index} className="question-container overflow-hidden">
 
                             {/* Question */}
@@ -79,7 +99,7 @@ const Home = () => {
                             <SocialIcons q={q} />
 
                             {/* Observer */}
-                            {index === questions.length - 2 && <div ref={targetRef}></div>}
+                            {index === currentQuestions.length - 2 && <div ref={targetRef}></div>}
                         </div>
                     ))}
 

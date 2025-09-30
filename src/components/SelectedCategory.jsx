@@ -11,16 +11,33 @@ import CompletedAll from './CompletedAll'
 
 const SelectedCategory = () => {
   const {
+    answers = [],
     hintVisible,
     categories,
-    selectedCategory
+    setSelectedCategory,
+    explorePageCategory
   }
     = useHomeStore()
 
   const targetRef = useRef(null);
   const scrollContain = useRef(null)
-  const currentCategory = categories.find(c => c.name === selectedCategory);
+  const currentCategory = categories.find(c => c.name === explorePageCategory.value);
   const currentQuestions = currentCategory?.questions || [];
+
+  useEffect(() => {
+    //setting the categories
+    setSelectedCategory(explorePageCategory.value)
+
+    //checking if answered
+    if (answers.length > 0) {
+      filterAnsweredQuestions(currentQuestions)
+    }
+
+    //fetching the questions
+    checkUserForQuestions()
+  }, [])
+
+
 
   //Stoping scrolling on hint container toggle
   useEffect(() => {
@@ -32,13 +49,6 @@ const SelectedCategory = () => {
       scrollContain.current.style.overflow = "auto"
     }
   }, [hintVisible])//dependency
-
-  //checking user
-  useEffect(() => {
-    // console.log("categories", categories)
-    filterAnsweredQuestions()
-    checkUserForQuestions()//changes the categories
-  }, [])
 
   // Intersection Observer
   useEffect(() => {

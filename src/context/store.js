@@ -5,15 +5,6 @@ import SelectedCategory from '../components/SelectedCategory';
 const useHomeStore = create((set) => ({
   BATCH_SIZE: 5,
 
-  //questions
-  questions: [],
-  setQuestions: (qs) => set({ questions: qs }),
-
-  //max reached
-  maxReached: false,
-  setMaxReached: (val) => set({ maxReached: val }),
-
-
   //Holds all the categories
   categories: [],
 
@@ -85,6 +76,11 @@ const useHomeStore = create((set) => ({
   setIsCategorySelected: (v) => set({ isCategorySelected: v }),
   selectedCategory: null,
   setSelectedCategory: (v) => set({ selectedCategory: v }),
+
+  
+  //explore page category
+  explorePageCategory: { isOpen: false, value: null },
+  setExplorePageCategory: (c) => set({ explorePageCategory: c }),
 
   //tabs
   activeTab: "home",

@@ -9,7 +9,7 @@ import useHomeStore from '../context/store.js';
 const SelectedCategory = lazy(() => import("../components/SelectedCategory.jsx"));
 
 const Explore = () => {
-  const { isCategorySelected, setIsCategorySelected, setSelectedCategory, setHintVisible, hintVisible } = useHomeStore();
+  const { setExplorePageCategory, explorePageCategory, setSelectedCategory, setHintVisible, hintVisible } = useHomeStore();
   const [categories, setCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState(""); // state for search
 
@@ -36,7 +36,7 @@ const Explore = () => {
     if (hintVisible) {
       setHintVisible(false);
     }
-    setIsCategorySelected(false);
+    setExplorePageCategory({ isOpen: false, value: null });
     setSelectedCategory(null);
   };
 
@@ -44,7 +44,7 @@ const Explore = () => {
     <main className="home custom-scrollbar fixed md:flex-row">
       <Sidebar />
 
-      {isCategorySelected ? (
+      {explorePageCategory.isOpen ? (
         // Selected Category View
         <div className="flex-1 flex flex-col relative overflow-hidden">
           <nav className="absolute top-4 left-4 z-10 md:top-6 md:left-6">
@@ -112,7 +112,7 @@ export default Explore;
 
 
 const Category = ({ c }) => {
-  const { setSelectedCategory, setIsCategorySelected, addNewCategory } = useHomeStore()
+  const { setSelectedCategory, setExplorePageCategory, addNewCategory } = useHomeStore()
 
   const { name, image, totalquestion } = c;
 
@@ -120,7 +120,7 @@ const Category = ({ c }) => {
     //add new categories
     addNewCategory(name)
     setSelectedCategory(name)//settinng category
-    setIsCategorySelected(true) //toggle
+    setExplorePageCategory({ isOpen: true, value: name })
   }
 
   return (
