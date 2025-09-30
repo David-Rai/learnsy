@@ -1,123 +1,111 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { lazy } from 'react';
-import { Book } from 'lucide-react';
+import React, { useState, useEffect, lazy } from 'react';
+import { Book, ChevronLeft } from 'lucide-react';
 import Sidebar from '../components/Sidebar.jsx';
-import supabase from '../config/supabase.js'
+import supabase from '../config/supabase.js';
 import Hintsection from '../components/Hintsection.jsx';
 import BottomNav from '../components/BottomNav.jsx';
-import { ChevronLeft } from 'lucide-react'
 import useHomeStore from '../context/store.js';
 
 const SelectedCategory = lazy(() => import("../components/SelectedCategory.jsx"));
 
 const Explore = () => {
-  const { isCategorySelected,
-    setIsCategorySelected,
-    setSelectedCategory,
-     setHintVisible,
-    hintVisible
-  } = useHomeStore()
-  const [categories, setCategories] = useState([])
+  const { isCategorySelected, setIsCategorySelected, setSelectedCategory, setHintVisible, hintVisible } = useHomeStore();
+  const [categories, setCategories] = useState([]);
+  const [searchTerm, setSearchTerm] = useState(""); // state for search
 
-  //get the categories
+  // fetch categories
   useEffect(() => {
-    // filterAnsweredQuestions()
     const get = async () => {
-      const { error, data } = await supabase.rpc('get_categories_with_count')
-
+      const { error, data } = await supabase.rpc('get_categories_with_count');
       if (error) {
-        console.error('Error fetching categories:', error)
-        return setCategories([])
+        console.error('Error fetching categories:', error);
+        return setCategories([]);
       }
+      setCategories(data);
+    };
+    get();
+  }, []);
 
-      setCategories(data)
-    }
-    get()
-  }, [])
+  // filter categories based on search term
+  const filteredCategories = categories.filter((c) =>
+    c.name?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-  //getting out of the category
+  // handle back out of category
   const handleOutCategory = () => {
-    if(hintVisible){
-      setHintVisible(false)
+    if (hintVisible) {
+      setHintVisible(false);
     }
-    setIsCategorySelected(false)
-    setSelectedCategory(null)
-  }
+    setIsCategorySelected(false);
+    setSelectedCategory(null);
+  };
 
   return (
-    <>
-      <main className="home custom-scrollbar fixed md:flex-row">
+    <main className="home custom-scrollbar fixed md:flex-row">
+      <Sidebar />
 
-        <Sidebar />
-
-        {isCategorySelected ? (
-          // Selected Category View
-          <div className="flex-1 flex flex-col relative overflow-hidden">
-            {/* Top Navigation */}
-            <nav className="absolute top-4 left-4 z-10 md:top-6 md:left-6">
-              <ChevronLeft
-                className="text-text cursor-pointer w-6 h-6 md:w-8 md:h-8"
-                onClick={handleOutCategory}
+      {isCategorySelected ? (
+        // Selected Category View
+        <div className="flex-1 flex flex-col relative overflow-hidden">
+          <nav className="absolute top-4 left-4 z-10 md:top-6 md:left-6">
+            <ChevronLeft
+              className="text-text cursor-pointer w-6 h-6 md:w-8 md:h-8"
+              onClick={handleOutCategory}
+            />
+          </nav>
+          <div className="flex-1 overflow-y-auto snap-y snap-mandatory custom-scrollbar">
+            <SelectedCategory />
+          </div>
+        </div>
+      ) : (
+        // Main Categories View
+        <div className="flex-1 flex flex-col overflow-hidden">
+          {/* Search Bar */}
+          <header className="flex-shrink-0 bg-secondary px-4 py-4 md:py-6">
+            <div className="max-w-2xl mx-auto">
+              <input
+                type="text"
+                placeholder="Search"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)} // update search term
+                className="w-full px-4 py-3 rounded-md border border-gray-600 text-white bg-bg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
               />
-            </nav>
-
-            {/* Selected Category Content */}
-            <div className="flex-1 overflow-y-auto snap-y snap-mandatory custom-scrollbar">
-              <SelectedCategory />
             </div>
-          </div>
-        ) : (
-          // Main Categories View
-          <div className="flex-1 flex flex-col overflow-hidden">
-            {/* Search Bar */}
-            <header className="flex-shrink-0 bg-secondary px-4 py-4 md:py-6">
-              <div className="max-w-2xl mx-auto">
-                <input
-                  type="text"
-                  placeholder="Search"
-                  className="w-full px-4 py-3 rounded-md border border-gray-600 text-white bg-bg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
-                />
-              </div>
-            </header>
+          </header>
 
-            {/* Categories Section */}
-            <section className="flex-1 overflow-y-auto custom-scrollbar">
-              <div className="p-4 md:p-6">
-                {categories.length > 0 ? (
-                  <div className="flex flex-wrap gap-3 md:gap-4 justify-center max-w-6xl mx-auto">
-                    {categories.map((c, index) => (
-                      <Category
-                        c={c}
-                        key={c.id || index}
-                      />
-                    ))}
+          {/* Categories Section */}
+          <section className="flex-1 overflow-y-auto custom-scrollbar">
+            <div className="p-4 md:p-6">
+              {filteredCategories.length > 0 ? (
+                <div className="flex flex-wrap gap-3 md:gap-4 justify-center max-w-6xl mx-auto">
+                  {filteredCategories.map((c, index) => (
+                    <Category c={c} key={c.id || index} />
+                  ))}
+                </div>
+              ) : (
+                <div className="flex items-center justify-center h-32 md:h-40">
+                  <div className="text-center text-gray-500 text-lg md:text-xl">
+                    No categories found
                   </div>
-                ) : (
-                  <div className="flex items-center justify-center h-32 md:h-40">
-                    <div className="text-center text-gray-500 text-lg md:text-xl">
-                      <Loader />
-                    </div>
-                  </div>
-                )}
-              </div>
-            </section>
-          </div>
-        )}
-
-        {/* Hint Section */}
-        <div className="flex-shrink-0">
-          <Hintsection />
+                </div>
+              )}
+            </div>
+          </section>
         </div>
+      )}
 
-        {/* Bottom Navigation */}
-        <div className="flex-shrink-0">
-          <BottomNav />
-        </div>
-      </main>
-    </>
+      {/* Hint Section */}
+      <div className="flex-shrink-0">
+        <Hintsection />
+      </div>
+
+      {/* Bottom Navigation */}
+      <div className="flex-shrink-0">
+        <BottomNav />
+      </div>
+    </main>
   );
 };
-
 
 export default Explore;
 
