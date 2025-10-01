@@ -119,7 +119,7 @@ const Profile = () => {
                   />
                 </div>
                 <h2 className="text-2xl md:text-3xl font-bold mt-4 mb-1 text-center lg:text-left">
-                  {user?.user_metadata?.username || 'Anonymous'}
+                  {user?.user_metadata?.username || user?.user_metadata?.full_name || 'Anonymous'}
                 </h2>
                 <p className="text-gray-400 text-lg text-center lg:text-left">Rank #{stats?.rank || 'N/A'}</p>
               </div>

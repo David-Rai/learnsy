@@ -1,4 +1,5 @@
 import React from 'react'
+import supabase from './config/supabase.js'
 import { createRoot } from 'react-dom/client'
 import Progress from './routes/Progress.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router'
@@ -10,6 +11,7 @@ import Explore from './routes/Explore.jsx'
 import Leaderboard from './components/Leaderboard.jsx'
 import Signup from './routes/auth/Signup.jsx'
 import SelectedCategory from './components/SelectedCategory.jsx'
+import useHomeStore from './context/store.js'
 
 
 const router = createBrowserRouter([
@@ -33,7 +35,7 @@ const router = createBrowserRouter([
   {
     path: '/explore',
     element: <Explore />
-  }  ,
+  },
   {
     path: '/explore/:category',
     element: <SelectedCategory />
@@ -50,5 +52,5 @@ const router = createBrowserRouter([
 
 
 createRoot(document.getElementById('root')).render(
-    <RouterProvider router={router} />
+  <RouterProvider router={router} />
 )

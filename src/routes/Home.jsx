@@ -1,5 +1,6 @@
 import { observe } from '../utils/observe.jsx';
 import Sidebar from '../components/Sidebar.jsx';
+import supabase from '../config/supabase.js';
 import Hintsection from '../components/Hintsection.jsx';
 import React, { useState, useEffect, useRef } from 'react';
 import Loader from '../components/Loader.jsx';
@@ -10,6 +11,7 @@ import Question from '../utils/Question.jsx';
 import useHomeStore from '../context/store.js'
 import checkUserForQuestions from '../utils/checkUserForQuestions.jsx';
 import filterAnsweredQuestions from '../utils/filterAnsweredQuestions.jsx';
+import insertUserIfFirstLogin from '../utils/insertUserIfNewUser.jsx';
 
 const BottomNav = lazy(() => import("../components/BottomNav"));
 
@@ -19,11 +21,7 @@ const Home = () => {
         categories = [],
         addNewCategory,
         setSelectedCategory,
-        answers=[],
-        selectedCategory,
-        setIsCategorySelected,
-        updateCategoryQuestions,
-        updateCategoryQuestionsCompletely
+        answers = [],
     } = useHomeStore(state => state)
 
     const targetRef = useRef(null);
@@ -32,22 +30,25 @@ const Home = () => {
     const currentQuestions = currentCategory?.questions || [];
 
 
-    
+
     useEffect(() => {
+        //checking if user exist and provider is google 
+        insertUserIfFirstLogin()
+
         //adding new category if not exist yet
         addNewCategory('home')
         setSelectedCategory('home')//home is selected now
 
         //checking if answered
-        if(answers.length > 0){
-        filterAnsweredQuestions(currentQuestions)
+        if (answers.length > 0) {
+            filterAnsweredQuestions(currentQuestions)
         }
 
         //fetching the questions
         checkUserForQuestions()
     }, [])
 
-    
+
     //Stoping scrolling on hint container toggle
     useEffect(() => {
         // console.log(scrollContain)
