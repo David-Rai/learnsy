@@ -12,7 +12,7 @@ const randomAvatar = getRandomAvatar();
 //random images
 function getRandomAvatar() {
   const num = Math.floor(Math.random() * 5) + 1; // generates 1 to 5
-  return avatars[num];
+  return avatars[num - 1];
 }
 
 
