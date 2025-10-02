@@ -72,8 +72,8 @@ const useHomeStore = create((set) => ({
 
 
   //Explore page category selection
-  isCategorySelected: false,
-  setIsCategorySelected: (v) => set({ isCategorySelected: v }),
+  // isCategorySelected: false,
+  // setIsCategorySelected: (v) => set({ isCategorySelected: v }),
   selectedCategory: null,
   setSelectedCategory: (v) => set({ selectedCategory: v }),
 

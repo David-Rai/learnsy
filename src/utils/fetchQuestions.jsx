@@ -17,6 +17,7 @@ export default async function fetchQuestions() {
     .select("*", { count: "exact" })
     .limit(BATCH_SIZE)
 
+    //no home route then
   if (selectedCategory !== 'home') {
     query = query.eq('category', selectedCategory)
   }
