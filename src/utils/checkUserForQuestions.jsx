@@ -5,17 +5,19 @@ import getQuestions from "./getQuestions";
 
 // Accept setUser as a parameter
 const checkUserForQuestions = async () => {
-  const { setUser  } = useHomeStore.getState()
-  const { data: { user }, error } = await supabase.auth.getUser()
 
-  if (user?.id) {
-    setUser(user)
-    console.log("user existed")
-    removePreviousQuestions()
-  } else {
-    console.log("new user")
-    getQuestions()
-  }
+
+  //getting questions for initail
+  getQuestions()
+
+  // if (user?.id) {
+  //   setUser(user)
+  //   console.log("user existed")
+  //   removePreviousQuestions()
+  // } else {
+  //   console.log("new user")
+  //   getQuestions()
+  // }
 }
 
 

@@ -7,43 +7,47 @@ const useHomeStore = create((set) => ({
 
   //Holds all the categories
   categories: [],
+  setCategories: (c) => set({ categories: c }),
+
+  //****Lessons container**** */
+  lessons: [],
 
   //Add a new category if not exist here
-  addNewCategory: (name, questions = []) =>
+  addNewLesson: (name, questions = [], c) =>
     set((state) => {
-      if (state.categories.some((c) => c.name === name)) return {};
+      if (state.lessons.some((c) => c.name === name)) return {};
       return {
-        categories: [
-          ...state.categories,
-          { name, questions, maxReached: false },
+        lessons: [
+          ...state.lessons,
+          { name, questions, maxReached: false, category: c },
         ],
       };
-    }),  
+    }),
 
-    //Update the questions of particular category basis of category.name
-  updateCategoryQuestions: (name, newQuestions) =>
+  //Update the questions of particular category basis of category.name
+  updateLessonQuestions: (name, newQuestions) =>
     set((state) => ({
-      categories: state.categories.map((c) =>
+      lessons: state.lessons.map((c) =>
         c.name === name
           ? { ...c, questions: [...c.questions, ...newQuestions] }
           : c
       ),
     })),
 
-    //Completely overriding the questions of particular category
-  updateCategoryQuestionsCompletely: (name, newQuestions) =>
+  //Completely overriding the questions of particular category
+  updateLessonQuestionsCompletely: (name, newQuestions) =>
     set((state) => ({
-      categories: state.categories.map((c) =>
+      lessons: state.lessons.map((c) =>
         c.name === name
           ? { ...c, questions: newQuestions }
           : c
       ),
     })),
 
-    //Updating the maxReached of particular category
-  updateCategoryMaxReached: (name, status) =>
+  //Updating the maxReached of particular category
+  updateLessonMaxReached: (name, status) =>
     set((state) => ({
-      categories: state.categories.map((c) =>
+      lessons: state.lessons.map((c) =>
         c.name === name
           ? { ...c, maxReached: status }  // update maxReached
           : c
@@ -71,16 +75,20 @@ const useHomeStore = create((set) => ({
   setUser: (userData => set({ user: userData })),
 
 
-  //Explore page category selection
-  // isCategorySelected: false,
-  // setIsCategorySelected: (v) => set({ isCategorySelected: v }),
-  selectedCategory: null,
-  setSelectedCategory: (v) => set({ selectedCategory: v }),
+  //Current selected options state here
+  currentLesson: {
+    isSelected: false,
+    name: null
+  },
+  setCurrentLesson: (s) => set({ currentLesson: s }),
 
-  
-  //explore page category
-  explorePageCategory: { isOpen: false, value: null },
-  setExplorePageCategory: (c) => set({ explorePageCategory: c }),
+  //Selected category state here
+  currentCategory: {
+    isSelected: false,
+    name: null,
+    lessonOptions: []
+  },
+  setCurrentCategory: (s) => set({ currentCategory: s }),
 
   //tabs
   activeTab: "home",

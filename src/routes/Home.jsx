@@ -17,34 +17,31 @@ const BottomNav = lazy(() => import("../components/BottomNav"));
 
 const Home = () => {
     const {
+        lessons = [],
         hintVisible,
-        categories = [],
-        addNewCategory,
-        setSelectedCategory,
         answers = [],
+        currentLesson,
+        currentCategory,
+        setCurrentLesson,
+        setCurrentCategory
     } = useHomeStore(state => state)
 
     const targetRef = useRef(null);
     const scrollContain = useRef(null)
-    const currentCategory = categories.find(c => c.name === "home");
-    const currentQuestions = currentCategory?.questions || [];
-
-
+    const currentSelectedLesson = lessons.find(l => l.name === currentLesson.name)
+    const currentQuestions = currentSelectedLesson?.questions || []
 
     useEffect(() => {
         //checking if user exist and provider is google 
+        console.log("home page render")
         insertUserIfFirstLogin()
 
-        //adding new category if not exist yet
-        addNewCategory('home')
-        setSelectedCategory('home')//home is selected now
-
-        //checking if answered
+        // checking if answered
         if (answers.length > 0) {
             filterAnsweredQuestions(currentQuestions)
         }
 
-        //fetching the questions
+        //fetching the questions for initialss
         checkUserForQuestions()
     }, [])
 
@@ -63,7 +60,7 @@ const Home = () => {
 
     // Intersection Observer
     useEffect(() => {
-        if (currentCategory?.maxReached) return
+        if (currentSelectedLesson?.maxReached) return
         const observer = observe()
         if (targetRef.current) {
             observer.observe(targetRef.current)
@@ -72,7 +69,7 @@ const Home = () => {
         return () => {
             if (targetRef.current) observer.unobserve(targetRef.current);
         };
-    }, [currentQuestions, currentCategory?.maxReached]);
+    }, [currentQuestions, currentSelectedLesson?.maxReached]);
 
     // Loading state
     if (currentQuestions.length === 0) {

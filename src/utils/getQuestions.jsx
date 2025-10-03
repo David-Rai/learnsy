@@ -5,14 +5,15 @@ import filterAnsweredQuestions from "./filterAnsweredQuestions.jsx"
 //Initial questions
 export default async function getQuestions() {
     const {
-        answers = [],
-        selectedCategory,
-        categories = [],
+        lessons = [],
+        currentLesson
     } = useHomeStore.getState()
 
-    //current selected category
-    const currentCategory = categories.find(c => c.name === selectedCategory)
-    if (currentCategory?.questions.length > 0) return
-    await fetchQuestions()
+    const selectedLesson = lessons.find(l => l.name === currentLesson.name)
+
+    if (selectedLesson.questions.length > 0) return console.log("no intila fetch questions")
+
+    //fetching questions
+    fetchQuestions()
 }
 

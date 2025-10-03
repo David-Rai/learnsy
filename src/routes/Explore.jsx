@@ -1,5 +1,9 @@
 import React, { useState, useEffect, lazy } from 'react';
+import LessonOptions from '../components/LessonOptions.jsx';
+import Category from '../components/Category.jsx';
 import { Book, ChevronLeft } from 'lucide-react';
+import { ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import Sidebar from '../components/Sidebar.jsx';
 import supabase from '../config/supabase.js';
 import Hintsection from '../components/Hintsection.jsx';
@@ -9,8 +13,19 @@ import useHomeStore from '../context/store.js';
 const SelectedCategory = lazy(() => import("../components/SelectedCategory.jsx"));
 
 const Explore = () => {
-  const { setExplorePageCategory, explorePageCategory, setSelectedCategory, setHintVisible, hintVisible } = useHomeStore();
-  const [categories, setCategories] = useState([]);
+  const {
+    lessons = [],
+    setLessons,
+    setCategories,
+    categories = [],
+    setHintVisible,
+    hintVisible,
+    currentCategory,
+    setCurrentCategory,
+    currentLesson,
+    setCurrentLesson
+  } = useHomeStore();
+
   const [searchTerm, setSearchTerm] = useState(""); // state for search
 
   // fetch categories
@@ -33,32 +48,19 @@ const Explore = () => {
 
   // handle back out of category
   const handleOutCategory = () => {
-    if (hintVisible) {
-      setHintVisible(false);
-    }
-    setExplorePageCategory({ isOpen: false, value: null });
-    setSelectedCategory(null);
-  };
-
+  
+  }
+  
   return (
     <main className="home custom-scrollbar fixed md:flex-row">
       <Sidebar />
 
-      {explorePageCategory.isOpen ? (
-        // Selected Category View
+      {currentCategory.isSelected ? (
         <div className="flex-1 flex flex-col relative overflow-hidden">
-          <nav className="absolute top-4 left-4 z-10 md:top-6 md:left-6">
-            <ChevronLeft
-              className="text-text cursor-pointer w-6 h-6 md:w-8 md:h-8"
-              onClick={handleOutCategory}
-            />
-          </nav>
-          <div className="flex-1 overflow-y-auto snap-y snap-mandatory custom-scrollbar">
-            <SelectedCategory />
-          </div>
+            <LessonOptions />
         </div>
-      ) : (
-        // Main Categories View
+      ) 
+      : (
         <div className="flex-1 flex flex-col overflow-hidden">
           {/* Search Bar */}
           <header className="flex-shrink-0 bg-secondary px-4 py-4 md:py-6">
@@ -82,13 +84,16 @@ const Explore = () => {
                     <Category c={c} key={c.id || index} />
                   ))}
                 </div>
-              ) : (
-                <div className="flex items-center justify-center h-32 md:h-40">
-                  <div className="text-center text-gray-500 text-lg md:text-xl">
-                    No categories found
+              ) :
+                (
+                  <div className="flex items-center justify-center h-32 md:h-40">
+                    <div className="text-center text-gray-500 text-lg md:text-xl">
+                      No categories found
+                    </div>
                   </div>
-                </div>
-              )}
+                )
+              }
+
             </div>
           </section>
         </div>
@@ -103,59 +108,13 @@ const Explore = () => {
       <div className="flex-shrink-0">
         <BottomNav />
       </div>
+      <ToastContainer autoClose={100} />
     </main>
   );
 };
 
 export default Explore;
 
-
-
-const Category = ({ c }) => {
-  const { setSelectedCategory, setExplorePageCategory, addNewCategory } = useHomeStore()
-
-  const { name, image, totalquestion } = c;
-
-  const handleStart = () => {
-    //add new categories
-    addNewCategory(name)
-    setSelectedCategory(name)//settinng category
-    setExplorePageCategory({ isOpen: true, value: name })
-  }
-
-  return (
-    <div className="flex flex-col w-full md:w-[20%]
-     h-[250px] overflow-hidden rounded-2xl
-      bg-gray-800 shadow-lg transition-transform hover:scale-105
-      cursor-pointer
-      "
-      onClick={handleStart}
-    >
-
-      {/* Image */}
-      <img
-        src={image}
-        alt={name}
-        className="h-[60%] w-full object-cover"
-      />
-
-      {/* Details */}
-      <div className="flex flex-col justify-center p-4 w-full bg-gray-900">
-        {/* Category Name */}
-        <h2 className="text-white text-lg md:text-xl font-bold mb-2 truncate">
-          {name}
-        </h2>
-
-        {/* Questions Count */}
-        <div className="flex items-center gap-2 text-white font-medium">
-          <Book className="w-5 h-5 text-green-400" />
-          <span>{totalquestion || 0} Questions</span>
-        </div>
-      </div>
-
-    </div>
-  );
-};
 
 
 

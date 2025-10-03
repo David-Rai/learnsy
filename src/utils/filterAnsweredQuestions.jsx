@@ -4,24 +4,24 @@ import useHomeStore from "../context/store"
 const filterAnsweredQuestions = (data = []) => {
     const {
         answers = [],
-        updateCategoryQuestionsCompletely,
-        categories,
-        selectedCategory,
+        updateLessonQuestionsCompletely,
+        lessons = [],
+        currentLesson
     }
         = useHomeStore.getState()
 
     //Getting the selected category
-    const currentCategory = categories.find(c => c.name === selectedCategory);
+    const currentSelectedLesson = lessons.find(c => c.name === currentLesson.name);
 
-    if (!currentCategory?.questions || currentCategory.questions.length === 0) {
+    if (!currentSelectedLesson?.questions || currentLesson?.questions?.length === 0) {
         return console.log("zero questions to filter");
     }
 
     const answeredIds = new Set(answers.map(a => a.id));
     let unanswered = data.length > 0 ? data.filter(q => !answeredIds.has(q.id))
-        : currentCategory?.questions.filter(q => !answeredIds.has(q.id))
+        : currentSelectedLesson?.questions.filter(q => !answeredIds.has(q.id))
 
-    updateCategoryQuestionsCompletely(selectedCategory, unanswered);
+    updateLessonQuestionsCompletely(currentLesson.name, unanswered);
     return
 }
 
