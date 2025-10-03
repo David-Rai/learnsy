@@ -54,9 +54,9 @@ const Home = () => {
 
     //Knowing user is new to this app
     if (!currentCategory.isSelected && !currentLesson.isSelected) {
-        // return (
-        //     <IntroPopup />
-        // )
+        return (
+            <IntroPopup />
+        )
     }
 
 

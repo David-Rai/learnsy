@@ -62,42 +62,38 @@ const Explore = () => {
       ) 
       : (
         <div className="flex-1 flex flex-col overflow-hidden">
-          {/* Search Bar */}
-          <header className="flex-shrink-0 bg-secondary px-4 py-4 md:py-6 shadow-lg">
+        {/* Search Bar */}
+        <header className="flex-shrink-0 bg-secondary px-4 py-4 md:py-6 shadow-lg">
             <div className="max-w-4xl mx-auto">
-              <input
-                type="text"
-                placeholder="Search categories..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-4 py-3 md:py-4 rounded-2xl border-b-4 border-gray-700 text-white bg-bg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary transition-all text-base md:text-lg font-medium"
-              />
+                <input
+                    type="text"
+                    placeholder="Search categories..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full px-4 py-3 md:py-4 rounded-2xl border-b-4 border-gray-700 text-white bg-bg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary transition-all text-base md:text-lg font-medium"
+                />
             </div>
-          </header>
+        </header>
 
           {/* Categories Section */}
           <section className="flex-1 overflow-y-auto custom-scrollbar">
-            <div className="p-4 md:p-6 lg:p-8">
+            <div className="p-4 md:p-6">
               {filteredCategories.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5 max-w-7xl mx-auto">
+                <div className="flex flex-wrap gap-3 md:gap-4 justify-center max-w-6xl mx-auto">
                   {filteredCategories.map((c, index) => (
                     <Category c={c} key={c.id || index} />
                   ))}
                 </div>
               ) :
                 (
-                  <div className="flex items-center justify-center h-64">
-                    <div className="text-center">
-                      <p className="text-xl md:text-2xl font-bold text-gray-400 mb-2">
-                        No categories found 🔍
-                      </p>
-                      <p className="text-sm md:text-base text-gray-500">
-                        Try adjusting your search
-                      </p>
+                  <div className="flex items-center justify-center h-32 md:h-40">
+                    <div className="text-center text-gray-500 text-lg md:text-xl">
+                      No categories found
                     </div>
                   </div>
                 )
               }
+
             </div>
           </section>
         </div>
