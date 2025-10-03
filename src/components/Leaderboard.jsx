@@ -62,25 +62,29 @@ const Leaderboard = () => {
       {/* Main container */}
       <div className="h-[calc(100vh-80px)] md:h-full pb-6 overflow-x-hidden custom-scrollbar w-full">
         {/* Header */}
-        <header className="text-center py-6 px-4">
-          <div className="flex items-center justify-center gap-3 mb-3">
-            <div className="p-2 bg-[var(--secondary)] rounded-full shadow-lg">
-              <Trophy className="w-8 h-8 md:w-10 md:h-10 text-[var(--primary)]" />
+        <header className="bg-secondary shadow-lg py-6 md:py-8 px-4 mb-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex items-center justify-center gap-3 mb-3">
+              <div className="p-3 bg-bg rounded-full shadow-xl border-b-4 border-yellow-600">
+                <Trophy className="w-8 h-8 md:w-10 md:h-10 text-yellow-400" />
+              </div>
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-yellow-400 drop-shadow-lg">
+                Leaderboard
+              </h1>
             </div>
-            <h1 className="text-2xl md:text-4xl font-bold text-[var(--primary)]">
-              Leaderboard
-            </h1>
-          </div>
-          <p className="text-sm md:text-base opacity-80 text-text">Top performers this season</p>
-          <div className="flex items-center justify-center gap-2 mt-3 text-sm opacity-70">
-            <Target className="w-4 h-4" />
-            <span>{leaders.length} Players</span>
+            <p className="text-sm md:text-base text-center text-gray-300 font-medium">
+              Top performers this season
+            </p>
+            <div className="flex items-center justify-center gap-2 mt-3 text-xs md:text-sm text-gray-400 font-medium">
+              <Target className="w-4 h-4" />
+              <span>{leaders.length} Players</span>
+            </div>
           </div>
         </header>
 
         {/* Top Three Podium */}
         {topThree.length > 0 && (
-          <section className="px-4 mb-8">
+          <section className="px-4 mb-8 md:mb-12">
             <div className="max-w-6xl mx-auto">
               {/* Mobile: Row layout */}
               <div className="flex items-end justify-center gap-2 md:hidden">
@@ -90,7 +94,7 @@ const Leaderboard = () => {
               </div>
 
               {/* Desktop: Podium layout */}
-              <div className="hidden md:flex items-end justify-center gap-6">
+              <div className="hidden md:flex items-end justify-center gap-6 lg:gap-8">
                 {topThree[1] && <TopPlayer leader={topThree[1]} position={2} />}
                 {topThree[0] && <TopPlayer leader={topThree[0]} position={1} />}
                 {topThree[2] && <TopPlayer leader={topThree[2]} position={3} />}
@@ -101,12 +105,12 @@ const Leaderboard = () => {
 
         {/* Other Players */}
         {otherPlayers.length > 0 && (
-          <section className="px-4">
+          <section className="px-4 pb-6">
             <div className="max-w-4xl mx-auto">
-              <h2 className="text-xl font-semibold text-text mb-4 text-center md:text-left">
-                Other Players
+              <h2 className="text-xl md:text-2xl font-bold text-text mb-4 md:mb-6 text-center md:text-left">
+                Mid Players
               </h2>
-              <div className="max-h-96 overflow-y-auto overflow-x-hidden custom-scrollbar space-y-2">
+              <div className="max-h-96 overflow-y-auto overflow-x-hidden custom-scrollbar space-y-3">
                 {otherPlayers.map((leader, index) => (
                   <OtherPlayer key={leader.user_id} leader={leader} position={index + 4} />
                 ))}

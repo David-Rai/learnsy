@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
-*{
+* {
     /* font-family: "Inter"; */
 }
+
 :root {
     /* --bg: #000000; */
     --bg: oklch(12.9% 0.042 264.695);
@@ -24,20 +25,28 @@
 
 @layer components {
     .option-button {
-        @apply bg-text backdrop-blur-sm text-bg 
-          sm:px-5 py-4 cursor-pointer rounded-md
-          shadow-lg font-medium text-sm sm:text-base 
-          w-full max-w-xs sm:max-w-full transition-transform transition-colors 
-          duration-150 ease-out;
-      }
-      
-      .option-button:active {
-        @apply scale-95 bg-gray-300; /* slight shrink + color change on click */
-      }
-      
+        @apply bg-text text-bg sm:px-5 py-4 cursor-pointer rounded-2xl font-bold text-sm sm:text-base w-full max-w-xs sm:max-w-full transition-all duration-100 ease-out border-b-4 border-gray-300 active:border-b-0 active:translate-y-1 hover:brightness-105;
+    }
+
+    .option-button.bg-right {
+        @apply border-green-600;
+    }
+
+    .option-button.bg-wrong {
+        @apply border-red-700;
+    }
+
+    .option-button.bg-primary {
+        @apply border-purple-700;
+    }
+
+    .option-button:active {
+        @apply scale-95 bg-gray-300;
+        /* slight shrink + color change on click */
+    }
 
     .home {
-        @apply   h-screen w-full bg-bg text-gray-800 dark:text-gray-100 overflow-hidden flex flex-col
+        @apply h-screen w-full bg-bg text-gray-800 dark:text-gray-100 overflow-hidden flex flex-col
     }
 
     .question-container {
@@ -45,9 +54,8 @@
     }
 
     .question-text {
-        @apply text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mb-6 text-center text-text drop-shadow-lg w-[80%] leading-snug break-words overflow-hidden
+        @apply text-lg sm:text-xl md:text-2xl font-bold mb-6 text-center text-text drop-shadow-lg w-[90%] sm:w-[80%] md:w-[70%] lg:w-[60%] max-w-3xl leading-snug break-words overflow-hidden;
     }
-
     .social-contain {
         @apply bg-secondary backdrop-blur-sm p-3 cursor-pointer rounded-full transition-all mb-1
     }
@@ -58,12 +66,14 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-    background: oklch(20.8% 0.042 265.755); /* secondary */
+    background: oklch(20.8% 0.042 265.755);
+    /* secondary */
     border-radius: 4px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: oklch(58.5% 0.233 277.117); /* primary */
+    background: oklch(58.5% 0.233 277.117);
+    /* primary */
     border-radius: 4px;
 }
 
@@ -75,4 +85,3 @@
     scrollbar-width: thin;
     scrollbar-color: oklch(58.5% 0.233 277.117) oklch(20.8% 0.042 265.755);
 }
-

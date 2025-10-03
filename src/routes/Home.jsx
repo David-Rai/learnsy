@@ -1,17 +1,18 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { Suspense, lazy } from 'react'
+import { ToastContainer, toast } from 'react-toastify';
 import getQuestions from '../utils/getQuestions.jsx';
 import { observe } from '../utils/observe.jsx';
 import Sidebar from '../components/Sidebar.jsx';
 import Hintsection from '../components/Hintsection.jsx';
-import React, { useState, useEffect, useRef } from 'react';
 import Loader from '../components/Loader.jsx';
-import { Suspense, lazy } from 'react'
-import { ToastContainer, toast } from 'react-toastify';
 import SocialIcons from "../components/SocialIcons";
 import Question from '../utils/Question.jsx';
 import useHomeStore from '../context/store.js'
 import filterAnsweredQuestions from '../utils/filterAnsweredQuestions.jsx';
 import insertUserIfFirstLogin from '../utils/insertUserIfNewUser.jsx';
 import CompletedAll from '../components/CompletedAll.jsx';
+import IntroPopup from '../components/IntroPopup.jsx'
 
 const BottomNav = lazy(() => import("../components/BottomNav"));
 
@@ -28,7 +29,7 @@ const Home = () => {
     const scrollContain = useRef(null)
     const currentSelectedLesson = lessons.find(l => l.name === currentLesson.name)
     const currentQuestions = currentSelectedLesson?.questions || []
-    const maxReached=currentSelectedLesson?.maxReached || false
+    const maxReached = currentSelectedLesson?.maxReached || false
 
 
     useEffect(() => {
@@ -36,20 +37,28 @@ const Home = () => {
         insertUserIfFirstLogin()
 
         //***checking if category selected
-        if(currentCategory.isSelected && currentLesson.isSelected){
-        // checking if answered
-        if (answers.length > 0) {
-            filterAnsweredQuestions(currentQuestions)
-        }
+        if (currentCategory.isSelected && currentLesson.isSelected) {
+            // checking if answered
+            if (answers.length > 0) {
+                filterAnsweredQuestions(currentQuestions)
+            }
 
-        //fetching the questions for initialss
-         getQuestions()
-        return
+            //fetching the questions for initialss
+            getQuestions()
+            return
         }
 
         console.log("selected your fav category")
 
     }, [])
+
+    //Knowing user is new to this app
+    if (!currentCategory.isSelected && !currentLesson.isSelected) {
+        // return (
+        //     <IntroPopup />
+        // )
+    }
+
 
 
     //Stoping scrolling on hint container toggle
@@ -77,6 +86,7 @@ const Home = () => {
         };
     }, [currentQuestions, currentSelectedLesson?.maxReached]);
 
+
     // Loading state
     if (currentQuestions.length === 0 && maxReached) {
         return (
@@ -84,11 +94,12 @@ const Home = () => {
         )
     }
 
-    if (currentQuestions.length === 0 && maxReached===false) {
+    if (currentQuestions.length === 0 && maxReached === false) {
         return (
             <Loader />
         )
     }
+
 
     return (
         <>

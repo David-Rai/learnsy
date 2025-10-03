@@ -108,25 +108,31 @@ const Profile = () => {
       <div className="flex-1 flex flex-col h-screen">
         <MobileHeader username={user?.user_metadata?.username} onBack={handleBack} onMenu={handleMenu} />
         <main className="flex-1 px-4 md:px-8 py-6 md:py-8 overflow-y-scroll custom-scrollbar">
-          <div className="max-w-4xl mx-auto">
-            <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8 lg:gap-12">
-              <div className="flex flex-col items-center lg:items-start lg:w-1/3">
-                <div className="relative group">
-                  <img
-                    src={user?.user_metadata?.avatar || avatar}
-                    alt="Profile"
-                    className="rounded-full w-32 h-32 md:w-40 md:h-40 object-cover border-4 border-[var(--color-primary)]"
-                  />
+          <div className="max-w-5xl mx-auto">
+            <div className="bg-secondary rounded-3xl shadow-2xl p-6 md:p-8 lg:p-10 border-b-4 border-gray-800">
+              <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8 lg:gap-12">
+                <div className="flex flex-col items-center lg:items-start lg:w-1/3">
+                  <div className="relative group">
+                    <div className="absolute inset-0 bg-[var(--color-primary)] rounded-full blur-xl opacity-30 group-hover:opacity-50 transition-opacity"></div>
+                    <img
+                      src={user?.user_metadata?.avatar || avatar}
+                      alt="Profile"
+                      className="relative rounded-full w-32 h-32 md:w-40 md:h-40 object-cover border-4 border-[var(--color-primary)] shadow-xl"
+                    />
+                  </div>
+                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mt-6 mb-2 text-center lg:text-left drop-shadow-lg">
+                    {user?.user_metadata?.username || user?.user_metadata?.full_name || 'Anonymous'}
+                  </h2>
+                  <div className="flex items-center gap-2 bg-[var(--color-primary)] text-white px-4 py-2 rounded-full font-bold text-sm md:text-base shadow-lg border-b-4 border-purple-700">
+                    <span>🏆</span>
+                    <span>Rank #{stats?.rank || 'N/A'}</span>
+                  </div>
                 </div>
-                <h2 className="text-2xl md:text-3xl font-bold mt-4 mb-1 text-center lg:text-left">
-                  {user?.user_metadata?.username || user?.user_metadata?.full_name || 'Anonymous'}
-                </h2>
-                <p className="text-gray-400 text-lg text-center lg:text-left">Rank #{stats?.rank || 'N/A'}</p>
-              </div>
-              <div className="lg:w-2/3 w-full max-w-2xl grid grid-cols-1 gap-4">
-                {statConfigs.map(stat => (
-                  <StatBar key={stat.label} {...stat} />
-                ))}
+                <div className="lg:w-2/3 w-full max-w-2xl grid grid-cols-1 gap-4 md:gap-5">
+                  {statConfigs.map(stat => (
+                    <StatBar key={stat.label} {...stat} />
+                  ))}
+                </div>
               </div>
             </div>
           </div>

@@ -28,6 +28,7 @@ const Question = ({ q}) => {
                                 if (answer.selectedOption === opt) {
                                     //showing the users answer
                                     buttonClass += answer.isCorrect ? " bg-right text-bg" : " bg-wrong text-bg";
+                                    // buttonClass += answer.isCorrect ? " bg-right text-bg" : " bg-wrong text-bg";
                                 } else {
                                     if (q.a === opt) {
                                         buttonClass += " bg-right text-bg"
