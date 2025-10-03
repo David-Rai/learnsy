@@ -1,5 +1,3 @@
-import useHomeStore from "../context/store";
-import fetchFilteredQuestions from "./fetchFilteredQuestions";
 import fetchQuestions from "./fetchQuestions";
 
 export const observe = () => {
@@ -8,13 +6,7 @@ export const observe = () => {
         (entries) => {
             entries.forEach(async (entry) => {
                 if (entry.isIntersecting) {
-                    const { user } = useHomeStore.getState(); // always latest
-
-                    if (user?.id) {
-                        await fetchFilteredQuestions() 
-                    } else {
-                         await fetchQuestions()
-                    }
+                    fetchQuestions()
                 }
             });
         },

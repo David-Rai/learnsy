@@ -1,6 +1,6 @@
+import getQuestions from '../utils/getQuestions.jsx';
 import { observe } from '../utils/observe.jsx';
 import Sidebar from '../components/Sidebar.jsx';
-import supabase from '../config/supabase.js';
 import Hintsection from '../components/Hintsection.jsx';
 import React, { useState, useEffect, useRef } from 'react';
 import Loader from '../components/Loader.jsx';
@@ -9,9 +9,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import SocialIcons from "../components/SocialIcons";
 import Question from '../utils/Question.jsx';
 import useHomeStore from '../context/store.js'
-import checkUserForQuestions from '../utils/checkUserForQuestions.jsx';
 import filterAnsweredQuestions from '../utils/filterAnsweredQuestions.jsx';
 import insertUserIfFirstLogin from '../utils/insertUserIfNewUser.jsx';
+import CompletedAll from '../components/CompletedAll.jsx';
 
 const BottomNav = lazy(() => import("../components/BottomNav"));
 
@@ -22,27 +22,33 @@ const Home = () => {
         answers = [],
         currentLesson,
         currentCategory,
-        setCurrentLesson,
-        setCurrentCategory
     } = useHomeStore(state => state)
 
     const targetRef = useRef(null);
     const scrollContain = useRef(null)
     const currentSelectedLesson = lessons.find(l => l.name === currentLesson.name)
     const currentQuestions = currentSelectedLesson?.questions || []
+    const maxReached=currentSelectedLesson?.maxReached || false
+
 
     useEffect(() => {
-        //checking if user exist and provider is google 
-        console.log("home page render")
+        //***checking if user exist and provider is google 
         insertUserIfFirstLogin()
 
+        //***checking if category selected
+        if(currentCategory.isSelected && currentLesson.isSelected){
         // checking if answered
         if (answers.length > 0) {
             filterAnsweredQuestions(currentQuestions)
         }
 
         //fetching the questions for initialss
-        checkUserForQuestions()
+         getQuestions()
+        return
+        }
+
+        console.log("selected your fav category")
+
     }, [])
 
 
@@ -72,7 +78,13 @@ const Home = () => {
     }, [currentQuestions, currentSelectedLesson?.maxReached]);
 
     // Loading state
-    if (currentQuestions.length === 0) {
+    if (currentQuestions.length === 0 && maxReached) {
+        return (
+            <CompletedAll />
+        )
+    }
+
+    if (currentQuestions.length === 0 && maxReached===false) {
         return (
             <Loader />
         )

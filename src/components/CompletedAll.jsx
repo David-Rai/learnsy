@@ -5,8 +5,8 @@ import BottomNav from './BottomNav';
 
 const CompletedAll = () => {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
-      <main className="min-h-screen flex items-center justify-center pb-20 px-4">
+    <div className="h-screen w-full flex flex-col bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
+      <main className="flex flex-1 items-center justify-center px-4">
         <div
           className="relative w-full max-w-md mx-auto p-8 rounded-2xl shadow-lg 
           bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 
@@ -49,7 +49,7 @@ const CompletedAll = () => {
         </div>
       </main>
       
-      {/* <BottomNav /> */}
+      <BottomNav />
       <ToastContainer />
     </div>
   );

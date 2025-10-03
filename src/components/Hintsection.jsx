@@ -13,7 +13,7 @@ const Hintsection = ({ }) => {
     w-full py-5 px-4 md:px-8 absolute z-50
     left-0 shadow-lg
     ${hintVisible ? "bottom-0 opacity-100" : "bottom-[-100%] opacity-0"}
-    max-h-[50vh] md:max-h-[200px] overflow-y-auto
+    h-[40vh] md:max-h-[200px] overflow-y-auto
 `}>
                 {/* Toggle */}
                 <div

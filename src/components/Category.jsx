@@ -35,7 +35,7 @@ const Category = ({ c }) => {
             lessonOptions: newLessons
         })
 
-        console.log("current selected category", useHomeStore.getState().currentCategory)
+        // console.log("current selected category", useHomeStore.getState().currentCategory)
     }
 
     return (

@@ -5,11 +5,9 @@ import useHomeStore from "../context/store";
 export default async function fetchQuestions() {
   const { BATCH_SIZE,
     answers = [],
-    categories,
     currentCategory,
     currentLesson,
     lessons = [],
-    setLesson,
     updateLessonMaxReached,
     updateLessonQuestions
   } = useHomeStore.getState()
@@ -17,16 +15,16 @@ export default async function fetchQuestions() {
   const { setUser } = useHomeStore.getState()
   const { data: { user } } = await supabase.auth.getUser()
   const selectedLesson = lessons.find(l => l.name === currentLesson.name)
-  let isUser=false//no useState cause this is not react components
+  let isUser = false//no useState cause this is not react components
 
 
   if (user?.id) {
     setUser(user)
     console.log("user existed")
-    isUser=true
+    isUser = true
   } else {
     console.log("new user")
-    isUser=false
+    isUser = false
   }
 
   //fetching for selected category
@@ -36,31 +34,34 @@ export default async function fetchQuestions() {
     .limit(BATCH_SIZE)
 
 
-  if (selectedLesson?.maxReached) return//if maxReached no fetch
+  if (selectedLesson?.maxReached) return //if maxReached no fetch
 
   //already fetch and answered questions
-  const questionsIds = selectedLesson?.questions
-  let totalquestions = [...questionsIds, ...answers]
+  const questions = selectedLesson?.questions || []
+  const questionsIds=questions.map(q => q.id)
+  const answerIds=answers.map(a => a.id) || []
+  let totalquestions = [...questionsIds, ...answerIds]
 
   //if user dont fetch previous answered questions
   if (isUser) {
-    const previousQuestions = await supabase.from("user_answer").select('*').eq("user_id", id)
+    const previousQuestions = await supabase.from("user_answer").select('*').eq("user_id", user.id)
     const previousIds = previousQuestions.data.map(q => q.q_id); // get array of q_id
     totalquestions = [...totalquestions, ...previousIds]
   }
 
-  const fetchedIds = totalquestions.map(q => q.id);
 
   //filter for already fetch questions
-  if (fetchedIds.length > 0) {
-    const idsString = `(${fetchedIds.join(',')})`;
+  if (totalquestions?.length > 0) {
+    // console.log(totalquestions)
+    const idsString = `(${totalquestions.join(',')})`;
+    // console.log(idsString)
     query = query.not("id", "in", idsString)
   }
 
   //filter for selected lesson of category
   query = query
-    .eq('category', currentCategory.name)
-    .eq('lesson', currentLesson.name)
+    .eq('category', currentCategory?.name)
+    .eq('lesson', currentLesson?.name)
 
   //******Quering into database********
   const { data, error, count } = await query
@@ -73,11 +74,11 @@ export default async function fetchQuestions() {
 
   if (data.length < BATCH_SIZE) {
     console.log('max reached')
-    updateLessonMaxReached(selectedLesson.name, true);
+    updateLessonMaxReached(selectedLesson?.name, true);
   }
 
   //updating lesson questions list
-  updateLessonQuestions(selectedLesson.name, data)
-  console.log("questions pushed successfully", useHomeStore.getState().lessons)
+  updateLessonQuestions(selectedLesson?.name, data)
+  // console.log("questions pushed successfully", useHomeStore.getState().lessons)
 
 }

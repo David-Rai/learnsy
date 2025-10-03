@@ -1,6 +1,5 @@
 // store/homeStore.js
 import { create } from 'zustand';
-import SelectedCategory from '../components/SelectedCategory';
 
 const useHomeStore = create((set) => ({
   BATCH_SIZE: 5,
