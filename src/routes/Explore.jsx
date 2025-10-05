@@ -1,29 +1,19 @@
 import React, { useState, useEffect, lazy } from 'react';
 import LessonOptions from '../components/LessonOptions.jsx';
 import Category from '../components/Category.jsx';
-import { Book, ChevronLeft } from 'lucide-react';
 import { ToastContainer } from 'react-toastify';
-import { toast } from 'react-toastify';
 import Sidebar from '../components/Sidebar.jsx';
 import supabase from '../config/supabase.js';
 import Hintsection from '../components/Hintsection.jsx';
 import BottomNav from '../components/BottomNav.jsx';
 import useHomeStore from '../context/store.js';
 
-const SelectedCategory = lazy(() => import("../components/SelectedCategory.jsx"));
 
 const Explore = () => {
   const {
-    lessons = [],
-    setLessons,
     setCategories,
     categories = [],
-    setHintVisible,
-    hintVisible,
     currentCategory,
-    setCurrentCategory,
-    currentLesson,
-    setCurrentLesson
   } = useHomeStore();
 
   const [searchTerm, setSearchTerm] = useState(""); // state for search
@@ -38,7 +28,10 @@ const Explore = () => {
       }
       setCategories(data);
     };
-    get();
+
+    if(categories.length === 0){
+      get()
+    }
   }, []);
 
   // filter categories based on search term
@@ -114,17 +107,3 @@ const Explore = () => {
 };
 
 export default Explore;
-
-
-
-
-const Loader = () => {
-  return (
-    <div className="flex items-center justify-center h-full">
-      <div className="relative">
-        <div className="w-12 h-12 border-4 border-indigo-200 dark:border-indigo-800 rounded-full animate-spin"></div>
-        <div className="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin absolute top-0 left-0"></div>
-      </div>
-    </div>
-  )
-}

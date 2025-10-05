@@ -24,7 +24,6 @@ const Home = () => {
     const currentLesson = useHomeStore(state => state.currentLesson);
     const currentCategory = useHomeStore(state => state.currentCategory);
     const isIntroDone = useHomeStore(state => state.isIntroDone);
-
     const targetRef = useRef(null);
     const scrollContain = useRef(null)
     const currentSelectedLesson = lessons.find(l => l.name === currentLesson.name)
@@ -95,6 +94,7 @@ const Home = () => {
         )
     }
 
+
     return (
         <>
             {
@@ -102,6 +102,7 @@ const Home = () => {
                     <IntroPopup />
                 ) : (
                     <div className="home custom-scrollbar fixed md:flex-row">
+
                         <Sidebar />
                         {/* Main Content */}
                         <main

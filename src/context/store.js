@@ -14,7 +14,7 @@ const useHomeStore = create((set) => ({
       localStorage.setItem("isIntroDone", t);
       return { isIntroDone: t };
     }),
-    
+
   //****Lessons container**** */
   lessons: [],
 
@@ -100,6 +100,25 @@ const useHomeStore = create((set) => ({
   activeTab: "home",
   setActiveTab: (t) => set({ activeTab: t })
 
+
 }));
+
+
+//Leader store
+export const useLeaderStore = create((set) => ({
+  leaders: [],
+  loading: true,
+  setLeaders: (data) => set({ leaders: data }),
+  setLoading: (value) => set({ loading: value }),
+
+  //contains the leaders stats
+  leaderDetails: [],
+  addNewLeaderDetail: (d) => set((state) => {
+    if(state.leaderDetails.some(l=> Object.keys(l)[0] === Object.keys(d)[0])) return {}
+    return { leaderDetails: [...state.leaderDetails, d] }
+  }
+)
+
+}))
 
 export default useHomeStore;

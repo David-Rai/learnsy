@@ -17,9 +17,9 @@ function getRandomAvatar() {
 
 
 const setUserBoard = async (id, username) => {
-  const res = await supabase.from("board")
+  await supabase.from("board")
     .insert({ user_id: id, avatar: randomAvatar, username })
-    console.log('user board added')
+  console.log('user board added')
 }
 
 export default setUserBoard

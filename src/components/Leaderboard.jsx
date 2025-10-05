@@ -5,10 +5,13 @@ import { getStats } from '../utils/getStats'
 import supabase from '../config/supabase'
 import BottomNav from './BottomNav'
 import LeaderboardLoader from './LeaderBoardLoader'
+import { useLeaderStore } from '../context/store'
 
 const Leaderboard = () => {
-  const [leaders, setLeaders] = useState([])
-  const [loading, setLoading] = useState(true)
+  const loading = useLeaderStore(state => state.loading)
+  const setLoading = useLeaderStore(state => state.setLoading)
+  const leaders = useLeaderStore(state => state.leaders)
+  const setLeaders = useLeaderStore(state => state.setLeaders)
 
   useEffect(() => {
     async function getLeaders() {
@@ -31,12 +34,19 @@ const Leaderboard = () => {
         setLoading(false)
       }
     }
-    getLeaders()
-  }, [])
+
+    if (leaders.length === 0) {
+      getLeaders()
+    }
+
+  }, [leaders, setLeaders])
+
 
   if (loading) return <LeaderboardLoader />
 
   if (!leaders.length) {
+    console.log("no leaders")
+
     return (
       <main className="min-h-screen flex flex-col">
         <div className="bg-bg flex flex-col items-center justify-center min-h-[calc(100vh-80px)] text-text px-4">
@@ -87,17 +97,10 @@ const Leaderboard = () => {
           <section className="px-4 mb-8 md:mb-12">
             <div className="max-w-6xl mx-auto">
               {/* Mobile: Row layout */}
-              <div className="flex items-end justify-center gap-2 md:hidden">
+              <div className="flex items-end justify-center gap-2">
                 {topThree[1] && <TopPlayer leader={topThree[1]} position={2} isMobile />}
                 {topThree[0] && <TopPlayer leader={topThree[0]} position={1} isMobile />}
                 {topThree[2] && <TopPlayer leader={topThree[2]} position={3} isMobile />}
-              </div>
-
-              {/* Desktop: Podium layout */}
-              <div className="hidden md:flex items-end justify-center gap-6 lg:gap-8">
-                {topThree[1] && <TopPlayer leader={topThree[1]} position={2} />}
-                {topThree[0] && <TopPlayer leader={topThree[0]} position={1} />}
-                {topThree[2] && <TopPlayer leader={topThree[2]} position={3} />}
               </div>
             </div>
           </section>
@@ -110,7 +113,7 @@ const Leaderboard = () => {
               <h2 className="text-xl md:text-2xl font-bold text-text mb-4 md:mb-6 text-center md:text-left">
                 Mid Players
               </h2>
-              <div className="max-h-96 overflow-y-auto overflow-x-hidden custom-scrollbar space-y-3">
+              <div className="max-h-96 space-y-3">
                 {otherPlayers.map((leader, index) => (
                   <OtherPlayer key={leader.user_id} leader={leader} position={index + 4} />
                 ))}
@@ -158,14 +161,33 @@ const getPositionConfig = (position) => {
 
 const TopPlayer = ({ leader, position, isMobile = false }) => {
   const [stats, setStats] = useState(null)
+  const { leaderDetails = [], addNewLeaderDetail } = useLeaderStore()
 
   useEffect(() => {
     const getDetails = async () => {
       const details = await getStats(leader.user_id)
+
+      //adding into the zustand store
+      const d = {
+        [leader.id]: details
+      }
+
+      if (details) {
+        addNewLeaderDetail(d)
+      }
       setStats(details)
     }
-    getDetails()
-  }, [leader.user_id])
+
+    if (leaderDetails.length === 0) {
+      getDetails()
+    }
+
+  
+    if (leaderDetails.length > 0) {
+      const thisStats = leaderDetails.find(l => Object.keys(l)[0] === String(leader.id))
+      setStats(thisStats[String(leader.id)])
+    }
+  }, [])
 
   const config = getPositionConfig(position)
   const IconComponent = config.icon
@@ -215,14 +237,33 @@ const TopPlayer = ({ leader, position, isMobile = false }) => {
 
 const OtherPlayer = ({ leader, position }) => {
   const [stats, setStats] = useState(null)
+  const { leaderDetails = [], addNewLeaderDetail } = useLeaderStore()
 
   useEffect(() => {
     const getDetails = async () => {
       const details = await getStats(leader.user_id)
+
+      //adding into the zustand store
+      const d = {
+        [leader.id]: details
+      }
+
+      if (details) {
+        addNewLeaderDetail(d)
+      }
       setStats(details)
     }
-    getDetails()
-  }, [leader.user_id])
+
+    if (leaderDetails.length === 0) {
+      getDetails()
+    }
+
+  
+    if (leaderDetails.length > 0) {
+      const thisStats = leaderDetails.find(l => Object.keys(l)[0] === String(leader.id))
+      setStats(thisStats[String(leader.id)])
+    }
+  }, [])
 
   return (
     <div className="bg-[var(--secondary)] rounded-xl p-3 md:p-4
