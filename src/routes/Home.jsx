@@ -13,19 +13,17 @@ import filterAnsweredQuestions from '../utils/filterAnsweredQuestions.jsx';
 import insertUserIfFirstLogin from '../utils/insertUserIfNewUser.jsx';
 import CompletedAll from '../components/CompletedAll.jsx';
 import IntroPopup from '../components/IntroPopup.jsx'
+import SelectACategory from '../components/SelectACategory.jsx';
 
 const BottomNav = lazy(() => import("../components/BottomNav"));
 
 const Home = () => {
-    const {
-        lessons = [],
-        hintVisible,
-        answers = [],
-        currentLesson,
-        currentCategory,
-        setIsIntroDone,
-        isIntroDone,
-    } = useHomeStore(state => state)
+    const lessons = useHomeStore(state => state.lessons);
+    const hintVisible = useHomeStore(state => state.hintVisible);
+    const answers = useHomeStore(state => state.answers);
+    const currentLesson = useHomeStore(state => state.currentLesson);
+    const currentCategory = useHomeStore(state => state.currentCategory);
+    const isIntroDone = useHomeStore(state => state.isIntroDone);
 
     const targetRef = useRef(null);
     const scrollContain = useRef(null)
@@ -49,18 +47,6 @@ const Home = () => {
             getQuestions()
             return
         }
-    }, [])
-
-
-    //Intro page toggleing
-    useState(() => {
-        const check = async () => {
-            const data = localStorage.getItem("isIntroDone")
-            if (data) {
-                setIsIntroDone(true)
-            }
-        }
-        check()
     }, [])
 
     //Stoping scrolling on hint container toggle
@@ -89,13 +75,20 @@ const Home = () => {
     }, [currentQuestions, currentSelectedLesson?.maxReached]);
 
 
-    // Loading state
+    // NO categorires and lesson is selected
+    if (!currentLesson.isSelected && !currentCategory.isSelected && isIntroDone) {
+        console.log("select a category pelase")
+        return <SelectACategory />
+    }
+
+    // All questions are completed in this lessons
     if (currentQuestions.length === 0 && maxReached) {
         return (
             <CompletedAll />
         )
     }
 
+    //NO questions are availabes
     if (currentQuestions.length === 0 && maxReached === false && isIntroDone) {
         return (
             <Loader />
@@ -105,42 +98,33 @@ const Home = () => {
     return (
         <>
             {
-                isIntroDone === false ?
-                    (<IntroPopup setIsIntroDone={setIsIntroDone} />)
-                    :
-                    (
-                        <div className="home custom-scrollbar fixed md:flex-row">
-                            <Sidebar />
-                            {/* Main Content */}
-                            <main
-                                ref={scrollContain}
-                                className="flex-1 md:h-full w-full overflow-y-scroll snap-y snap-mandatory md:w-[calc(100% - 64)]">
-
-                                {Array.isArray(currentQuestions) && currentQuestions.map((q, index) => (
+                !isIntroDone ? (
+                    <IntroPopup />
+                ) : (
+                    <div className="home custom-scrollbar fixed md:flex-row">
+                        <Sidebar />
+                        {/* Main Content */}
+                        <main
+                            ref={scrollContain}
+                            className="flex-1 md:h-full w-full overflow-y-scroll snap-y snap-mandatory md:w-[calc(100% - 64)]"
+                        >
+                            {Array.isArray(currentQuestions) &&
+                                currentQuestions.map((q, index) => (
                                     <div key={index} className="question-container overflow-hidden">
-
-                                        {/* Question */}
                                         <Question q={q} />
-
-                                        {/* Socials icons */}
                                         <SocialIcons q={q} />
-
-                                        {/* Observer */}
                                         {index === currentQuestions.length - 2 && <div ref={targetRef}></div>}
                                     </div>
                                 ))}
+                        </main>
 
-                            </main>
-
-                            {/* hint section */}
-                            <Hintsection />
-
-                            {/* Bottom navigation */}
-                            <BottomNav />
-                            <ToastContainer autoClose={100} />
-                        </div>
-                    )
+                        <Hintsection />
+                        <BottomNav />
+                        <ToastContainer autoClose={100} />
+                    </div>
+                )
             }
+
         </>
     );
 };
