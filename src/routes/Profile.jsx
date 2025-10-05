@@ -106,7 +106,7 @@ const Profile = () => {
     <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] flex">
       <Sidebar />
       <div className="flex-1 flex flex-col h-screen">
-        <MobileHeader username={user?.user_metadata?.username} onBack={handleBack} onMenu={handleMenu} />
+        {/* <MobileHeader username={user?.user_metadata?.username} onBack={handleBack} onMenu={handleMenu} /> */}
         <main className="flex-1 px-4 md:px-8 py-6 md:py-8 overflow-y-scroll custom-scrollbar">
           <div className="max-w-5xl mx-auto">
             <div className="bg-secondary rounded-3xl shadow-2xl p-6 md:p-8 lg:p-10 border-b-4 border-gray-800">

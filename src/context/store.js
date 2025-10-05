@@ -8,6 +8,10 @@ const useHomeStore = create((set) => ({
   categories: [],
   setCategories: (c) => set({ categories: c }),
 
+  //intro
+  isIntroDone: false,
+  setIsIntroDone: (t) => set({ isIntroDone: t }),
+
   //****Lessons container**** */
   lessons: [],
 

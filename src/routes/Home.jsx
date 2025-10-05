@@ -23,6 +23,8 @@ const Home = () => {
         answers = [],
         currentLesson,
         currentCategory,
+        setIsIntroDone,
+        isIntroDone,
     } = useHomeStore(state => state)
 
     const targetRef = useRef(null);
@@ -31,7 +33,7 @@ const Home = () => {
     const currentQuestions = currentSelectedLesson?.questions || []
     const maxReached = currentSelectedLesson?.maxReached || false
 
-
+    //Initail setups
     useEffect(() => {
         //***checking if user exist and provider is google 
         insertUserIfFirstLogin()
@@ -47,19 +49,7 @@ const Home = () => {
             getQuestions()
             return
         }
-
-        console.log("selected your fav category")
-
     }, [])
-
-    //Knowing user is new to this app
-    if (!currentCategory.isSelected && !currentLesson.isSelected) {
-        return (
-            <IntroPopup />
-        )
-    }
-
-
 
     //Stoping scrolling on hint container toggle
     useEffect(() => {
@@ -94,45 +84,51 @@ const Home = () => {
         )
     }
 
-    if (currentQuestions.length === 0 && maxReached === false) {
+    if (currentQuestions.length === 0 && maxReached === false && isIntroDone) {
         return (
             <Loader />
         )
     }
 
-
     return (
         <>
-            <div className="home custom-scrollbar fixed md:flex-row">
-                <Sidebar />
-                {/* Main Content */}
-                <main
-                    ref={scrollContain}
-                    className="flex-1 md:h-full w-full overflow-y-scroll snap-y snap-mandatory md:w-[calc(100% - 64)]">
+            {
+                isIntroDone === false ?
+                  ( <IntroPopup setIsIntroDone={setIsIntroDone} />)
+                    :
+                    (
+                        <div className="home custom-scrollbar fixed md:flex-row">
+                            <Sidebar />
+                            {/* Main Content */}
+                            <main
+                                ref={scrollContain}
+                                className="flex-1 md:h-full w-full overflow-y-scroll snap-y snap-mandatory md:w-[calc(100% - 64)]">
 
-                    {Array.isArray(currentQuestions) && currentQuestions.map((q, index) => (
-                        <div key={index} className="question-container overflow-hidden">
+                                {Array.isArray(currentQuestions) && currentQuestions.map((q, index) => (
+                                    <div key={index} className="question-container overflow-hidden">
 
-                            {/* Question */}
-                            <Question q={q} />
+                                        {/* Question */}
+                                        <Question q={q} />
 
-                            {/* Socials icons */}
-                            <SocialIcons q={q} />
+                                        {/* Socials icons */}
+                                        <SocialIcons q={q} />
 
-                            {/* Observer */}
-                            {index === currentQuestions.length - 2 && <div ref={targetRef}></div>}
+                                        {/* Observer */}
+                                        {index === currentQuestions.length - 2 && <div ref={targetRef}></div>}
+                                    </div>
+                                ))}
+
+                            </main>
+
+                            {/* hint section */}
+                            <Hintsection />
+
+                            {/* Bottom navigation */}
+                            <BottomNav />
+                            <ToastContainer autoClose={100} />
                         </div>
-                    ))}
-
-                </main>
-
-                {/* hint section */}
-                <Hintsection />
-
-                {/* Bottom navigation */}
-                <BottomNav />
-                <ToastContainer autoClose={100} />
-            </div>
+                    )
+            }
         </>
     );
 };

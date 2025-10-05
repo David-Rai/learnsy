@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { Brain, Sparkles, ArrowRight, ChevronDown } from 'lucide-react';
-import BottomNav from './BottomNav';
+import useHomeStore from '../context/store';
 
 const Intro = () => {
   const navigate = useNavigate();
+  const {setIsIntroDone}=useHomeStore()
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [currentQuestion, setCurrentQuestion] = useState(0);
 
@@ -45,6 +46,7 @@ const Intro = () => {
   ];
 
   const handleSelect = (questionId, optionText, questionIndex) => {
+
     setSelectedAnswers(prev => ({ ...prev, [questionId]: optionText }));
     
     // Auto-scroll to next section after selection
@@ -56,10 +58,18 @@ const Intro = () => {
       if (currentQuestion < questions.length) {
         setCurrentQuestion(currentQuestion + 1);
       }
-    }, 400);
+    }, 0);
   };
 
   const isComplete = Object.keys(selectedAnswers).length === questions.length;
+
+  const handleStart=()=>{
+    setIsIntroDone(true)
+    console.log(setIsIntroDone)
+    console.log("naivgateing to explore page")
+    //navigating to the explore page
+    navigate('/explore')
+  }
 
   return (
     <main className='flex flex-col h-screen bg-bg'>
@@ -171,7 +181,7 @@ const Intro = () => {
                 </p>
                 
                 <button
-                  onClick={() => navigate("/explore")}
+                  onClick={handleStart}
                   className="group bg-right text-bg px-10 py-6 rounded-2xl font-black text-xl shadow-2xl border-b-8 border-green-700 hover:border-b-4 hover:translate-y-1 active:border-b-0 active:translate-y-2 transition-all duration-100 flex items-center gap-3"
                 >
                   Start Quizzing!
@@ -203,8 +213,6 @@ const Intro = () => {
           </div>
         </section>
       </div>
-
-      <BottomNav />
     </main>
   );
 };
