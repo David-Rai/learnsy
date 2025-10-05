@@ -20,10 +20,10 @@ export default async function fetchQuestions() {
 
   if (user?.id) {
     setUser(user)
-    console.log("user existed")
+    // console.log("user existed")
     isUser = true
   } else {
-    console.log("new user")
+    // console.log("new user")
     isUser = false
   }
 
@@ -73,7 +73,7 @@ export default async function fetchQuestions() {
   }
 
   if (data.length < BATCH_SIZE) {
-    console.log('max reached')
+    // console.log('max reached')
     updateLessonMaxReached(selectedLesson?.name, true);
   }
 

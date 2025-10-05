@@ -1,7 +1,6 @@
 import fetchQuestions from "./fetchQuestions";
 
 export const observe = () => {
-
     const observer = new IntersectionObserver(
         (entries) => {
             entries.forEach(async (entry) => {

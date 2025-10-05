@@ -17,10 +17,13 @@ const Leaderboard = () => {
     async function getLeaders() {
       try {
         setLoading(true)
+
+        //getting all users
         const { data, error } = await supabase
           .from('board')
           .select("*")
           .order("point", { ascending: false })
+
         if (error) {
           console.error('Error fetching leaderboard:', error)
           setLeaders([])
@@ -45,8 +48,6 @@ const Leaderboard = () => {
   if (loading) return <LeaderboardLoader />
 
   if (!leaders.length) {
-    console.log("no leaders")
-
     return (
       <main className="min-h-screen flex flex-col">
         <div className="bg-bg flex flex-col items-center justify-center min-h-[calc(100vh-80px)] text-text px-4">

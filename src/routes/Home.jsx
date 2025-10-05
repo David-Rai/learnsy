@@ -76,7 +76,8 @@ const Home = () => {
 
     // NO categorires and lesson is selected
     if (!currentLesson.isSelected && !currentCategory.isSelected && isIntroDone) {
-        console.log("select a category pelase")
+        // console.log("select a category pelase")
+    
         return <SelectACategory />
     }
 
