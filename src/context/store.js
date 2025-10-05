@@ -111,14 +111,6 @@ export const useLeaderStore = create((set) => ({
   setLeaders: (data) => set({ leaders: data }),
   setLoading: (value) => set({ loading: value }),
 
-  //contains the leaders stats
-  leaderDetails: [],
-  addNewLeaderDetail: (d) => set((state) => {
-    if(state.leaderDetails.some(l=> Object.keys(l)[0] === Object.keys(d)[0])) return {}
-    return { leaderDetails: [...state.leaderDetails, d] }
-  }
-)
-
 }))
 
 export default useHomeStore;
