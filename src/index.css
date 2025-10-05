@@ -25,7 +25,10 @@
 
 @layer components {
     .option-button {
-        @apply bg-text text-bg sm:px-5 py-4 cursor-pointer rounded-2xl font-bold text-sm sm:text-base w-full max-w-xs sm:max-w-full transition-all duration-100 ease-out border-b-4 border-gray-300 active:border-b-0 active:translate-y-1 hover:brightness-105;
+        @apply bg-text text-bg sm:px-5 py-4 cursor-pointer
+         rounded-2xl font-bold text-sm sm:text-base w-full
+          max-w-xs sm:max-w-full transition-all duration-100 ease-out border-b-4
+           border-gray-300 active:border-b-0 active:translate-y-1 hover:brightness-105;
     }
 
     .option-button.bg-right {

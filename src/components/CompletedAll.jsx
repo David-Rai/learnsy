@@ -1,9 +1,13 @@
 import React from 'react';
+import { useNavigate } from 'react-router';
+import { ArrowRight } from 'lucide-react'
 import { CheckCircle2, Sparkles } from 'lucide-react';
 import { ToastContainer } from 'react-toastify';
 import BottomNav from './BottomNav';
 
 const CompletedAll = () => {
+  const navigate=useNavigate()
+  
   return (
     <div className="h-screen w-full flex flex-col bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
       <main className="flex flex-1 items-center justify-center px-4">
@@ -30,9 +34,24 @@ const CompletedAll = () => {
                 All Questions Completed
               </h2>
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                Great work! You've completed all available questions. 
-                Check back later for new content.
+                Great work! You've completed all available questions.
               </p>
+
+              {/* Minimal CTA button with subtle Duolingo-style interactions */}
+              <button
+                onClick={() => navigate('/explore')}
+                className='group w-full sm:w-auto inline-flex items-center text-text bg-primary justify-center gap-2 px-6 py-3.5 sm:px-8 sm:py-4 text-base sm:text-lg font-bold rounded-xl sm:rounded-2xl transition-transform duration-200 ease-out hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[var(--bg)]'
+                style={{
+                  focusRingColor: 'var(--primary)'
+                }}
+                aria-label="Explore categories"
+              >
+                <span>Explore Categories</span>
+                <ArrowRight
+                  className='w-5 h-5 transition-transform duration-200 group-hover:translate-x-0.5'
+                  aria-hidden="true"
+                />
+              </button>
             </div>
 
             {/* Loading Indicators */}
@@ -48,7 +67,7 @@ const CompletedAll = () => {
           </div>
         </div>
       </main>
-      
+
       <BottomNav />
       <ToastContainer />
     </div>

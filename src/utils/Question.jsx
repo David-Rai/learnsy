@@ -54,8 +54,9 @@ const Question = ({ q }) => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full justify-items-center">
 
                     {/* options */}
-                    {q.options && q.options.length > 0 ? (
-                        q.options.map((opt, i) => {
+                    {
+                    q.options && q.options.length > 0 && q.options.map((opt, i) => 
+                        {
                             const answer = Array.isArray(answers)
                                 ? answers.find((ans) => ans.id === q.id) || false
                                 : false;
@@ -87,37 +88,7 @@ const Question = ({ q }) => {
                                 </button>
                             );
                         })
-                    ) : (
-                        <>
-                            {["true", "false"].map((opt, i) => {
-                                const answer = Array.isArray(answers)
-                                    ? answers.find((ans) => ans.id === q.id) || false
-                                    : false;
-
-                                let buttonClass = "option-button";
-
-                                if (answer) {
-                                    if (answer.selectedOption === opt) {
-                                        buttonClass += answer.isCorrect ? " bg-right text-bg" : " bg-wrong text-bg";
-
-                                    } else {
-                                        buttonClass += " bg-secondary text-text";
-                                    }
-                                }
-
-                                return (
-                                    <button
-                                        key={i}
-                                        className={buttonClass}
-                                        onClick={() => checkAnswer(q, opt)}
-                                        disabled={!!answer}
-                                    >
-                                        {opt === "true" ? "Yes" : "No"}
-                                    </button>
-                                );
-                            })}
-                        </>
-                    )}
+                    }
 
                 </div>
             </div>
