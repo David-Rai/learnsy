@@ -5,7 +5,7 @@ import useHomeStore from '../context/store';
 
 const Intro = () => {
   const navigate = useNavigate();
-  const {setIsIntroDone}=useHomeStore()
+  const { setIsIntroDone } = useHomeStore()
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [currentQuestion, setCurrentQuestion] = useState(0);
 
@@ -48,7 +48,7 @@ const Intro = () => {
   const handleSelect = (questionId, optionText, questionIndex) => {
 
     setSelectedAnswers(prev => ({ ...prev, [questionId]: optionText }));
-    
+
     // Auto-scroll to next section after selection
     setTimeout(() => {
       const nextSection = document.querySelectorAll('.snap-start')[questionIndex + 2];
@@ -63,10 +63,10 @@ const Intro = () => {
 
   const isComplete = Object.keys(selectedAnswers).length === questions.length;
 
-  const handleStart=()=>{
+  const handleStart = () => {
+    //settign user has seen  the intro page
     setIsIntroDone(true)
-    console.log(setIsIntroDone)
-    console.log("naivgateing to explore page")
+
     //navigating to the explore page
     navigate('/explore')
   }
@@ -133,8 +133,8 @@ const Intro = () => {
                       border-b-4 transition-all duration-200
                       hover:scale-105 hover:border-b-2 hover:translate-y-1
                       active:scale-95 active:border-b-0 active:translate-y-2
-                      ${selectedAnswers[q.id] === option.text 
-                        ? 'border-primary bg-primary/20 ring-4 ring-primary/50' 
+                      ${selectedAnswers[q.id] === option.text
+                        ? 'border-primary bg-primary/20 ring-4 ring-primary/50'
                         : 'border-gray-700 hover:bg-secondary/80'
                       }
                     `}
@@ -179,7 +179,7 @@ const Intro = () => {
                 <p className="text-lg md:text-xl text-gray-300 mb-8">
                   Your personalized quiz experience awaits
                 </p>
-                
+
                 <button
                   onClick={handleStart}
                   className="group bg-right text-bg px-10 py-6 rounded-2xl font-black text-xl shadow-2xl border-b-8 border-green-700 hover:border-b-4 hover:translate-y-1 active:border-b-0 active:translate-y-2 transition-all duration-100 flex items-center gap-3"

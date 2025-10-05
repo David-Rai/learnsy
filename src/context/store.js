@@ -10,7 +10,11 @@ const useHomeStore = create((set) => ({
 
   //intro
   isIntroDone: false,
-  setIsIntroDone: (t) => set({ isIntroDone: t }),
+  setIsIntroDone: (t) => set(()=>{
+    localStorage.setItem("isIntroDone",true)
+
+    return { isIntroDone: t }
+  }),
 
   //****Lessons container**** */
   lessons: [],

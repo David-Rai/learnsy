@@ -51,6 +51,18 @@ const Home = () => {
         }
     }, [])
 
+
+    //Intro page toggleing
+    useState(() => {
+        const check = async () => {
+            const data = localStorage.getItem("isIntroDone")
+            if (data) {
+                setIsIntroDone(true)
+            }
+        }
+        check()
+    }, [])
+
     //Stoping scrolling on hint container toggle
     useEffect(() => {
         // console.log(scrollContain)
@@ -94,7 +106,7 @@ const Home = () => {
         <>
             {
                 isIntroDone === false ?
-                  ( <IntroPopup setIsIntroDone={setIsIntroDone} />)
+                    (<IntroPopup setIsIntroDone={setIsIntroDone} />)
                     :
                     (
                         <div className="home custom-scrollbar fixed md:flex-row">
