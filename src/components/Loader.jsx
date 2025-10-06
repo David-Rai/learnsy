@@ -10,7 +10,7 @@ const Loader = () => {
                     <div className="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin absolute top-0 left-0"></div>
                 </div>
             </div>
-            <BottomNav />
+            {/* <BottomNav /> */}
         </main>
     )
 }
