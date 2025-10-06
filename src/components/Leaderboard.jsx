@@ -52,6 +52,9 @@ const Leaderboard = () => {
         </header>
 
         {/* TopPlayer */}
+        {
+          leaders.length > 0 && <Top l={leaders[0]} rank={1} />
+        }
 
         {/* Other Players */}
         <div className='flex flex-col'>
@@ -60,7 +63,7 @@ const Leaderboard = () => {
               <div>No users </div>
             )
               :
-              leaders.map((l, index) => <Card l={l} key={l.user_id} rank={index + 1} />)
+              leaders.slice(1).map((l, index) => <Other l={l} key={l.user_id} rank={index + 2} />)
           }
         </div>
       </div>
@@ -70,111 +73,92 @@ const Leaderboard = () => {
   )
 }
 
-const Card = ({ l, rank }) => {
+const Other = ({ l, rank }) => {
   const { username, avatar, points, total_questions, wrong_questions } = l
   const right_questions = total_questions - wrong_questions
   const accuracy = total_questions === 0 ? 0
     : ((Number(right_questions) / Number(total_questions)) * 100).toFixed(1)
 
   return (
-<section className="flex items-center justify-between p-3 md:p-4 bg-[var(--secondary)] rounded-xl shadow hover:shadow-lg transition-all duration-200">
-  {/* Rank */}
-  <div className="flex-shrink-0 w-10 text-center font-bold text-lg md:text-xl text-text">
-    {rank}
-  </div>
+    <section className="flex items-center justify-between p-3 md:p-4 bg-[var(--secondary)] rounded-xl shadow hover:shadow-lg transition-all duration-200">
+      {/* Rank */}
+      <div className="flex-shrink-0 w-10 text-center font-bold text-lg md:text-xl text-text">
+        {rank}
+      </div>
 
-  {/* Avatar and username */}
-  <div className="flex items-center gap-3 md:gap-4 flex-1 min-w-0">
-    <img
+      {/* Avatar and username */}
+      <div className="flex items-center gap-3 md:gap-4 flex-1 min-w-0">
+        {/* <img
       src={avatar}
       alt={username}
       className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover ring-2 ring-[var(--primary)]/20"
-    />
-    <p className="truncate font-semibold text-text text-sm md:text-base">{username}</p>
-  </div>
+    /> */}
+        <p className="truncate font-semibold text-text text-sm md:text-base">{username}</p>
+      </div>
 
-  {/* Stats: accuracy, points, total questions */}
-  <div className="flex items-center gap-4 md:gap-6 font-mono text-sm md:text-base">
-    <div className="text-center">
-      <p className="font-bold">{accuracy}%</p>
-      <p className="text-xs text-gray-400">Accuracy</p>
-    </div>
-    <div className="text-center">
-      <p className="font-bold">{points}</p>
-      <p className="text-xs text-gray-400">Points</p>
-    </div>
-    <div className="text-center">
-      <p className="font-bold">{total_questions}</p>
-      <p className="text-xs text-gray-400">Total Qs</p>
-    </div>
-  </div>
-</section>
+      {/* Stats: accuracy, points, total questions */}
+      <div className="flex items-center gap-4 md:gap-6 font-mono text-sm md:text-base">
+        <div className="text-center">
+          <p className="font-bold">{accuracy}%</p>
+          <p className="text-xs text-gray-400">Accuracy</p>
+        </div>
+        <div className="text-center">
+          <p className="font-bold">{points}</p>
+          <p className="text-xs text-gray-400">Points</p>
+        </div>
+        <div className="text-center">
+          <p className="font-bold">{total_questions}</p>
+          <p className="text-xs text-gray-400">Total Qs</p>
+        </div>
+      </div>
+    </section>
 
   )
 }
 
-const OtherPlayer = ({ leader, position }) => {
-  const [stats, setStats] = useState(null)
-  const { leaderDetails = [], addNewLeaderDetail } = useLeaderStore()
 
-  useEffect(() => {
-    const getDetails = async () => {
-      const details = await getStats(leader.user_id)
+// Top player
 
-      //adding into the zustand store
-      const d = {
-        [leader.id]: details
-      }
-
-      if (details) {
-        addNewLeaderDetail(d)
-      }
-      setStats(details)
-    }
-
-    if (leaderDetails.length === 0) {
-      getDetails()
-    }
-
-
-    if (leaderDetails.length > 0) {
-      const thisStats = leaderDetails.find(l => Object.keys(l)[0] === String(leader.id))
-      setStats(thisStats[String(leader.id)])
-    }
-  }, [])
+const Top = ({ l, rank }) => {
+  const { username, avatar, points, total_questions, wrong_questions } = l
+  const right_questions = total_questions - wrong_questions
+  const accuracy = total_questions === 0 ? 0
+    : ((Number(right_questions) / Number(total_questions)) * 100).toFixed(1)
 
   return (
-    <div className="bg-[var(--secondary)] rounded-xl p-3 md:p-4
-     flex items-center gap-3 md:gap-4 shadow-lg hover:shadow-xl
-      transition-all duration-300 hover:scale-[1.02]">
-      {/* Rank Badge */}
-      <div className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 
-      bg-gradient-to-br from-[var(--primary)] to-[var(--primary)]/70 rounded-full flex items-center justify-center shadow-md">
-        <span className="text-sm md:text-base font-bold text-white">{position}</span>
+    <section className="flex items-center justify-between p-3 md:p-4 bg-primary rounded-xl shadow hover:shadow-lg transition-all duration-200">
+      {/* Rank */}
+      <div className="flex-shrink-0 w-10 text-center font-bold text-lg md:text-xl text-text">
+        {rank}
       </div>
 
-      {/* Avatar */}
-      <div className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-full overflow-hidden shadow-lg ring-2 ring-[var(--primary)]/20">
-        <img
-          src={leader.avatar}
-          alt={leader.username}
-          className="w-full h-full object-cover"
-        />
+      {/* Avatar and username */}
+      <div className="flex items-center gap-3 md:gap-4 flex-1 min-w-0">
+        {/* <img
+      src={avatar}
+      alt={username}
+      className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover ring-2 ring-[var(--primary)]/20"
+    /> */}
+        <p className="truncate font-semibold text-text text-sm md:text-base">{username}</p>
       </div>
 
-      {/* User Info */}
-      <div className="flex-grow min-w-0">
-        <h3 className="font-semibold text-text truncate text-base md:text-lg mb-1">
-          {leader.username}
-        </h3>
-        {stats && (
-          <div className="flex items-center gap-2">
-            <Flame className="w-3 h-3 md:w-4 md:h-4 text-orange-400" />
-            <span className="text-sm md:text-base text-text opacity-80">{stats.point} points</span>
-          </div>
-        )}
+      {/* Stats: accuracy, points, total questions */}
+      <div className="flex items-center gap-4 md:gap-6 font-mono text-sm md:text-base">
+        <div className="text-center">
+          <p className="font-bold">{accuracy}%</p>
+          <p className="text-xs text-gray-400">Accuracy</p>
+        </div>
+        <div className="text-center">
+          <p className="font-bold">{points}</p>
+          <p className="text-xs text-gray-400">Points</p>
+        </div>
+        <div className="text-center">
+          <p className="font-bold">{total_questions}</p>
+          <p className="text-xs text-gray-400">Total Qs</p>
+        </div>
       </div>
-    </div>
+    </section>
+
   )
 }
 
