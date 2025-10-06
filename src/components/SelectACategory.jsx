@@ -2,6 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router'
 import { ArrowRight } from 'lucide-react'
 import BottomNav from './BottomNav'
+import Sidebar from './Sidebar'
 
 const SelectACategory = () => {
     const navigate = useNavigate()

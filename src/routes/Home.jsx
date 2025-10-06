@@ -76,8 +76,6 @@ const Home = () => {
 
     // NO categorires and lesson is selected
     if (!currentLesson.isSelected && !currentCategory.isSelected && isIntroDone) {
-        // console.log("select a category pelase")
-    
         return <SelectACategory />
     }
 
@@ -102,7 +100,6 @@ const Home = () => {
                     <IntroPopup />
                 ) : (
                     <div className="home custom-scrollbar fixed md:flex-row">
-
                         <Sidebar />
                         {/* Main Content */}
                         <main
