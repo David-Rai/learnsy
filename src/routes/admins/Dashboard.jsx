@@ -3,39 +3,39 @@ import { useNavigate } from 'react-router'
 import supabase from '../../config/supabase'
 import Sidebar from '../../components/Sidebar'
 import { checkUser } from '../../utils/checkUser'
+import checkAdmin from '../../utils/checkAdmin'
 import { useState, useEffect } from 'react'
 
 const Dashboard = () => {
   const [users, setUsers] = useState([])
   const navigate = useNavigate()
 
-  //checking vaidation of admin
-  const checkAdmin = async () => {
-    const {exist} = await checkUser()
-    if(!exist) return
+  const check = async () => {
+    const res = await checkAdmin()
+    if (!res) return navigate('/')
+    getAllAuthUsers()
   }
 
   //Getting all the auth users
   useEffect(() => {
-    async function getAllAuthUsers() {
-      const { data, error } = await supabase
-        .from('board')
-        .select('*')
-        .order("point", { ascending: false })
-      if (error) {
-        console.error('Error fetching auth users:', error)
-        return []
-      }
+    check()
+  }, [])
 
-      setUsers(data)
-      console.log(data)
-      // return data.users
+  //Getting users data
+  async function getAllAuthUsers() {
+    const { data, error } = await supabase
+      .from('board')
+      .select('*')
+      .order("point", { ascending: false })
+    if (error) {
+      console.error('Error fetching auth users:', error)
+      return []
     }
 
-    getAllAuthUsers()
-    checkAdmin()
+    setUsers(data)
+    console.log(data[0])
+  }
 
-  }, [])
 
   return (
     <main className='home flex flex-row'>

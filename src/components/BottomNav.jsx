@@ -16,9 +16,11 @@ const BottomNav = () => {
     const {activeTab,setActiveTab}=useHomeStore()
 
     useEffect(() => {
-        const path = location.pathname.replace("/", "") // remove leading slash
-        setActiveTab(path || "home") // default to home if empty
-    }, [location.pathname])
+        const pathSegments = location.pathname.split("/").filter(Boolean) 
+        const mainPath = pathSegments[0] || "home"
+        setActiveTab(mainPath)
+      }, [location.pathname])
+      
 
     return (
         <div className="w-full m-0 p-0 bg-secondary h-[80px] md:hidden">

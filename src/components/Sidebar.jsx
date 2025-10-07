@@ -1,4 +1,7 @@
 import React, { useEffect } from 'react';
+import useHomeStore, { useAdminStore } from '../context/store';
+import checkAdmin from '../utils/checkAdmin';
+import { LayoutDashboard } from 'lucide-react'
 import { useLocation, useNavigate } from 'react-router';
 import {
   FaHome,
@@ -6,8 +9,6 @@ import {
   FaUser,
   FaChartLine,
 } from 'react-icons/fa';
-import useHomeStore, { useAdminStore } from '../context/store';
-import checkAdmin from '../utils/checkAdmin';
 
 const Sidebar = () => {
   const location = useLocation();
@@ -30,10 +31,7 @@ const Sidebar = () => {
 
   //checking admin or not
   useEffect(() => {
-    const check = async () => {
-      const res = await checkAdmin()
-    }
-    check()
+    checkAdmin()
   }, [])
 
   return (
@@ -69,7 +67,7 @@ const Sidebar = () => {
               : "text-gray-400 hover:text-white hover:bg-gray-800"
               }`}
           >
-            <span className="text-lg"><FaUser /></span>
+            <span className="text-lg"><LayoutDashboard /></span>
             <span className="font-medium">Dashboard</span>
           </button>
         )

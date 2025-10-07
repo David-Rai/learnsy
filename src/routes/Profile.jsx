@@ -41,7 +41,6 @@ const StatBar = React.memo(({ label, value, max = 100, type, delay = 0 }) => {
 
 const Profile = () => {
   const [user, setUser] = useState(null)
-  const navigate = useNavigate();
   const [stats, setStats] = useState(null);
   const { user_id } = useParams()
   const [loading, setLoading] = useState(true);
