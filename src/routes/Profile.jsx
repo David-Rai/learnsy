@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 import supabase from "../config/supabase";
 import { getStats } from "../utils/getStats";
 import Loader from "../components/Loader";
@@ -45,6 +45,7 @@ const Profile = () => {
   const { user_id } = useParams()
   const [loading, setLoading] = useState(true);
 
+  //Fetching User data
   const fetchUserData = async () => {
     try {
       setLoading(true);

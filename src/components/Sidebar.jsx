@@ -28,10 +28,11 @@ const Sidebar = () => {
     { name: "profile", icon: <FaUser />, label: "Profile", path: "/goto_profile" },
   ];
 
-
   //checking admin or not
   useEffect(() => {
-    checkAdmin()
+    if (!isAdmin) {
+      checkAdmin()
+    }
   }, [])
 
   return (
@@ -44,7 +45,7 @@ const Sidebar = () => {
             navigate(item.path);
           }}
           className={`flex items-center gap-3 py-3 px-4 mb-2 rounded-lg transition-colors cursor-pointer ${activeTab === item.name
-            ? "text-primary bg-gray-700"
+            ? "text-text bg-primary"
             : "text-gray-400 hover:text-white hover:bg-gray-800"
             }`}
         >
@@ -63,7 +64,7 @@ const Sidebar = () => {
               navigate('/dashboard');
             }}
             className={`flex items-center gap-3 py-3 px-4 mb-2 rounded-lg transition-colors cursor-pointer ${activeTab === 'dashboard'
-              ? "text-primary bg-gray-700"
+              ? "text-text bg-primary"
               : "text-gray-400 hover:text-white hover:bg-gray-800"
               }`}
           >
