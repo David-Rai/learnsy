@@ -1,7 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@400;600;700&display=swap');
 @import "tailwindcss";
 
-* {
-    /* font-family: "Inter"; */
+body {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    /* color: #e5e5e5; */
+    /* Light gray for dark theme */
+    line-height: 1.6;
+    /* background-color: #0f0f0f; */
+}
+
+h1,
+h2 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+h3,
+h4 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    color: #fafafa;
+}
+
+button,
+.btn {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+p {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+}
+
+small,
+.secondary {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    color: #a1a1a1;
 }
 
 :root {
@@ -25,10 +64,7 @@
 
 @layer components {
     .option-button {
-        @apply bg-text text-bg sm:px-5 py-4 cursor-pointer
-         rounded-2xl font-bold text-sm sm:text-base w-full
-          max-w-xs sm:max-w-full transition-all duration-100 ease-out border-b-4
-           border-gray-300 active:border-b-0 active:translate-y-1 hover:brightness-105;
+        @apply bg-text text-bg sm:px-5 py-4 cursor-pointer rounded-2xl font-bold text-sm sm:text-base w-full max-w-xs sm:max-w-full transition-all duration-100 ease-out border-b-4 border-gray-300 active:border-b-0 active:translate-y-1 hover:brightness-105;
     }
 
     .option-button.bg-right {
@@ -59,6 +95,7 @@
     .question-text {
         @apply text-lg sm:text-xl md:text-2xl font-bold mb-6 text-center text-text drop-shadow-lg w-[90%] sm:w-[80%] md:w-[70%] lg:w-[60%] max-w-3xl leading-snug break-words overflow-hidden;
     }
+
     .social-contain {
         @apply bg-secondary backdrop-blur-sm p-3 cursor-pointer rounded-full transition-all mb-1
     }
