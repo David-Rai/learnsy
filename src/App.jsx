@@ -5,6 +5,7 @@ import './index.css'
 import Signin from './routes/auth/Signin.jsx'
 import Profile from './routes/Profile.jsx'
 import Home from './routes/Home'
+import GotoProfile from './routes/GotoProfile'
 import Explore from './routes/Explore.jsx'
 import Leaderboard from './components/Leaderboard.jsx'
 import Signup from './routes/auth/Signup.jsx'
@@ -24,14 +25,14 @@ const router = createBrowserRouter([
     element: <Signup />
   },
   {
-    path: '/profile',
+    path: '/profile/:user_id',
     element: <Profile />
   }
   ,
   {
     path: '/explore',
     element: <Explore />
-  },,
+  }, ,
   {
     path: '/leaderboard',
     element: <Leaderboard />
@@ -39,7 +40,11 @@ const router = createBrowserRouter([
 
   {
     path: '/dashboard',
-    element: <Dashboard/>
+    element: <Dashboard />
+  },
+  {
+    path: '/goto_profile',
+    element: <GotoProfile />
   }
 ])
 

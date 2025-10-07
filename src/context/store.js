@@ -80,7 +80,6 @@ const useHomeStore = create((set) => ({
   user: {},
   setUser: (userData => set({ user: userData })),
 
-
   //Current selected options state here
   currentLesson: {
     isSelected: false,

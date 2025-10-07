@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import supabase from "../config/supabase";
-import useHomeStore from "../context/store";
 import { getStats } from "../utils/getStats";
 import Loader from "../components/Loader";
 import BottomNav from "../components/BottomNav";
@@ -41,30 +40,37 @@ const StatBar = React.memo(({ label, value, max = 100, type, delay = 0 }) => {
 
 
 const Profile = () => {
-  const { user, setUser } = useHomeStore();
+  const [user, setUser] = useState(null)
   const navigate = useNavigate();
   const [stats, setStats] = useState(null);
+  const { user_id } = useParams()
   const [loading, setLoading] = useState(true);
 
-  const fetchUserData = useCallback(async () => {
+  const fetchUserData = async () => {
     try {
       setLoading(true);
-      const { data: { user: currentUser } } = await supabase.auth.getUser();
-      if (currentUser) {
-        setUser(currentUser);
-        const userStats = await getStats(currentUser.id);
+      const { data, error } = await supabase.from('board')
+        .select()
+        .eq('user_id', user_id)
+
+      if (error) {
+        console.log(error)
+      }
+
+      if (data) {
+        // console.log(data[0])
+        setUser(data[0]);
+        const userStats = await getStats(data[0].user_id);
         setStats(userStats);
-      } else {
-        navigate("/signup");
       }
     } catch (err) {
       console.error('Error fetching user data:', err);
     } finally {
       setLoading(false);
     }
-  }, [setUser, navigate]);
+  }
 
-  useEffect(() => { fetchUserData(); }, [fetchUserData]);
+  useEffect(() => { fetchUserData(); }, []);
 
   const statConfigs = [
     { label: "Accuracy", value: stats?.accuracy ? `${stats.accuracy.toFixed(1)}%` : '0%', type: 'primary', max: 100, delay: 100 },
@@ -76,7 +82,7 @@ const Profile = () => {
 
   return (
     (
-      !user.id ? <Loader />
+      !user?.id ? <Loader />
         :
         (
           <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] flex">
@@ -91,13 +97,14 @@ const Profile = () => {
                         <div className="relative group">
                           <div className="absolute inset-0 bg-[var(--color-primary)] rounded-full blur-xl opacity-30 group-hover:opacity-50 transition-opacity"></div>
                           <img
-                            src={user?.user_metadata?.avatar || avatar}
+                            src={user?.avatar || avatar}
                             alt="Profile"
                             className="relative rounded-full w-32 h-32 md:w-40 md:h-40 object-cover border-4 border-[var(--color-primary)] shadow-xl"
                           />
                         </div>
                         <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mt-6 mb-2 text-center lg:text-left drop-shadow-lg">
-                          {user?.user_metadata?.username || user?.user_metadata?.full_name || 'Anonymous'}
+                          {/* {user?.user_metadata?.username || user?.user_metadata?.full_name || 'Anonymous'} */}
+                          {user?.username || 'Anonymous'}
                         </h2>
                         <div className="flex items-center gap-2 bg-[var(--color-primary)] text-white px-4 py-2 rounded-full font-bold text-sm md:text-base shadow-lg border-b-4 border-purple-700">
                           <span>🏆</span>

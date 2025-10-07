@@ -70,7 +70,7 @@ const Leaderboard = () => {
         {/* Other Leaders */}
         <div className="flex flex-col gap-3 mt-4">
           {leaders.slice(1).map((l, index) => (
-            <MidLeader key={l.user_id} l={l} rank={index + 2} />
+            <MidLeader key={index} l={l} rank={index + 2} />
           ))}
         </div>
       </div>

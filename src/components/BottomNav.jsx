@@ -14,7 +14,6 @@ const BottomNav = () => {
     const location = useLocation()
     const navigate = useNavigate()
     const {activeTab,setActiveTab}=useHomeStore()
-    // const [activeTab, setActiveTab] = useState('home');
 
     useEffect(() => {
         const path = location.pathname.replace("/", "") // remove leading slash
@@ -73,7 +72,7 @@ const BottomNav = () => {
                 <button
                     onClick={() => {
                         setActiveTab("profile")
-                        navigate("/profile")
+                        navigate("/goto_profile")
                     }}
                     className={`flex flex-col cursor-pointer items-center py-2 px-3 rounded-lg transition-colors ${activeTab === "profile"
                         ? "text-primary"
