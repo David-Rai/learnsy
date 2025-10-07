@@ -8,7 +8,7 @@ import Home from './routes/Home'
 import Explore from './routes/Explore.jsx'
 import Leaderboard from './components/Leaderboard.jsx'
 import Signup from './routes/auth/Signup.jsx'
-
+import Dashboard from './routes/admins/Dashboard.jsx'
 //Public routes
 const router = createBrowserRouter([
   {
@@ -31,10 +31,15 @@ const router = createBrowserRouter([
   {
     path: '/explore',
     element: <Explore />
-  },
+  },,
   {
     path: '/leaderboard',
     element: <Leaderboard />
+  },
+
+  {
+    path: '/dashboard',
+    element: <Dashboard/>
   }
 ])
 

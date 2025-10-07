@@ -23,6 +23,7 @@ const Sidebar = () => {
     { name: "explore", icon: <FaCompass />, label: "Explore", path: "/explore" },
     { name: "leaderboard", icon: <FaChartLine />, label: "Leaderboard", path: "/leaderboard" },
     { name: "profile", icon: <FaUser />, label: "Profile", path: "/profile" },
+    // { name:"dashboard" , icon: <FaUser />, label: "Dashboard", path:"/dashboard"  },
   ];
 
   return (
@@ -34,16 +35,31 @@ const Sidebar = () => {
             setActiveTab(item.name);
             navigate(item.path);
           }}
-          className={`flex items-center gap-3 py-3 px-4 mb-2 rounded-lg transition-colors cursor-pointer ${
-            activeTab === item.name
-              ? "text-primary bg-gray-700"
-              : "text-gray-400 hover:text-white hover:bg-gray-800"
-          }`}
+          className={`flex items-center gap-3 py-3 px-4 mb-2 rounded-lg transition-colors cursor-pointer ${activeTab === item.name
+            ? "text-primary bg-gray-700"
+            : "text-gray-400 hover:text-white hover:bg-gray-800"
+            }`}
         >
           <span className="text-lg">{item.icon}</span>
           <span className="font-medium">{item.label}</span>
         </button>
       ))}
+
+      {/* Dashboard button */}
+      <button
+        key='dashboard'
+        onClick={() => {
+          setActiveTab('dashboard');
+          navigate('/dashboard');
+        }}
+        className={`flex items-center gap-3 py-3 px-4 mb-2 rounded-lg transition-colors cursor-pointer ${activeTab === 'dashboard'
+          ? "text-primary bg-gray-700"
+          : "text-gray-400 hover:text-white hover:bg-gray-800"
+          }`}
+      >
+        <span className="text-lg"><FaUser /></span>
+        <span className="font-medium">Dashboard</span>
+      </button>
     </div>
   );
 };

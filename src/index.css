@@ -4,10 +4,7 @@
 body {
     font-family: 'Inter', sans-serif;
     font-weight: 400;
-    /* color: #e5e5e5; */
-    /* Light gray for dark theme */
     line-height: 1.6;
-    /* background-color: #0f0f0f; */
 }
 
 h1,
@@ -25,7 +22,7 @@ h4 {
 }
 
 button,
-.btn {
+.btn{
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
     letter-spacing: 0.5px;
@@ -44,8 +41,8 @@ small,
 }
 
 :root {
-    /* --bg: #000000; */
-    --bg: oklch(12.9% 0.042 264.695);
+    --bg: #000000;
+    /* --bg: oklch(12.9% 0.042 264.695); */
     --text: #FFFFFF;
     --right: #48FF00;
     --wrong: #FF385A;
