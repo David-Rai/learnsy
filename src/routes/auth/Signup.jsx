@@ -38,7 +38,7 @@ const Signup = () => {
       if (result.exist) {
         console.log("user existed")
         setUser(user)
-        navigate("/profile")
+        navigate("/goto_profile")
       }
     })
   }, [])
