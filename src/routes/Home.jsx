@@ -59,7 +59,7 @@ const Home = () => {
         }
     }, [hintVisible])//dependency
 
-
+    
     // Intersection Observer
     useEffect(() => {
         if (currentSelectedLesson?.maxReached) return
