@@ -6,12 +6,14 @@ import {
   FaUser,
   FaChartLine,
 } from 'react-icons/fa';
-import useHomeStore from '../context/store';
+import useHomeStore, { useAdminStore } from '../context/store';
+import checkAdmin from '../utils/checkAdmin';
 
 const Sidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { activeTab, setActiveTab } = useHomeStore();
+  const { isAdmin, setIsAdmin } = useAdminStore()
 
   useEffect(() => {
     const path = location.pathname.replace("/", "");
@@ -22,9 +24,17 @@ const Sidebar = () => {
     { name: "home", icon: <FaHome />, label: "Home", path: "/" },
     { name: "explore", icon: <FaCompass />, label: "Explore", path: "/explore" },
     { name: "leaderboard", icon: <FaChartLine />, label: "Leaderboard", path: "/leaderboard" },
-    { name: "profile", icon: <FaUser />, label: "Profile", path: "/profile" },
-    // { name:"dashboard" , icon: <FaUser />, label: "Dashboard", path:"/dashboard"  },
+    { name: "profile", icon: <FaUser />, label: "Profile", path: "/goto_profile" },
   ];
+
+
+  //checking admin or not
+  useEffect(() => {
+    const check = async () => {
+      const res = await checkAdmin()
+    }
+    check()
+  }, [])
 
   return (
     <div className="hidden lg:flex lg:flex-col bg-secondary w-64 h-screen p-4">
@@ -46,20 +56,24 @@ const Sidebar = () => {
       ))}
 
       {/* Dashboard button */}
-      <button
-        key='dashboard'
-        onClick={() => {
-          setActiveTab('dashboard');
-          navigate('/dashboard');
-        }}
-        className={`flex items-center gap-3 py-3 px-4 mb-2 rounded-lg transition-colors cursor-pointer ${activeTab === 'dashboard'
-          ? "text-primary bg-gray-700"
-          : "text-gray-400 hover:text-white hover:bg-gray-800"
-          }`}
-      >
-        <span className="text-lg"><FaUser /></span>
-        <span className="font-medium">Dashboard</span>
-      </button>
+      {
+        isAdmin && (
+          <button
+            key='dashboard'
+            onClick={() => {
+              setActiveTab('dashboard');
+              navigate('/dashboard');
+            }}
+            className={`flex items-center gap-3 py-3 px-4 mb-2 rounded-lg transition-colors cursor-pointer ${activeTab === 'dashboard'
+              ? "text-primary bg-gray-700"
+              : "text-gray-400 hover:text-white hover:bg-gray-800"
+              }`}
+          >
+            <span className="text-lg"><FaUser /></span>
+            <span className="font-medium">Dashboard</span>
+          </button>
+        )
+      }
     </div>
   );
 };

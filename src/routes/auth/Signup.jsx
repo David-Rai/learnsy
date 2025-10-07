@@ -34,7 +34,7 @@ const Signup = () => {
 
   //checking user
   useEffect(() => {
-    checkUser(setUser).then((result) => {
+    checkUser().then((result) => {
       if (result.exist) {
         console.log("user existed")
         setUser(user)

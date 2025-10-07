@@ -2,6 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router'
 import supabase from '../../config/supabase'
 import Sidebar from '../../components/Sidebar'
+import { checkUser } from '../../utils/checkUser'
 import { useState, useEffect } from 'react'
 
 const Dashboard = () => {
@@ -10,9 +11,10 @@ const Dashboard = () => {
 
   //checking vaidation of admin
   const checkAdmin = async () => {
-
-
+    const {exist} = await checkUser()
+    if(!exist) return
   }
+
   //Getting all the auth users
   useEffect(() => {
     async function getAllAuthUsers() {

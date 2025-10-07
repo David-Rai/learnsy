@@ -112,4 +112,11 @@ export const useLeaderStore = create((set) => ({
 
 }))
 
+//Admin datas
+export const useAdminStore = create((set) => ({
+  //Admin data
+  isAdmin: false,
+  setIsAdmin: (v) => set({ isAdmin: v })
+}))
+
 export default useHomeStore;
