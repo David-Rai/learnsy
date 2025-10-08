@@ -11,14 +11,14 @@ import Loader from '../../components/Loader';
 const Member = () => {
     const navigate = useNavigate()
     const { categories, setCategories } = useHomeStore()
-    const { question_count, setQuestionCount ,isMemberChecked } = useMemberStore()
-    const [isChecked,setIsChecked]=useState(false)
+    const { question_count, setQuestionCount, isMemberChecked } = useMemberStore()
+    const [isChecked, setIsChecked] = useState(false)
 
     //Protecting the routes
     const check = async () => {
         const res = await checkMember()
         if (!res) return navigate('/')
-            setIsChecked(true)
+        setIsChecked(true)
     }
 
     //Getting categoires
@@ -110,6 +110,13 @@ const Member = () => {
                 </div>
 
             </section>
+
+            {/* Add new question field */}
+            <div>
+                <button onClick={() => navigate('/addQuestion')}
+                    className='option-button'
+                    >Add Question</button>
+            </div>
         </main>
     )
         :
