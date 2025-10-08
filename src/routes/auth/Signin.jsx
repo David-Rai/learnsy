@@ -44,7 +44,7 @@ const Signin = () => {
         reset()
       } else {
         console.log(data.user)
-        navigate("/profile")
+        navigate("/")
       }
 
     } catch (error) {

@@ -102,7 +102,7 @@ const Signup = () => {
         toast.success("successully signup")
         //Creating the new row for board table
         setUserBoard(data.user.id, username)
-        navigate('/profile')
+        navigate('/')
       }
 
 

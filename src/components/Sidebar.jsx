@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import useHomeStore, { useAdminStore } from '../context/store';
+import useHomeStore, { useAdminStore ,useMemberStore} from '../context/store';
+import checkMember from '../utils/checkMember'
 import checkAdmin from '../utils/checkAdmin';
 import { LayoutDashboard } from 'lucide-react'
 import { useLocation, useNavigate } from 'react-router';
@@ -14,7 +15,8 @@ const Sidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { activeTab, setActiveTab } = useHomeStore();
-  const { isAdmin, setIsAdmin } = useAdminStore()
+  const { isAdminChecked, isAdmin } = useAdminStore()
+  const { isMemberChecked, isMember } = useMemberStore()
 
   useEffect(() => {
     const path = location.pathname.replace("/", "");
@@ -28,11 +30,11 @@ const Sidebar = () => {
     { name: "profile", icon: <FaUser />, label: "Profile", path: "/goto_profile" },
   ];
 
-  //checking admin or not
+
+  //Checking member or not
   useEffect(() => {
-    if (!isAdmin) {
-      checkAdmin()
-    }
+    if (!isAdminChecked) checkAdmin()
+    if (!isMemberChecked) checkMember()
   }, [])
 
   return (
@@ -70,6 +72,26 @@ const Sidebar = () => {
           >
             <span className="text-lg"><LayoutDashboard /></span>
             <span className="font-medium">Dashboard</span>
+          </button>
+        )
+      }
+
+      {/* Member button */}
+      {
+        isMember && (
+          <button
+            key='dashboard'
+            onClick={() => {
+              setActiveTab('member');
+              navigate('/member');
+            }}
+            className={`flex items-center gap-3 py-3 px-4 mb-2 rounded-lg transition-colors cursor-pointer ${activeTab === 'member'
+              ? "text-text bg-primary"
+              : "text-gray-400 hover:text-white hover:bg-gray-800"
+              }`}
+          >
+            <span className="text-lg"><LayoutDashboard /></span>
+            <span className="font-medium">Member</span>
           </button>
         )
       }

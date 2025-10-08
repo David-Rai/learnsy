@@ -1,17 +1,18 @@
 import supabase from "../config/supabase"
-import { useAdminStore } from "../context/store"
+import { useMemberStore } from "../context/store"
 import { checkUser } from "./checkUser"
 
 //checking vaidation of admin
-const checkAdmin = async () => {
-    const { setIsAdmin, setIsAdminChecked } = useAdminStore.getState()
-    setIsAdminChecked(true)
+const checkMember = async () => {
+    const { setIsMember, setIsMemberChecked } = useMemberStore.getState()
+
+    setIsMemberChecked(true)
 
     //checking user validation
     const { exist, user } = await checkUser()
     if (!exist) return false
 
-    //checking if admin or not
+    //Getting user role
     const { data, error } = await supabase.from("board")
         .select()
         .eq("user_id", user.id)
@@ -19,17 +20,17 @@ const checkAdmin = async () => {
 
     if (error) {
         console.log(error)
-        setIsAdmin(false)
+        setIsMember(false)
         return false
     }
 
     //checking role
-    if (data.role === "admin") {
-        setIsAdmin(true)//settting this user is admin
+    if (data.role === "member") {
+        setIsMember(true)//settting this user is  member
         return true
     }
-    setIsAdmin(false)
+    setIsMember(false)
     return false
 }
 
-export default checkAdmin
+export default checkMember

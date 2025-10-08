@@ -98,8 +98,6 @@ const useHomeStore = create((set) => ({
   //tabs
   activeTab: "home",
   setActiveTab: (t) => set({ activeTab: t })
-
-
 }));
 
 
@@ -115,8 +113,23 @@ export const useLeaderStore = create((set) => ({
 //Admin datas
 export const useAdminStore = create((set) => ({
   //Admin data
+  isAdminChecked: false,
+  setIsAdminChecked: (v) => set({ isAdminChecked: v }),
   isAdmin: false,
   setIsAdmin: (v) => set({ isAdmin: v })
+}))
+
+//Members datas
+export const useMemberStore = create((set) => ({
+  //Admin data
+  isMemberChecked: false,
+  setIsMemberChecked: (v) => set({ isMemberChecked: v }),
+  isMember: false,
+  setIsMember: (v) => set({ isMember: v }),
+
+  //questions count
+  question_count: 0,
+  setQuestionCount: (c) => set({ question_count: c })
 }))
 
 export default useHomeStore;

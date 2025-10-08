@@ -1,18 +1,24 @@
-import React from 'react'
-import { Outlet } from 'react-router'
-import Sidebar from './components/Sidebar'
-import BottomNav from './components/BottomNav'
+import React from 'react';
+import { Outlet } from 'react-router';
+import IntroPopUp from './components/IntroPopup';
+import Sidebar from './components/Sidebar';
+import BottomNav from './components/BottomNav';
+import useHomeStore from './context/store';
 
 const Layout = () => {
-  return (
-    <div className='h-screen w-full bg-bg md:flex md:flex-row rootLayout'>
+  const isIntroDone = useHomeStore(state => state.isIntroDone);
+
+  return !isIntroDone ? (
+    <IntroPopUp />
+  ) : (
+    <div className="h-screen w-full bg-bg md:flex md:flex-row rootLayout">
       <Sidebar />
-        <main className="h-[calc(100%-80px)] md:h-screen bg-bg w-full flex flex-col overflow-hidden">
+      <main className="h-[calc(100%-80px)] md:h-screen bg-bg w-full flex flex-col overflow-hidden">
         <Outlet />
       </main>
       <BottomNav />
     </div>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;

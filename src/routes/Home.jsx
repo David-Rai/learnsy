@@ -3,7 +3,6 @@ import { lazy } from 'react'
 import { ToastContainer } from 'react-toastify';
 import getQuestions from '../utils/getQuestions.jsx';
 import { observe } from '../utils/observe.jsx';
-import Sidebar from '../components/Sidebar.jsx';
 import Hintsection from '../components/Hintsection.jsx';
 import Loader from '../components/Loader.jsx';
 import SocialIcons from "../components/SocialIcons";
@@ -12,10 +11,8 @@ import useHomeStore from '../context/store.js'
 import filterAnsweredQuestions from '../utils/filterAnsweredQuestions.jsx';
 import insertUserIfFirstLogin from '../utils/insertUserIfNewUser.jsx';
 import CompletedAll from '../components/CompletedAll.jsx';
-import IntroPopup from '../components/IntroPopup.jsx'
 import SelectACategory from '../components/SelectACategory.jsx';
 
-const BottomNav = lazy(() => import("../components/BottomNav"));
 
 const Home = () => {
     const lessons = useHomeStore(state => state.lessons);
@@ -95,10 +92,7 @@ const Home = () => {
 
     return (
         <>
-            {
-                !isIntroDone ? (
-                    <IntroPopup />
-                ) : (
+
                     <div className="h-full w-full bg-bg flex custom-scrollbar md:h-full">
                         {/* Main Content */}
                         <main
@@ -119,9 +113,6 @@ const Home = () => {
                         {/* <BottomNav /> */}
                         <ToastContainer autoClose={100} />
                     </div>
-                )
-            }
-
         </>
     );
 };

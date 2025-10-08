@@ -11,7 +11,6 @@ const Dashboard = () => {
   const [users, setUsers] = useState([])
   const navigate = useNavigate()
   const members=users.length > 0 ? users.filter(u=> u.role === 'member') : 0
-  console.log(members)
   const total_members=members.length
 
   //Starting from heres
@@ -60,12 +59,12 @@ const Dashboard = () => {
 
 
   return (
-    <main className='home flex flex-row'>
+    <main className='h-full w-full flex flex-row custom-scrollbar'>
       {/* main content here  */}
-      <main className='h-full w-full flex flex-col overflow-y-scroll'>
+      <main className='h-full w-full flex flex-col overflow-y-scroll curstom-scrollbar'>
 
         {/* Users count */}
-        <section className='w-full min-h-[40%] flex items-center justify-center py-4 gap-x-4'>
+        <section className='w-full min-h-[40%] flex items-center justify-center py-4 gap-x-4 text-gray-300'>
           {/* Total users */}
           <div className='group relative h-full w-[30%] bg-gradient-to-br from-secondary to-secondary/50 rounded-2xl flex items-center justify-center overflow-hidden border border-transparent hover:border-primary/20 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1'>
             <div className='absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500' />
@@ -79,7 +78,8 @@ const Dashboard = () => {
 
             <div className='flex flex-col h-full w-[60%] justify-center gap-1 items-start relative z-10 pr-4'>
               <p className='text-sm text-muted-foreground font-medium uppercase tracking-wide'>Total users</p>
-              <h1 className='text-4xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent transition-all duration-500 group-hover:scale-110 origin-left'>
+              <h1 className='text-4xl font-bold bg-gradient-to-r from-foreground
+               to-foreground/70 bg-clip-text text-transparent transition-all duration-500 group-hover:scale-110 origin-left'>
                 {users.length > 0 ? (
                   <span className='inline-block tabular-nums' style={{ animation: 'countUp 0.5s ease-out' }}>
                     {users.length}
