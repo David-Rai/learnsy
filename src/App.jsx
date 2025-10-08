@@ -1,5 +1,4 @@
 import React from 'react'
-import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router'
 import './index.css'
 import Signin from './routes/auth/Signin.jsx'
@@ -10,40 +9,48 @@ import Leaderboard from './components/Leaderboard.jsx'
 import Signup from './routes/auth/Signup.jsx'
 import Dashboard from './routes/admins/Dashboard.jsx'
 import GotoProfile from './routes/GotoProfile'
+import Root from './Root'
+
 //Public routes
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Home />
-  },
-  {
-    path: '/signin',
-    element: <Signin />
-  },
-  {
-    path: '/signup',
-    element: <Signup />
-  },
-  {
-    path: '/profile/:user_id',
-    element: <Profile />
-  }
-  ,
-  {
-    path: '/explore',
-    element: <Explore />
-  }, ,
-  {
-    path: '/leaderboard',
-    element: <Leaderboard />
-  },
+    element: <Root />,
+    children: [
+      {
+        path: '/',
+        element: <Home />
+      },
+      {
+        path: '/signin',
+        element: <Signin />
+      },
+      {
+        path: '/signup',
+        element: <Signup />
+      },
+      {
+        path: '/profile/:user_id',
+        element: <Profile />
+      }
+      ,
+      {
+        path: '/explore',
+        element: <Explore />
+      }, ,
+      {
+        path: '/leaderboard',
+        element: <Leaderboard />
+      },
 
-  {
-    path: '/dashboard',
-    element: <Dashboard />
-  }, {
-    path: '/goto_profile',
-    element: <GotoProfile />
+      {
+        path: '/dashboard',
+        element: <Dashboard />
+      }, {
+        path: '/goto_profile',
+        element: <GotoProfile />
+      }
+    ]
   }
 ])
 

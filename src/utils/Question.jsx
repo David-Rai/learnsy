@@ -38,8 +38,7 @@ const Question = ({ q }) => {
 
     return (
         <>
-            <div className="flex flex-col items-center justify-center h-[calc(100% - 80px)]
-                             flex-1 relative z-10 max-w-lg w-full px-4">
+            <div className="flex flex-1 flex-col items-center justify-center relative z-10 max-w-lg w-full px-4">
 
                 {/* add to home button */}
                 {showInstallButton && (

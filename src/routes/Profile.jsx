@@ -85,8 +85,7 @@ const Profile = () => {
       !user?.id ? <Loader />
         :
         (
-          <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] flex">
-            <Sidebar />
+          <div className="h-full bg-[var(--color-bg)] text-[var(--color-text)] flex">
             <div className="flex-1 flex flex-col h-screen">
               {/* <MobileHeader username={user?.user_metadata?.username} onBack={handleBack} onMenu={handleMenu} /> */}
               <main className="flex-1 px-4 md:px-8 py-6 md:py-8 overflow-y-scroll custom-scrollbar">
@@ -120,7 +119,7 @@ const Profile = () => {
                   </div>
                 </div>
               </main>
-              <div className="md:hidden"><BottomNav /></div>
+              {/* <div className="md:hidden"><BottomNav /></div> */}
             </div>
           </div>
         )

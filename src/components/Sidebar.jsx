@@ -36,7 +36,7 @@ const Sidebar = () => {
   }, [])
 
   return (
-    <div className="hidden lg:flex lg:flex-col bg-secondary w-64 h-screen p-4">
+    <div className="hidden lg:flex lg:flex-col bg-secondary w-64 h-screen p-4 z-50">
       {menuItems.map((item) => (
         <button
           key={item.name}

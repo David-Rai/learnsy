@@ -1,19 +1,15 @@
 import React from 'react'
 import { useNavigate } from 'react-router'
 import { ArrowRight } from 'lucide-react'
-import BottomNav from './BottomNav'
-import Sidebar from './Sidebar'
 
 const SelectACategory = () => {
     const navigate = useNavigate()
 
     return (
-        <main className='home flex flex-col md:flex-row h-screen bg-bg'>
-
-            <Sidebar />
-
+        <main className='h-full w-full flex flex-col md:flex-row bg-bg md:h-screen' >
+            
             {/* Main content - centered and fully responsive */}
-            <section className='flex flex-1 w-full items-center justify-center px-6 sm:px-8 lg:px-12 pb-24'>
+            <section className='flex flex-1 w-full items-center justify-center px-6 sm:px-8 lg:px-12'>
                 <div className='max-w-lg w-full text-center space-y-6 sm:space-y-8'>
                     {/* Heading with clean typography */}
                     <div className='space-y-2 sm:space-y-3'>
@@ -55,9 +51,6 @@ const SelectACategory = () => {
                     </p>
                 </div>
             </section>
-
-            {/* Bottom navigation - always accessible */}
-            <BottomNav />
         </main>
     )
 }

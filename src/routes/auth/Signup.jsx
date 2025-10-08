@@ -1,6 +1,5 @@
 import setUserBoard from '../../utils/setUserBoard';
 import React, { useEffect } from 'react'
-import BottomNav from '../../components/BottomNav';
 import Sidebar from '../../components/Sidebar';
 import { checkUser } from '../../utils/checkUser';
 import { toast, ToastContainer } from 'react-toastify'
@@ -115,10 +114,9 @@ const Signup = () => {
 
   return (
     
-    <main className="h-screen bg-bg flex flex-col items-center justify-center overflow-hidden md:flex-row md:justify-start">
+    <main className="h-full bg-bg flex flex-col items-center justify-center overflow-hidden md:flex-row md:justify-start">
 
-      <Sidebar />
-      <main className='w-full h-[calc(100%-80px)] md:h-full md:w-screen md:flex md:items-center md:justify-center'>
+      <main className='w-full h-full md:h-full md:w-screen md:flex md:items-center md:justify-center'>
         <div className="w-full max-w-md">
           {/* Main Form Container */}
           <div className="overflow-hidden">
@@ -331,8 +329,6 @@ const Signup = () => {
       </main>
 
       <ToastContainer autoClose={100} />
-      {/* Bottom Navigation */}
-      <BottomNav />
     </main>
 
   )

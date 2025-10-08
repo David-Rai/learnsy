@@ -54,14 +54,10 @@ const Signin = () => {
 
   }
 
-
-
   return (
-    <main className="h-screen bg-bg flex flex-col md:flex-row justify-center md:justify-start items-center overflow-hidden">
+    <main className="h-full bg-bg flex flex-col md:flex-row justify-center md:justify-start items-center overflow-hidden">
 
-      <Sidebar />
-
-      <main className='w-full h-[calc(100%-80px)] md:h-full md:w-screen md:flex md:items-center md:justify-center'>
+      <main className='w-full h-full md:h-full md:w-screen md:flex md:items-center md:justify-center'>
         <div className="w-full h-full max-w-md overflow-hidden">
           {/* Main Form Container */}
           <div className="p-8">
@@ -200,8 +196,6 @@ const Signin = () => {
       </main>
 
 
-      {/* <BottomNav/> */}
-      <BottomNav />
       <ToastContainer autoClose={100} />
     </main>
   )

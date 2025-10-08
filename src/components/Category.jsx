@@ -11,9 +11,9 @@ const Category = ({ c }) => {
 
   const handleStart = async () => {
     if (isLoading) return;
-    
+
     setIsLoading(true);
-    
+
     try {
       const { data, error } = await supabase
         .from('questions')
@@ -51,7 +51,14 @@ const Category = ({ c }) => {
 
   return (
     <div
-      className="group relative flex flex-col w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(33.333%-0.667rem)] lg:w-[280px] xl:w-[300px] h-[280px] rounded-2xl overflow-hidden bg-gradient-to-b from-gray-800 to-gray-900 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] cursor-pointer focus:outline-none focus:ring-4 focus:ring-green-500/50"
+      className="group relative
+       flex flex-col w-full
+        sm:w-[calc(50%-0.5rem)]
+         md:w-[calc(33.333%-0.667rem)]
+          lg:w-[280px] xl:w-[300px] h-[280px] rounded-2xl 
+          overflow-hidden bg-gradient-to-b from-gray-800
+           to-gray-900 shadow-xl hover:shadow-2xl transition-all 
+           duration-300 hover:scale-[1.03] active:scale-[0.98] cursor-pointer focus:outline-none focus:ring-4 focus:ring-green-500/50"
       onClick={handleStart}
       onKeyDown={handleKeyDown}
       role="button"
@@ -77,13 +84,13 @@ const Category = ({ c }) => {
           className="h-full w-full object-cover transition-all duration-500 group-hover:scale-110 group-hover:brightness-110"
           loading="lazy"
         />
-        
+
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent opacity-70 group-hover:opacity-60 transition-opacity duration-300" />
-        
+
         {/* Shimmer Effect */}
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 transition-opacity duration-700 transform -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%]" />
-        
+
         {/* Question Count Badge */}
         <div className="absolute top-3 right-3 flex items-center gap-1.5 px-3 py-1.5 bg-gray-900/90 backdrop-blur-sm rounded-full border border-gray-700/50 transition-all duration-300 group-hover:bg-green-500/20 group-hover:border-green-500/50">
           <Sparkles className="w-3.5 h-3.5 text-green-400 group-hover:scale-110 transition-transform duration-300" strokeWidth={2.5} />

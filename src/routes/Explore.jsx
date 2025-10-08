@@ -2,10 +2,7 @@ import React, { useState, useEffect, lazy } from 'react';
 import LessonOptions from '../components/LessonOptions.jsx';
 import Category from '../components/Category.jsx';
 import { ToastContainer } from 'react-toastify';
-import Sidebar from '../components/Sidebar.jsx';
 import supabase from '../config/supabase.js';
-import Hintsection from '../components/Hintsection.jsx';
-import BottomNav from '../components/BottomNav.jsx';
 import useHomeStore from '../context/store.js';
 
 
@@ -29,7 +26,7 @@ const Explore = () => {
       setCategories(data);
     };
 
-    if(categories.length === 0){
+    if (categories.length === 0) {
       get()
     }
   }, []);
@@ -39,34 +36,29 @@ const Explore = () => {
     c.name?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // handle back out of category
-  const handleOutCategory = () => {
-  
-  }
-  
-  return (
-    <main className="home custom-scrollbar fixed md:flex-row">
-      <Sidebar />
 
+  return (
+    <main className="h-full bg-bg w-full flex flex-col overflow-hidden">
+   
+      {/* Lessons of selected category */}
       {currentCategory.isSelected ? (
-        <div className="flex-1 flex flex-col relative overflow-hidden">
-            <LessonOptions />
+        <div className="h-full flex flex-col relative overflow-hidden">
+          <LessonOptions />
         </div>
-      ) 
-      : (
-        <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Search Bar */}
-        <header className="flex-shrink-0 bg-secondary px-4 py-4 md:py-6 shadow-lg">
+      ) : (
+        <div className="h-full flex flex-col overflow-hidden">
+          {/* Search Bar */}
+          <header className="flex-shrink-0 bg-secondary px-4 py-4 md:py-6 shadow-lg">
             <div className="max-w-4xl mx-auto">
-                <input
-                    type="text"
-                    placeholder="Search categories..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full px-4 py-3 md:py-4 rounded-2xl border-b-4 border-gray-700 text-white bg-bg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary transition-all text-base md:text-lg font-medium"
-                />
+              <input
+                type="text"
+                placeholder="Search categories..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full px-4 py-3 md:py-4 rounded-2xl border-b-4 border-gray-700 text-white bg-bg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary transition-all text-base md:text-lg font-medium"
+              />
             </div>
-        </header>
+          </header>
 
           {/* Categories Section */}
           <section className="flex-1 overflow-y-auto custom-scrollbar">
@@ -77,30 +69,19 @@ const Explore = () => {
                     <Category c={c} key={c.id || index} />
                   ))}
                 </div>
-              ) :
-                (
-                  <div className="flex items-center justify-center h-32 md:h-40">
-                    <div className="text-center text-gray-500 text-lg md:text-xl">
-                      No categories found
-                    </div>
+              ) : (
+                <div className="flex items-center justify-center h-32 md:h-40">
+                  <div className="text-center text-gray-500 text-lg md:text-xl">
+                    No categories found
                   </div>
-                )
-              }
-
+                </div>
+              )}
             </div>
           </section>
         </div>
       )}
 
-      {/* Hint Section */}
-      <div className="flex-shrink-0">
-        <Hintsection />
-      </div>
 
-      {/* Bottom Navigation */}
-      <div className="flex-shrink-0">
-        <BottomNav />
-      </div>
       <ToastContainer autoClose={100} />
     </main>
   );

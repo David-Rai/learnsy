@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Suspense, lazy } from 'react'
-import { ToastContainer, toast } from 'react-toastify';
+import React, { useEffect, useRef } from 'react';
+import { lazy } from 'react'
+import { ToastContainer } from 'react-toastify';
 import getQuestions from '../utils/getQuestions.jsx';
 import { observe } from '../utils/observe.jsx';
 import Sidebar from '../components/Sidebar.jsx';
@@ -33,7 +33,7 @@ const Home = () => {
     //Initail setups
     useEffect(() => {
         //***checking if user exist and provider is google 
-        insertUserIfFirstLogin()
+        insertUserIfFirstLogin()//fix this shit
 
         //***checking if category selected
         if (currentCategory.isSelected && currentLesson.isSelected) {
@@ -99,12 +99,11 @@ const Home = () => {
                 !isIntroDone ? (
                     <IntroPopup />
                 ) : (
-                    <div className="home custom-scrollbar fixed md:flex-row">
-                        <Sidebar />
+                    <div className="h-full w-full bg-bg flex custom-scrollbar md:h-full">
                         {/* Main Content */}
                         <main
                             ref={scrollContain}
-                            className="flex-1 md:h-full w-full overflow-y-scroll snap-y snap-mandatory md:w-[calc(100% - 64)]"
+                            className="flex-1  w-full overflow-y-scroll snap-y snap-mandatory"
                         >
                             {Array.isArray(currentQuestions) &&
                                 currentQuestions.map((q, index) => (
@@ -117,7 +116,7 @@ const Home = () => {
                         </main>
 
                         <Hintsection />
-                        <BottomNav />
+                        {/* <BottomNav /> */}
                         <ToastContainer autoClose={100} />
                     </div>
                 )

@@ -61,9 +61,6 @@ const Dashboard = () => {
 
   return (
     <main className='home flex flex-row'>
-      {/* Side navigation bar */}
-      <Sidebar />
-
       {/* main content here  */}
       <main className='h-full w-full flex flex-col overflow-y-scroll'>
 

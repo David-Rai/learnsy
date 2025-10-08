@@ -1,8 +1,6 @@
 // Leaderboard.jsx
 import React, { useEffect } from 'react'
 import supabase from '../config/supabase'
-import Sidebar from './Sidebar'
-import BottomNav from './BottomNav'
 import { Trophy } from 'lucide-react'
 import { useLeaderStore } from '../context/store'
 import TopLeader from './leaders/TopLeaders'
@@ -37,16 +35,15 @@ const Leaderboard = () => {
   }
 
   //loader
-  if(leaders.length === 0){
+  if (leaders.length === 0) {
     return (
       <Loader />
     )
   }
   return (
-    <main className="h-screen bg-bg text-text pb-20 md:flex md:pb-0">
-      <Sidebar />
+    <main className="h-full bg-bg text-text md:flex md:pb-0">
+      <div className="h-full md:h-full pb-6 overflow-x-hidden custom-scrollbar w-full">
 
-      <div className="h-[calc(100vh-80px)] md:h-full pb-6 overflow-x-hidden custom-scrollbar w-full">
         {/* Header */}
         <header className="bg-secondary shadow-lg py-6 md:py-8 px-4 mb-6">
           <div className="max-w-4xl mx-auto text-center">
@@ -64,18 +61,20 @@ const Leaderboard = () => {
           </div>
         </header>
 
-        {/* Top Leader */}
-        {leaders[0] && <TopLeader l={leaders[0]} rank={1} />}
+        <div className='px-4'>
+          {/* Top Leader */}
+          {leaders[0] && <TopLeader l={leaders[0]} rank={1} />}
 
-        {/* Other Leaders */}
-        <div className="flex flex-col gap-3 mt-4">
-          {leaders.slice(1).map((l, index) => (
-            <MidLeader key={index} l={l} rank={index + 2} />
-          ))}
+          {/* Other Leaders */}
+          <div className="flex flex-col gap-3 mt-4">
+            {leaders.slice(1).map((l, index) => (
+              <MidLeader key={index} l={l} rank={index + 2} />
+            ))}
+          </div>
         </div>
       </div>
 
-      <BottomNav />
+      {/* <BottomNav /> */}
     </main>
   )
 }

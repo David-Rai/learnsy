@@ -63,7 +63,7 @@ const LessonOptions = () => {
         </header>
     
         {/* Main content */}
-        <section className='flex-1 w-full overflow-y-auto px-4 py-6 md:py-8'>
+        <section className='flex-1 w-full overflow-y-auto px-4 py-6 md:py-8 custom-scrollbar'>
             <div className='max-w-4xl mx-auto'>
                 <h1 className='text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-text'>Chapters</h1>
                 

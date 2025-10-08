@@ -8,13 +8,13 @@ const Hintsection = ({ }) => {
     return (
         <>
             <div className={`
-    transition-all duration-500 ease-in-out
-    bg-secondary rounded-lg
-    w-full py-5 px-4 md:px-8 absolute z-50
-    left-0 shadow-lg
-    ${hintVisible ? "bottom-0 opacity-100" : "bottom-[-100%] opacity-0"}
-    h-[40vh] md:max-h-[200px] overflow-y-auto
+    fixed left-0 bottom-0 w-full md:max-w-md
+    bg-secondary rounded-t-xl p-5 md:p-8 shadow-lg
+    transform transition-transform duration-500 ease-in-out
+    ${hintVisible ? "translate-y-0" : "translate-y-full"}
+    z-50  h-[40vh] md:max-h-[200px]
 `}>
+
                 {/* Toggle */}
                 <div
                     onClick={() => setHintVisible(!hintVisible)}
