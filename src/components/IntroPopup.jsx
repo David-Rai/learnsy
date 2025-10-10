@@ -46,7 +46,6 @@ const Intro = () => {
   ];
 
   const handleSelect = (questionId, optionText, questionIndex) => {
-
     setSelectedAnswers(prev => ({ ...prev, [questionId]: optionText }));
 
     // Auto-scroll to next section after selection
@@ -63,6 +62,7 @@ const Intro = () => {
 
   const isComplete = Object.keys(selectedAnswers).length === questions.length;
 
+  
   const handleStart = () => {
     //settign user has seen  the intro page
     setIsIntroDone(true)
