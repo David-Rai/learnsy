@@ -3,8 +3,6 @@ import { useParams } from "react-router";
 import supabase from "../config/supabase";
 import { getStats } from "../utils/getStats";
 import Loader from "../components/Loader";
-import BottomNav from "../components/BottomNav";
-import Sidebar from "../components/Sidebar";
 import avatar from "../../public/profiles/1.jpg";
 
 const StatBar = React.memo(({ label, value, max = 100, type, delay = 0 }) => {
@@ -58,7 +56,6 @@ const Profile = () => {
       }
 
       if (data) {
-        // console.log(data[0])
         setUser(data[0]);
         const userStats = await getStats(data[0].user_id);
         setStats(userStats);
@@ -70,7 +67,7 @@ const Profile = () => {
     }
   }
 
-  useEffect(() => { fetchUserData(); }, []);
+  useEffect(() => { fetchUserData() }, []);
 
   const statConfigs = [
     { label: "Accuracy", value: stats?.accuracy ? `${stats.accuracy.toFixed(1)}%` : '0%', type: 'primary', max: 100, delay: 100 },

@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { ToastContainer } from 'react-toastify';
 import getQuestions from '../utils/getQuestions.jsx';
 import { observe } from '../utils/observe.jsx';
+import filterAnsweredQuestions from '../utils/filterAnsweredQuestions.jsx';
 import Hintsection from '../components/Hintsection.jsx';
 import Loader from '../components/Loader.jsx';
 import SocialIcons from "../components/SocialIcons";
