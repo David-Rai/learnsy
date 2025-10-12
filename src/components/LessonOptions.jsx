@@ -6,7 +6,6 @@ import useHomeStore from '../context/store'
 const LessonOptions = () => {
     const {
         setCurrentLesson,
-        currentLesson,
         currentCategory,
         setCurrentCategory,
         addNewLesson
@@ -78,7 +77,7 @@ const LessonOptions = () => {
                                 >
                                     <div className='flex items-center gap-3'>
                                         <span className='text-2xl'>📚</span>
-                                        <span className='font-bold truncate'>{l}</span>
+                                        <span className='font-bold truncate capitalize'>{l}</span>
                                     </div>
                                 </button>
                             ))

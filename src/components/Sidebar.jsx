@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import MemberControls from './MemberControls';
 import useHomeStore, { useAdminStore ,useMemberStore} from '../context/store';
 import checkMember from '../utils/checkMember'
 import checkAdmin from '../utils/checkAdmin';
@@ -76,23 +77,10 @@ const Sidebar = () => {
         )
       }
 
-      {/* Member button */}
+      {/* Member contorls*/}
       {
         isMember && (
-          <button
-            key='dashboard'
-            onClick={() => {
-              setActiveTab('member');
-              navigate('/member');
-            }}
-            className={`flex items-center gap-3 py-3 px-4 mb-2 rounded-lg transition-colors cursor-pointer ${activeTab === 'member'
-              ? "text-text bg-primary"
-              : "text-gray-400 hover:text-white hover:bg-gray-800"
-              }`}
-          >
-            <span className="text-lg"><LayoutDashboard /></span>
-            <span className="font-medium">Member</span>
-          </button>
+     <MemberControls />    
         )
       }
     </div>

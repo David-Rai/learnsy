@@ -23,6 +23,7 @@ const AddQuestion = () => {
     const selectedCategory = watch('category');
     const selectedLesson = watch('lesson');
     const navigate = useNavigate();
+    const { user } = useHomeStore()
 
     // ✅ Protecting route
     const check = async () => {
@@ -69,7 +70,8 @@ const AddQuestion = () => {
                 hint,
                 category: category.trim().toLowerCase(),
                 lesson,
-                options
+                options,
+                uploaded_by: user.id
             })
 
         if (error) {

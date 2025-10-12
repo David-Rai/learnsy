@@ -72,7 +72,7 @@ const Explore = () => {
         )}
 
 
-      <ToastContainer autoClose={100} />
+      <ToastContainer />
     </main>
   );
 };

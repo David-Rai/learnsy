@@ -102,7 +102,7 @@ const Category = ({ c }) => {
       {/* Content Section */}
       <div className="relative flex flex-col justify-center flex-1 px-5 py-4 bg-gray-900">
         {/* Category Name */}
-        <h2 className="text-white text-lg md:text-xl font-bold mb-3 truncate group-hover:text-green-400 transition-colors duration-300">
+        <h2 className="capitalize text-white text-lg md:text-xl font-bold mb-3 truncate group-hover:text-green-400 transition-colors duration-300">
           {name}
         </h2>
 

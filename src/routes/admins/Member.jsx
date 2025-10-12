@@ -115,7 +115,7 @@ const Member = () => {
             <div>
                 <button onClick={() => navigate('/addQuestion')}
                     className='option-button'
-                    >Add Question</button>
+                >Add Question</button>
             </div>
         </main>
     )

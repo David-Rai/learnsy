@@ -1,7 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router'
 import supabase from '../../config/supabase'
-import Sidebar from '../../components/Sidebar'
 import checkAdmin from '../../utils/checkAdmin'
 import { CircleUser } from 'lucide-react'
 import { Trash, Users, TrendingUp, Crown } from 'lucide-react';
