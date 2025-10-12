@@ -1,6 +1,5 @@
 import setUserBoard from '../../utils/setUserBoard';
 import React, { useEffect } from 'react'
-import Sidebar from '../../components/Sidebar';
 import { checkUser } from '../../utils/checkUser';
 import { toast, ToastContainer } from 'react-toastify'
 import handleGoogleLogin from '../../utils/handleGoogleLogin';

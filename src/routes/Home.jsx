@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import { lazy } from 'react'
 import { ToastContainer } from 'react-toastify';
 import getQuestions from '../utils/getQuestions.jsx';
 import { observe } from '../utils/observe.jsx';
@@ -8,7 +7,6 @@ import Loader from '../components/Loader.jsx';
 import SocialIcons from "../components/SocialIcons";
 import Question from '../utils/Question.jsx';
 import useHomeStore from '../context/store.js'
-import filterAnsweredQuestions from '../utils/filterAnsweredQuestions.jsx';
 import insertUserIfFirstLogin from '../utils/insertUserIfNewUser.jsx';
 import CompletedAll from '../components/CompletedAll.jsx';
 import SelectACategory from '../components/SelectACategory.jsx';
@@ -56,7 +54,7 @@ const Home = () => {
         }
     }, [hintVisible])//dependency
 
-    
+
     // Intersection Observer
     useEffect(() => {
         if (currentSelectedLesson?.maxReached) return
@@ -93,26 +91,26 @@ const Home = () => {
     return (
         <>
 
-                    <div className="h-full w-full bg-bg flex custom-scrollbar md:h-full">
-                        {/* Main Content */}
-                        <main
-                            ref={scrollContain}
-                            className="flex-1  w-full overflow-y-scroll snap-y snap-mandatory"
-                        >
-                            {Array.isArray(currentQuestions) &&
-                                currentQuestions.map((q, index) => (
-                                    <div key={index} className="question-container overflow-hidden">
-                                        <Question q={q} />
-                                        <SocialIcons q={q} />
-                                        {index === currentQuestions.length - 2 && <div ref={targetRef}></div>}
-                                    </div>
-                                ))}
-                        </main>
+            <div className="h-full w-full bg-bg flex custom-scrollbar md:h-full">
+                {/* Main Content */}
+                <main
+                    ref={scrollContain}
+                    className="flex-1  w-full overflow-y-scroll snap-y snap-mandatory"
+                >
+                    {Array.isArray(currentQuestions) &&
+                        currentQuestions.map((q, index) => (
+                            <div key={index} className="question-container overflow-hidden">
+                                <Question q={q} />
+                                <SocialIcons q={q} />
+                                {index === currentQuestions.length - 2 && <div ref={targetRef}></div>}
+                            </div>
+                        ))}
+                </main>
 
-                        <Hintsection />
-                        {/* <BottomNav /> */}
-                        <ToastContainer autoClose={100} />
-                    </div>
+                <Hintsection />
+                {/* <BottomNav /> */}
+                <ToastContainer autoClose={100} />
+            </div>
         </>
     );
 };

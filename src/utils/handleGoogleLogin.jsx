@@ -5,7 +5,7 @@ const handleGoogleLogin = async () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `https://learnwhilescrolling.netlify.app`, // page after login
+        redirectTo: window.location.origin, // page after login
       },
     });
 
