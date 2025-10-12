@@ -9,6 +9,7 @@ const Category = ({ c }) => {
   const { setCurrentCategory } = useHomeStore();
   const { name, image, totalquestion } = c;
 
+  //Initial setup
   const handleStart = async () => {
     if (isLoading) return;
 

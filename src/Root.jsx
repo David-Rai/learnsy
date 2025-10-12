@@ -1,5 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router';
+import { ToastContainer } from 'react-toastify'
 import IntroPopUp from './components/IntroPopup';
 import Sidebar from './components/Sidebar';
 import BottomNav from './components/BottomNav';
@@ -17,6 +18,7 @@ const Layout = () => {
         <Outlet />
       </main>
       <BottomNav />
+      <ToastContainer />
     </div>
   );
 };

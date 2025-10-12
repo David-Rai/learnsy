@@ -11,11 +11,13 @@ const checkAdmin = async () => {
     const { exist, user } = await checkUser()
     if (!exist) return false
 
+
     //checking if admin or not
     const { data, error } = await supabase.from("board")
         .select()
         .eq("user_id", user.id)
         .single()
+
 
     if (error) {
         console.log(error)

@@ -1,19 +1,23 @@
 import supabase from '../../config/supabase';
+import getLessons from '../../utils/supabase/getLessons';
 import React, { useEffect, useState } from 'react';
+import getCategories from '../../utils/supabase/getCategories';
+import uploadNewCategory from '../../utils/supabase/uploadNewCategory';
 import checkMember from '../../utils/checkMember';
 import { useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { PlusCircle } from 'lucide-react';
 import useHomeStore from '../../context/store';
 import Loader from '../../components/Loader';
+import { toast } from 'react-toastify';
 
 const AddQuestion = () => {
     const { categories, setCategories } = useHomeStore();
     const [newCategory, setNewCategory] = useState('');
+    const [newCategoryImage, setNewCategoryImage] = useState('');
     const [lessons, setLessons] = useState([]);
     const [newLesson, setNewLesson] = useState('');
     const [isChecked, setIsChecked] = useState(false);
-
     const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
     const optionType = watch('optionType');
     const selectedCategory = watch('category');
@@ -27,48 +31,22 @@ const AddQuestion = () => {
         setIsChecked(true);
     };
 
-    // ✅ Get categories
-    const getCategories = async () => {
-        const { error, data } = await supabase.rpc('get_categories_with_count');
-        if (error) {
-            console.error('Error fetching categories:', error);
-            return setCategories([]);
-        }
-        setCategories(data);
-    };
-
-    // ✅ Get lessons when category changes
-    const getLessons = async (category) => {
-        if (!category || category === 'new') {
-            setLessons([]);
-            return;
-        }
-        const { data, error } = await supabase
-            .from('questions')
-            .select('lesson')
-            .eq('category', category);
-
-        if (error) {
-            console.error('Error fetching lessons:', error);
-            setLessons([]);
-        } else {
-
-            const newLessons = [...new Set(data.map(item => item.lesson.trim()))];
-            setLessons(newLessons || []);
-        }
-    };
 
     // ✅ On form submit
     const onSubmit = async (data) => {
+        const newCat = newCategory.trim().toLowerCase()//category
+
+
         // Handle new category
-        if (data.category === 'new' && newCategory.trim()) {
-            setCategories([...categories, { name: newCategory.trim() }]);
-            data.category = newCategory.trim();
+        if (data.category === 'new' && newCat) {
+            uploadNewCategory(newCat, newCategoryImage)
+            setCategories([...categories, { name: newCat }]);
+            data.category = newCat;
         }
 
         // Handle new lesson
         if (data.lesson === 'new' && newLesson.trim()) {
-            data.lesson = newLesson.trim();
+            data.lesson = newLesson.trim().toLowerCase()
         }
 
         console.log('📝 New Question:', data);
@@ -84,18 +62,21 @@ const AddQuestion = () => {
         }
 
         //saving into supabase
-        const res = await supabase.from('questions')
+        const { error } = await supabase.from('questions')
             .insert({
                 q: question,
                 a,
                 hint,
-                category,
+                category: category.trim().toLowerCase(),
                 lesson,
                 options
             })
 
-        console.log(res)
+        if (error) {
+            return toast.error(error.message)
+        }
 
+        toast.success("successfully added")
         //clearning the fiedls
         reset({
             question: '',
@@ -118,7 +99,7 @@ const AddQuestion = () => {
 
     // 🌀 Fetch lessons when category changes
     useEffect(() => {
-        getLessons(selectedCategory);
+        getLessons(selectedCategory, setLessons);
     }, [selectedCategory]);
 
     return isChecked ? (
@@ -142,13 +123,22 @@ const AddQuestion = () => {
                     </select>
 
                     {selectedCategory === 'new' && (
-                        <input
-                            type="text"
-                            value={newCategory}
-                            onChange={(e) => setNewCategory(e.target.value)}
-                            placeholder="Enter new category"
-                            className="mt-2 p-3 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
+                        <div>
+                            <input
+                                type="text"
+                                value={newCategory}
+                                onChange={(e) => setNewCategory(e.target.value)}
+                                placeholder="Enter new category"
+                                className="mt-2 p-3 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                            <input
+                                type="text"
+                                value={newCategoryImage}
+                                onChange={(e) => setNewCategoryImage(e.target.value)}
+                                placeholder="Add new category image"
+                                className="mt-2 p-3 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
                     )}
                     {errors.category && <span className="text-red-500 text-sm mt-1">{errors.category.message}</span>}
                 </div>
