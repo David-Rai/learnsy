@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import getCategories from '../../utils/supabase/getCategories';
+import getYourUploads from '../../utils/supabase/getYourUpload';
+import getQuestionsCount from '../../utils/supabase/getQuestionsCount';
 import supabase from '../../config/supabase';
 import checkMember from '../../utils/checkMember';
 import { CircleUser } from 'lucide-react';
@@ -11,13 +13,13 @@ import { useForm } from 'react-hook-form';
 const Member = () => {
   const navigate = useNavigate();
   const { categories } = useHomeStore();
-  const { question_count, setQuestionCount, uploads = [], setUploads } = useMemberStore();
+  const { question_count, uploads = [], setUploads } = useMemberStore();
   const upload_count = uploads.length || 0
   const [isChecked, setIsChecked] = useState(false);
   const [editing, setEditing] = useState(null);
-
   const { register, handleSubmit, reset } = useForm();
 
+  //checking validation of member
   useEffect(() => { check(); }, []);
 
   const check = async () => {
@@ -25,23 +27,10 @@ const Member = () => {
     if (!res) return navigate('/');
     setIsChecked(true);
     if (categories.length === 0) getCategories();
-    if (question_count === 0) getQuestions();
+    if (question_count === 0) getQuestionsCount();
     if (uploads.length === 0) getYourUploads();
   };
 
-  const getQuestions = async () => {
-    const { count } = await supabase.from("questions").select("*", { count: 'exact' });
-    if (!count) return;
-    setQuestionCount(count);
-  };
-
-  const getYourUploads = async () => {
-    const { user } = useHomeStore.getState();
-    const memberId = user.id;
-    const { data, error } = await supabase.from('questions').select('*').eq('uploaded_by', memberId);
-    if (error) return;
-    if (data) setUploads(data);
-  };
 
   const handleEdit = (item) => {
     setEditing(item);
@@ -138,7 +127,7 @@ const Member = () => {
           {uploads.length > 0 ? (
             uploads.map((item) => (
               <div key={item.id} className="border rounded-lg p-4 shadow-sm bg-white relative">
-                <h2 className="text-lg font-semibold">{item.q}</h2>
+                <div className="text-lg font-semibold text-gray-700">{item.q}</div>
                 <p className="text-sm text-gray-600 mb-2">Category: <span className="font-medium">{item.category}</span> | Lesson: <span className="font-medium">{item.lesson}</span></p>
                 <p className="text-sm text-gray-500 mb-2">Hint: {item.hint}</p>
                 <div className="flex flex-wrap gap-2 mb-2">

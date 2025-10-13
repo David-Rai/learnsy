@@ -31,7 +31,7 @@ const Leaderboard = () => {
 
   // RPC call to Supabase
   const fetchLeadersRPC = async () => {
-    return await supabase.rpc('get_leaderboard_stats')
+    return await supabase.rpc('get_leaderboard_stats').limit(5)
   }
 
   //loader
@@ -40,6 +40,7 @@ const Leaderboard = () => {
       <Loader />
     )
   }
+
   return (
     <main className="h-full bg-bg text-text md:flex md:pb-0">
       <div className="h-full md:h-full pb-6 overflow-x-hidden custom-scrollbar w-full">

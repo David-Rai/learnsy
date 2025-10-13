@@ -1,4 +1,5 @@
 import React, { useState, useEffect, lazy } from 'react';
+import { useMemo } from 'react';
 import LessonOptions from '../components/LessonOptions.jsx';
 import Category from '../components/Category.jsx';
 import getCategories from '../utils/supabase/getCategories.jsx';
@@ -6,10 +7,8 @@ import { ToastContainer } from 'react-toastify';
 import useHomeStore from '../context/store.js';
 
 const Explore = () => {
-  const {
-    categories = [],
-    currentCategory,
-  } = useHomeStore();
+  const categories = useHomeStore((state) => state.categories || []);
+  const currentCategory = useHomeStore((state) => state.currentCategory);
 
   const [searchTerm, setSearchTerm] = useState(""); // state for search
 
@@ -20,11 +19,11 @@ const Explore = () => {
     }
   }, []);
 
-  // filter categories based on search term
-  const filteredCategories = categories.filter((c) =>
-    c.name?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
+  const filteredCategories = useMemo(() => {
+    return categories.filter((c) =>
+      c.name?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [categories, searchTerm]);
 
   return (
     <main className="h-full bg-bg w-full flex flex-col overflow-hidden">
