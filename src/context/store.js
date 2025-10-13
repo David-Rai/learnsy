@@ -1,6 +1,7 @@
 // store/homeStore.js
 import { create } from 'zustand';
 
+///********MAIN STORE********* */
 const useHomeStore = create((set) => ({
   BATCH_SIZE: 5,
 
@@ -101,7 +102,7 @@ const useHomeStore = create((set) => ({
 }));
 
 
-//Leader store
+//********LEADER STORE**********
 export const useLeaderStore = create((set) => ({
   leaders: [],
   loading: true,
@@ -110,7 +111,7 @@ export const useLeaderStore = create((set) => ({
 
 }))
 
-//Admin datas
+//******ADMIN DATA STORE********* */
 export const useAdminStore = create((set) => ({
   //Admin data
   isAdminChecked: false,
@@ -119,7 +120,7 @@ export const useAdminStore = create((set) => ({
   setIsAdmin: (v) => set({ isAdmin: v })
 }))
 
-//Members datas
+//******MEMBER STORE******* */
 export const useMemberStore = create((set) => ({
   //Admin data
   isMemberChecked: false,
@@ -129,7 +130,11 @@ export const useMemberStore = create((set) => ({
 
   //questions count
   question_count: 0,
-  setQuestionCount: (c) => set({ question_count: c })
+  setQuestionCount: (c) => set({ question_count: c }),
+
+  //Your uploads
+  uploads: [],
+  setUploads: (u) => set({ uploads: u })
 }))
 
 export default useHomeStore;
