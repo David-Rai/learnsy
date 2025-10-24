@@ -37,13 +37,11 @@ const Question = ({ q , questionIndex,handleScroll}) => {
                   buttonClass += answer.isCorrect
                     ? " bg-right text-bg"
                     : " bg-wrong text-bg";
-                  // buttonClass += answer.isCorrect ? " bg-right text-bg" : " bg-wrong text-bg";
                 } else {
                   if (q.a === opt) {
                     buttonClass += " bg-right text-bg";
                   } else {
                     buttonClass += " bg-secondary text-text border-[oklch(35%_0.042_265.755)]";
-
                   }
                 }
               }
