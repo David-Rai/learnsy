@@ -12,7 +12,6 @@ import insertUserIfFirstLogin from '../utils/insertUserIfNewUser.jsx';
 import CompletedAll from '../components/CompletedAll.jsx';
 import SelectACategory from '../components/SelectACategory.jsx';
 
-
 const Home = () => {
     const lessons = useHomeStore(state => state.lessons);
     const hintVisible = useHomeStore(state => state.hintVisible);
