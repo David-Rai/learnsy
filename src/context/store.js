@@ -31,6 +31,16 @@ const useHomeStore = create((set) => ({
       };
     }),
 
+    //set isAnsweredAll
+    updateIsAnsweredAllQuestions: (name, status) =>
+    set((state) => ({
+      lessons: state.lessons.map((c) =>
+        c.name === name
+          ? { ...c, isAnsweredAll: status }  // update isAnsweredAll
+          : c
+      ),
+    })),
+  
   //Update the questions of particular category basis of category.name
   updateLessonQuestions: (name, newQuestions) =>
     set((state) => ({
