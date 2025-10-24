@@ -88,7 +88,7 @@ const Home = () => {
         )
     }
 
-    //Auto scroll
+    //Auto scroll to next after the answer selection
     const handleScroll=(questionIndex)=>{
         console.log("scrolling to ",questionIndex)
     // Auto-scroll to next section after selection
@@ -98,7 +98,7 @@ const Home = () => {
       if (nextSection) {
         nextSection.scrollIntoView({ behavior: "smooth", block: "start" });
       }
-    }, 0);
+    }, 100);
 
     }
     return (
