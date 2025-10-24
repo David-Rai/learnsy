@@ -13,12 +13,12 @@ const MidLeader = memo(({ l, rank }) => {
       <div className="flex-shrink-0 w-10 text-center font-bold text-lg md:text-xl text-text">{rank}</div>
 
       <div className="flex items-center gap-3 md:gap-4 flex-1 min-w-0">
-        <img
+        {/* <img
           src={avatar}
           alt={username}
           loading="lazy"
           className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover ring-2 ring-[var(--primary)]/20"
-        />
+        /> */}
         <p className="truncate font-semibold text-text text-sm md:text-base">{username}</p>
       </div>
 
