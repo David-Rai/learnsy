@@ -26,7 +26,7 @@ const useHomeStore = create((set) => ({
       return {
         lessons: [
           ...state.lessons,
-          { name, questions, maxReached: false, category: c },
+          { name, questions, maxReached: false, category: c ,isAnsweredAll:false },
         ],
       };
     }),

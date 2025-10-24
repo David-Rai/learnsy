@@ -90,8 +90,6 @@ const Home = () => {
 
     //Auto scroll to next after the answer selection
     const handleScroll=(questionIndex)=>{
-        console.log("scrolling to ",questionIndex)
-    // Auto-scroll to next section after selection
     setTimeout(() => {
       const nextSection =
         document.querySelectorAll(".snap-start")[questionIndex + 1];
@@ -99,8 +97,8 @@ const Home = () => {
         nextSection.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     }, 100);
-
     }
+    
     return (
         <>
 

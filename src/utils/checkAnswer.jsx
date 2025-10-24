@@ -1,4 +1,5 @@
 import supabase from "../config/supabase";
+import checkIsAnsweredAll from "./checkIsAnsweredAll";
 import useHomeStore from "../context/store";
 
 //Handling Answering
@@ -15,6 +16,9 @@ export const checkAnswer = async (q, opt) => {
 
     // save the answer
     setAnswers([...answers, { id: q.id, selectedOption: opt, isCorrect }]);
+
+    //Checking if all answers are answered in this category lesson
+    checkIsAnsweredAll()
 
     //Increase the points and insert into user answers
     if (user?.id) {
