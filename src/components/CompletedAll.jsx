@@ -7,7 +7,7 @@ const CompletedAll = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen w-full flex flex-col bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+    <div className="h-full w-full flex flex-col bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
       {/* Main Content */}
       <main className="flex-1 flex items-center justify-center px-4 py-8 sm:py-12">
         <div className="relative w-full max-w-md mx-auto">
@@ -23,7 +23,7 @@ const CompletedAll = () => {
               {/* Icon Group */}
               <div className="flex items-center justify-center gap-2 mb-6">
                 <CheckCircle2 
-                  className="w-14 h-14 sm:w-16 sm:h-16 text-green-500 drop-shadow-lg" 
+                  className="w-14 h-14 sm:w-16 sm:h-16 text-primary drop-shadow-lg" 
                   strokeWidth={2} 
                 />
                 <Sparkles 
@@ -44,7 +44,7 @@ const CompletedAll = () => {
               {/* CTA Button */}
               <button
                 onClick={() => navigate('/explore')}
-                className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 text-base sm:text-lg font-bold text-white bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-200 ease-out hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-green-500/50"
+                className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 text-base sm:text-lg font-bold text-white bg-primary rounded-2xl shadow-lg hover:shadow-xl transition-all duration-200 ease-out hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-green-500/50"
                 aria-label="Explore categories"
               >
                 <span>Explore Categories</span>
@@ -56,7 +56,7 @@ const CompletedAll = () => {
                 {[0, 150, 300].map((delay) => (
                   <span
                     key={delay}
-                    className="w-2 h-2 bg-green-500 dark:bg-green-400 rounded-full animate-bounce"
+                    className="w-2 h-2 bg-primary  rounded-full animate-bounce"
                     style={{ animationDelay: `${delay}ms` }}
                   />
                 ))}

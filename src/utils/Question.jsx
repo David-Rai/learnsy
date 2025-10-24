@@ -42,7 +42,8 @@ const Question = ({ q , questionIndex,handleScroll}) => {
                   if (q.a === opt) {
                     buttonClass += " bg-right text-bg";
                   } else {
-                    buttonClass += " bg-secondary text-text"; // other options after answering
+                    buttonClass += " bg-secondary text-text border-[oklch(35%_0.042_265.755)]";
+
                   }
                 }
               }
