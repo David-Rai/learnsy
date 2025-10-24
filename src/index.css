@@ -98,7 +98,7 @@ small,
     } */
 
     .question-container {
-        @apply relative snap-start h-full flex flex-col w-full justify-center items-center
+        @apply relative h-full flex flex-col w-full justify-center items-center
     }
 
     .question-text {

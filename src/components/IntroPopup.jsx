@@ -60,9 +60,12 @@ const Intro = () => {
     }, 0);
   };
 
+
+  //Checking is all answers completed or not
   const isComplete = Object.keys(selectedAnswers).length === questions.length;
 
   
+  //All foen now redirecting to the category page
   const handleStart = () => {
     //settign user has seen  the intro page
     setIsIntroDone(true)

@@ -88,6 +88,19 @@ const Home = () => {
         )
     }
 
+    //Auto scroll
+    const handleScroll=(questionIndex)=>{
+        console.log("scrolling to ",questionIndex)
+    // Auto-scroll to next section after selection
+    setTimeout(() => {
+      const nextSection =
+        document.querySelectorAll(".snap-start")[questionIndex + 1];
+      if (nextSection) {
+        nextSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 0);
+
+    }
     return (
         <>
 
@@ -99,8 +112,8 @@ const Home = () => {
                 >
                     {Array.isArray(currentQuestions) &&
                         currentQuestions.map((q, index) => (
-                            <div key={index} className="question-container overflow-hidden">
-                                <Question q={q} />
+                            <div key={index} className=" snap-start question-container overflow-hidden">
+                                <Question q={q} handleScroll={handleScroll} questionIndex={index}/>
                                 <SocialIcons q={q} />
                                 {index === currentQuestions.length - 2 && <div ref={targetRef}></div>}
                             </div>

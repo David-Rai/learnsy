@@ -31,10 +31,10 @@ const TopLeader = memo(({ l, rank }) => {
           <p className="font-bold">{points}</p>
           <p className="text-xs text-gray-400">Points</p>
         </div>
-        <div className="text-center">
+        {/* <div className="text-center">
           <p className="font-bold">{total_questions}</p>
           <p className="text-xs text-gray-400">Total Qs</p>
-        </div>
+        </div> */}
       </div>
     </section>
   )
