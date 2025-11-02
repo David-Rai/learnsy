@@ -43,6 +43,7 @@ const Dashboard = () => {
   }
 
   const handleDelete = async (userId) => {
+    return
     try {
       const { error: rpcError } = await supabase.rpc("delete_user_cascade", {
         uid: userId,
