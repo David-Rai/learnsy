@@ -238,22 +238,42 @@ const Dashboard = () => {
         </section>
 
         {/* Change role */}
-        {isRoleChanging?.status && (
-          <div className="h-full w-full bg-gray-800 absolute top-0 left-0">
-            <img src={isRoleChanging.selected_user.avatar} alt="" />
-            <h1>{isRoleChanging.selected_user.username}</h1>
-            <h1>Current role {isRoleChanging.selected_user.role}</h1>
-            <label htmlFor="new-role">Choose a new role:</label>
-            <select id="new-role" ref={newRoleRef}>
-              <option value="admin">Admin</option>
-              <option value="user">user</option>
-              <option value="member">Member</option>
-            </select>
-            <button onClick={() => changeRole(isRoleChanging.selected_user)}>
-              Save
-            </button>
-          </div>
-        )}
+       {isRoleChanging?.status && (
+  <div className="fixed inset-0 flex flex-col items-center justify-center bg-gray-900 bg-opacity-90 p-4 z-50">
+    <div className="bg-gray-800 rounded-lg shadow-lg p-6 w-full max-w-sm flex flex-col items-center gap-4">
+      <img
+        src={isRoleChanging.selected_user.avatar}
+        alt={isRoleChanging.selected_user.username}
+        className="w-24 h-24 rounded-full object-cover"
+      />
+      <h1 className="text-xl font-semibold text-white">
+        {isRoleChanging.selected_user.username}
+      </h1>
+      <p className="text-gray-300">
+        Current role: <span className="font-medium">{isRoleChanging.selected_user.role}</span>
+      </p>
+      <label htmlFor="new-role" className="text-gray-200 self-start">
+        Choose a new role:
+      </label>
+      <select
+        id="new-role"
+        ref={newRoleRef}
+        className="w-full bg-gray-700 text-white p-2 rounded"
+      >
+        <option value="admin">Admin</option>
+        <option value="user">User</option>
+        <option value="member">Member</option>
+      </select>
+      <button
+        onClick={() => changeRole(isRoleChanging.selected_user)}
+        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded mt-2"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+)}
+
       </main>
     </main>
   );
