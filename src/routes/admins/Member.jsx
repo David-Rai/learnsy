@@ -46,7 +46,7 @@ const Member = () => {
       .update({ q, category, lesson, hint })
       .eq('id', id);
     if (error) return;
-    setUploads(prev => prev.map(item => item.id === id ? { ...item, q, category, lesson, hint } : item));
+    // setUploads(prev => prev.map(item => item.id === id ? { ...item, q, category, lesson, hint } : item));
     setEditing(null);
   };
 

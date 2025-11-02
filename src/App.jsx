@@ -6,6 +6,7 @@ import Profile from './routes/Profile.jsx'
 import Home from './routes/Home'
 import Explore from './routes/Explore.jsx'
 import AddQuestion from './routes/admins/AddQuestion'
+import { ToastContainer } from 'react-toastify'
 import Leaderboard from './components/Leaderboard.jsx'
 import Signup from './routes/auth/Signup.jsx'
 import Member from './routes/admins/Member'
@@ -68,6 +69,7 @@ const App = () => {
   return (
     <>
       <RouterProvider router={router} />
+      <ToastContainer />
     </>
   )
 }
