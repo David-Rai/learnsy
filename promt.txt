@@ -1,0 +1,29 @@
+Generate 100 science-9 questions in CSV format with the following columns:
+q,a,options,category,hint,lesson
+
+Requirements:
+
+Use exactly  different lessons  (all lowercase)
+lessons are (
+Scientific Studies,
+Classification of Organisms, Life Cycle of Mushroom, Evolution, Histology and Life Process, Nature and Environment, Force and Motion, Machine, Sources of Energy, Wave, Electricity, The Universe, Information and Communication Technology (ICT), Atomic Structure and Chemical Bond, Chemical Reaction, Some Gases, Metals and Non-Metals, Carbon and Its Compounds, Materials Used in Daily Life
+)
+. Ensure each lesson is used equally, i.e., each lesson appears for 10 questions.
+
+The options column must be a JSON array (e.g., ["option1","option2","option3","option4"]) containing either 4 options or True/False.
+
+The category column should always be in lowercase.
+
+Each question must be unique, and the correct answer must exist in the options array.
+
+Include a meaningful hint for each question to aid understanding.
+
+Do not include any extra columns (like id, date, role, created_at).
+
+Ensure the output is strictly CSV format, with no extra text, explanation, or formatting outside CSV rules.
+
+Notes:
+
+Balance lessons carefully
+
+Make hints concise but informative.

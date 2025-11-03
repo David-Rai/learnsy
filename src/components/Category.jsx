@@ -9,7 +9,7 @@ const Category = ({ c }) => {
   const { setCurrentCategory } = useHomeStore();
   const { name, image, totalquestion } = c;
 
-  //Initial setup
+  //Initial setup getting lessons from the DB
   const handleStart = async () => {
     if (isLoading) return;
 
