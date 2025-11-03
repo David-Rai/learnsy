@@ -6,35 +6,29 @@ const TopLeader = memo(({ l, rank }) => {
   const accuracy = total_questions === 0 ? 0 : ((right_questions / total_questions) * 100).toFixed(1)
 
   return (
-    <section className="flex items-center justify-between p-3 md:p-4 bg-primary rounded-xl shadow hover:shadow-lg transition-all duration-200">
-      {/* Rank */}
-      <div className="flex-shrink-0 w-10 text-center font-bold text-lg md:text-xl text-text">{rank}</div>
-
-      {/* Avatar + Username */}
-      <div className="flex items-center gap-3 md:gap-4 flex-1 min-w-0">
-        {/* <img
+    <section className="flex flex-col items-center justify-center bg-[var(--bg)] text-[var(--text)] p-6 rounded-2xl shadow-lg w-full max-w-sm mx-auto">
+      <div className="relative flex flex-col items-center">
+        <img
           src={avatar}
           alt={username}
-          loading="lazy"
-          className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover ring-2 ring-[var(--primary)]/20"
-        /> */}
-        <p className="truncate font-semibold text-text text-sm md:text-base">{username}</p>
+          className="w-24 h-24 md:w-28 md:h-28 rounded-full border-4 border-[var(--primary)] shadow-lg object-cover"
+        />
+        <div className="absolute -bottom-3 text-white bg-[var(--primary)] font-bold text-lg px-4 py-1 rounded-full shadow-md">
+          #{rank}
+        </div>
       </div>
 
-      {/* Stats */}
-      <div className="flex items-center gap-4 md:gap-6 font-mono text-sm md:text-base">
+      <h2 className="mt-6 text-xl md:text-2xl font-semibold text-center">{username}</h2>
+
+      <div className="flex justify-center gap-8 mt-4 font-mono">
         <div className="text-center">
-          <p className="font-bold">{accuracy}%</p>
-          <p className="text-xs text-gray-400">Accuracy</p>
+          <p className="font-bold text-[var(--right)]">{accuracy}%</p>
+          <p className="text-xs opacity-70">Accuracy</p>
         </div>
         <div className="text-center">
-          <p className="font-bold">{points}</p>
-          <p className="text-xs text-gray-400">Points</p>
+          <p className="font-bold text-[var(--primary)]">{points}</p>
+          <p className="text-xs opacity-70">Points</p>
         </div>
-        {/* <div className="text-center">
-          <p className="font-bold">{total_questions}</p>
-          <p className="text-xs text-gray-400">Total Qs</p>
-        </div> */}
       </div>
     </section>
   )

@@ -57,7 +57,7 @@ const Leaderboard = () => {
               </h1>
             </div>
             <p className="text-sm md:text-base text-gray-300 font-medium">
-              Top performers this season ({leaders.length} players)
+              Top performers this season
             </p>
           </div>
         </header>
