@@ -5,8 +5,8 @@ Requirements:
 
 Use exactly  different lessons  (all lowercase)
 lessons are (
-Scientific Studies,
-Classification of Organisms, Life Cycle of Mushroom, Evolution, Histology and Life Process, Nature and Environment, Force and Motion, Machine, Sources of Energy, Wave, Electricity, The Universe, Information and Communication Technology (ICT), Atomic Structure and Chemical Bond, Chemical Reaction, Some Gases, Metals and Non-Metals, Carbon and Its Compounds, Materials Used in Daily Life
+
+
 )
 . Ensure each lesson is used equally, i.e., each lesson appears for 10 questions.
 

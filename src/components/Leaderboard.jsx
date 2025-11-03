@@ -1,4 +1,5 @@
 // Leaderboard.jsx
+import { ChevronDown } from "lucide-react";
 import React, { useEffect } from "react";
 import supabase from "../config/supabase";
 import { Trophy } from "lucide-react";
@@ -10,6 +11,15 @@ import Loader from "./Loader";
 const Leaderboard = () => {
   const leaders = useLeaderStore((state) => state.leaders) || [];
   const setLeaders = useLeaderStore((state) => state.setLeaders);
+  const rankedLeaders = leaders.map((user) => {
+    const correct = user.total_questions - user.wrong_questions;
+    const accuracy = (correct / user.total_questions) * 100; // Accuracy %
+
+    // Combined score: 70% points + 30% accuracy
+    const rankScore = user.points * 0.7 + accuracy * 0.3;
+
+    return { ...user, accuracy, rankScore };
+  });
 
   // Fetch leaderboard once on mount
   useEffect(() => {
@@ -24,6 +34,7 @@ const Leaderboard = () => {
         console.error(error);
         return;
       }
+      console.log(data)
       setLeaders(data);
       const increaseFetchLimit = useLeaderStore.getState().increaseFetchLimit;
       increaseFetchLimit();
@@ -70,11 +81,11 @@ const Leaderboard = () => {
 
         <section className="px-4">
           {/* Top Leader */}
-          {leaders[0] && <TopLeader l={leaders[0]} rank={1} />}
+          {leaders[0] && <TopLeader l={rankedLeaders[0]} rank={1} />}
 
           {/* Other Leaders */}
           <div className="flex flex-col gap-3 mt-4">
-            {leaders.slice(1).map((l, index) => (
+            {rankedLeaders.slice(1).map((l, index) => (
               <MidLeader key={index} l={l} rank={index + 2} />
             ))}
           </div>
@@ -83,9 +94,10 @@ const Leaderboard = () => {
         {/* Render more users */}
         <button
           onClick={handleRenderMore}
-          className="w-full py-2 text-white text-center font-medium bg-gray-800 hover:bg-gray-700 rounded-lg transition-all duration-200 cursor-pointer"
+          className="w-full py-3 bg-gray-800 text-white text-center font-medium hover:bg-gray-700 rounded-lg transition-all duration-200 cursor-pointer flex items-center justify-center gap-2"
         >
-          More
+          <ChevronDown className="w-4 h-4" />
+          <span>Load More</span>
         </button>
       </div>
     </main>

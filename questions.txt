@@ -1,9 +1,6 @@
 
-- SCIENCE 9
-- SCIENCE 10 
 - Physics 11
 - Chemistry 11
-- WAMAD
 
 # EXTRA(500)
 - GK
