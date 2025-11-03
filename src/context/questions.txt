@@ -1,0 +1,31 @@
+
+# Class 9(500)
+- c
+- web
+- fca
+- fes
+- SCIENCE 9
+
+# class 10(500)
+- C++
+- DBMS
+- CHERM
+- MP
+- SCIENCE 10 
+
+# Class 11(500)
+- Physics 11
+- Chemistry 11
+- Java
+- OS
+- WAMAD
+
+# class 12(100)
+- C#
+
+# EXTRA(500)
+- GK
+- IQ
+- Football
+- Cricket 
+- Cyber Security
