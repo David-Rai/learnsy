@@ -1,50 +1,56 @@
 // Leaderboard.jsx
-import React, { useEffect } from 'react'
-import supabase from '../config/supabase'
-import { Trophy } from 'lucide-react'
-import { useLeaderStore } from '../context/store'
-import TopLeader from './leaders/TopLeaders'
-import MidLeader from './leaders/MidLeaders'
-import Loader from './Loader'
+import React, { useEffect } from "react";
+import supabase from "../config/supabase";
+import { Trophy } from "lucide-react";
+import { useLeaderStore } from "../context/store";
+import TopLeader from "./leaders/TopLeaders";
+import MidLeader from "./leaders/MidLeaders";
+import Loader from "./Loader";
 
 const Leaderboard = () => {
-  const leaders = useLeaderStore(state => state.leaders) || []
-  const setLeaders = useLeaderStore(state => state.setLeaders)
+  const leaders = useLeaderStore((state) => state.leaders) || [];
+  const setLeaders = useLeaderStore((state) => state.setLeaders);
 
   // Fetch leaderboard once on mount
   useEffect(() => {
-    const fetchLeaders = async () => {
-      try {
-        const { data, error } = await fetchLeadersRPC()
-        if (error) {
-          console.error(error)
-          return
-        }
-        setLeaders(data)
-      } catch (err) {
-        console.error(err)
-      }
-    }
+    if (leaders.length === 0) fetchLeaders();
+  }, [leaders.length, setLeaders]);
 
-    if (leaders.length === 0) fetchLeaders()
-  }, [leaders.length, setLeaders])
+  //Fetch leaders
+  const fetchLeaders = async () => {
+    try {
+      const { data, error } = await fetchLeadersRPC();
+      if (error) {
+        console.error(error);
+        return;
+      }
+      setLeaders(data);
+      const increaseFetchLimit = useLeaderStore.getState().increaseFetchLimit;
+      increaseFetchLimit();
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   // RPC call to Supabase
   const fetchLeadersRPC = async () => {
-    return await supabase.rpc('get_leaderboard_stats').limit(5)
-  }
+    const FETCH_LIMIT = useLeaderStore.getState().FETCH_LIMIT;
+    return await supabase.rpc("get_leaderboard_stats").limit(FETCH_LIMIT + 5);
+  };
 
   //loader
   if (leaders.length === 0) {
-    return (
-      <Loader />
-    )
+    return <Loader />;
   }
+
+  //Rendder more
+  const handleRenderMore = () => {
+    fetchLeaders();
+  };
 
   return (
     <main className="h-full bg-bg text-text md:flex md:pb-0">
       <div className="h-full md:h-full pb-6 overflow-x-hidden custom-scrollbar w-full">
-
         {/* Header */}
         <header className="bg-secondary shadow-lg py-6 md:py-8 px-4 mb-6">
           <div className="max-w-4xl mx-auto text-center">
@@ -62,7 +68,7 @@ const Leaderboard = () => {
           </div>
         </header>
 
-        <div className='px-4'>
+        <section className="px-4">
           {/* Top Leader */}
           {leaders[0] && <TopLeader l={leaders[0]} rank={1} />}
 
@@ -72,12 +78,18 @@ const Leaderboard = () => {
               <MidLeader key={index} l={l} rank={index + 2} />
             ))}
           </div>
-        </div>
+        </section>
+
+        {/* Render more users */}
+        <button
+          onClick={handleRenderMore}
+          className="w-full py-2 text-white text-center font-medium bg-gray-800 hover:bg-gray-700 rounded-lg transition-all duration-200 cursor-pointer"
+        >
+          More
+        </button>
       </div>
-
-      {/* <BottomNav /> */}
     </main>
-  )
-}
+  );
+};
 
-export default Leaderboard
+export default Leaderboard;

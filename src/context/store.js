@@ -1,5 +1,5 @@
 // store/homeStore.js
-import { create } from 'zustand';
+import { create } from "zustand";
 
 ///********MAIN STORE********* */
 const useHomeStore = create((set) => ({
@@ -26,21 +26,27 @@ const useHomeStore = create((set) => ({
       return {
         lessons: [
           ...state.lessons,
-          { name, questions, maxReached: false, category: c ,isAnsweredAll:false },
+          {
+            name,
+            questions,
+            maxReached: false,
+            category: c,
+            isAnsweredAll: false,
+          },
         ],
       };
     }),
 
-    //set isAnsweredAll
-    updateIsAnsweredAllQuestions: (name, status) =>
+  //set isAnsweredAll
+  updateIsAnsweredAllQuestions: (name, status) =>
     set((state) => ({
       lessons: state.lessons.map((c) =>
         c.name === name
-          ? { ...c, isAnsweredAll: status }  // update isAnsweredAll
+          ? { ...c, isAnsweredAll: status } // update isAnsweredAll
           : c
       ),
     })),
-  
+
   //Update the questions of particular category basis of category.name
   updateLessonQuestions: (name, newQuestions) =>
     set((state) => ({
@@ -55,9 +61,7 @@ const useHomeStore = create((set) => ({
   updateLessonQuestionsCompletely: (name, newQuestions) =>
     set((state) => ({
       lessons: state.lessons.map((c) =>
-        c.name === name
-          ? { ...c, questions: newQuestions }
-          : c
+        c.name === name ? { ...c, questions: newQuestions } : c
       ),
     })),
 
@@ -66,7 +70,7 @@ const useHomeStore = create((set) => ({
     set((state) => ({
       lessons: state.lessons.map((c) =>
         c.name === name
-          ? { ...c, maxReached: status }  // update maxReached
+          ? { ...c, maxReached: status } // update maxReached
           : c
       ),
     })),
@@ -84,17 +88,18 @@ const useHomeStore = create((set) => ({
   userLikes: [],
   setUserLikes: (updater) =>
     set((state) => ({
-      userLikes: typeof updater === 'function' ? updater(state.userLikes) : updater,
+      userLikes:
+        typeof updater === "function" ? updater(state.userLikes) : updater,
     })),
 
   //Auth user
   user: {},
-  setUser: (userData => set({ user: userData })),
+  setUser: (userData) => set({ user: userData }),
 
   //Current selected options state here
   currentLesson: {
     isSelected: false,
-    name: null
+    name: null,
   },
   setCurrentLesson: (s) => set({ currentLesson: s }),
 
@@ -102,15 +107,14 @@ const useHomeStore = create((set) => ({
   currentCategory: {
     isSelected: false,
     name: null,
-    lessonOptions: []
+    lessonOptions: [],
   },
   setCurrentCategory: (s) => set({ currentCategory: s }),
 
   //tabs
   activeTab: "home",
-  setActiveTab: (t) => set({ activeTab: t })
+  setActiveTab: (t) => set({ activeTab: t }),
 }));
-
 
 //********LEADER STORE**********
 export const useLeaderStore = create((set) => ({
@@ -118,8 +122,10 @@ export const useLeaderStore = create((set) => ({
   loading: true,
   setLeaders: (data) => set({ leaders: data }),
   setLoading: (value) => set({ loading: value }),
-
-}))
+  FETCH_LIMIT: 0,
+  increaseFetchLimit: () =>
+    set((state) => ({ FETCH_LIMIT: state.FETCH_LIMIT + 5 })),
+}));
 
 //******ADMIN DATA STORE********* */
 export const useAdminStore = create((set) => ({
@@ -127,8 +133,8 @@ export const useAdminStore = create((set) => ({
   isAdminChecked: false,
   setIsAdminChecked: (v) => set({ isAdminChecked: v }),
   isAdmin: false,
-  setIsAdmin: (v) => set({ isAdmin: v })
-}))
+  setIsAdmin: (v) => set({ isAdmin: v }),
+}));
 
 //******MEMBER STORE******* */
 export const useMemberStore = create((set) => ({
@@ -144,7 +150,7 @@ export const useMemberStore = create((set) => ({
 
   //Your uploads
   uploads: [],
-  setUploads: (u) => set({ uploads: u })
-}))
+  setUploads: (u) => set({ uploads: u }),
+}));
 
 export default useHomeStore;
