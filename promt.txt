@@ -1,12 +1,41 @@
-Generate 100 science-9 questions in CSV format with the following columns:
+Generate 100 physics-11 questions in CSV format with the following columns:
 q,a,options,category,hint,lesson
 
 Requirements:
 
 Use exactly  different lessons  (all lowercase)
 lessons are (
-
-
+Mechanics
+1. Physical quantities
+2. Vectors 
+3. Kinematics
+4.Dynamics
+5. Work, energy and power
+6. Circular motion
+7. Gravitation
+8. Elasticity
+Heat and Thermodynamics
+9. Heat and temperature
+10. Thermal expansion
+11. Quantity of heat
+12. Rate of heat flow
+13. Ideal gas
+Wave and optics
+14. Reflection at curved mirror
+15. Refraction at plane surfaces
+16. Refraction through prisms
+17. lenses
+18. Dispersion
+Electricity and Magnetism
+19. Electric charges
+20. Electric field
+21. Potential, potential difference and potential energy
+22. Capacitor
+23. DC circuits
+Modern physics
+24. Nuclear physics
+25. Solids
+26. Recent trends in physics
 )
 . Ensure each lesson is used equally, i.e., each lesson appears for 10 questions.
 

@@ -78,7 +78,7 @@ const Intro = () => {
     <main className='flex flex-col h-screen bg-bg'>
       <div className="flex-1 overflow-y-auto custom-scrollbar snap-y snap-mandatory">
         {/* Hero Section */}
-        <section className="h-full flex flex-col items-center justify-center px-6 text-text snap-start relative">
+        {/* <section className="h-full flex flex-col items-center justify-center px-6 text-text snap-start relative">
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <div className="absolute top-20 left-10 w-32 h-32 bg-primary/20 rounded-full blur-3xl animate-pulse"></div>
             <div className="absolute bottom-20 right-10 w-40 h-40 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
@@ -113,7 +113,7 @@ const Intro = () => {
               <ChevronDown className="w-6 h-6 text-primary" />
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* Question Sections */}
         {questions.map((q, index) => (
@@ -193,11 +193,11 @@ const Intro = () => {
 
                 <div className="mt-12 flex gap-8">
                   <div className="flex flex-col items-center">
-                    <div className="text-3xl font-bold text-primary">1000+</div>
+                    <div className="text-3xl font-bold text-primary">2000+</div>
                     <div className="text-sm text-gray-400">Questions</div>
                   </div>
                   <div className="flex flex-col items-center">
-                    <div className="text-3xl font-bold text-green-400">50+</div>
+                    <div className="text-3xl font-bold text-green-400">25+</div>
                     <div className="text-sm text-gray-400">Categories</div>
                   </div>
                 </div>
