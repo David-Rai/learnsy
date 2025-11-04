@@ -93,7 +93,7 @@ const useHomeStore = create((set) => ({
     })),
 
   //Auth user
-  user: {},
+  user: null,
   setUser: (userData) => set({ user: userData }),
 
   //Current selected options state here

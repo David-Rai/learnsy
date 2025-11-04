@@ -1,41 +1,22 @@
-Generate 100 physics-11 questions in CSV format with the following columns:
+Generate 100 chemistry-11 questions in CSV format with the following columns:
 q,a,options,category,hint,lesson
 
 Requirements:
 
 Use exactly  different lessons  (all lowercase)
 lessons are (
-Mechanics
-1. Physical quantities
-2. Vectors 
-3. Kinematics
-4.Dynamics
-5. Work, energy and power
-6. Circular motion
-7. Gravitation
-8. Elasticity
-Heat and Thermodynamics
-9. Heat and temperature
-10. Thermal expansion
-11. Quantity of heat
-12. Rate of heat flow
-13. Ideal gas
-Wave and optics
-14. Reflection at curved mirror
-15. Refraction at plane surfaces
-16. Refraction through prisms
-17. lenses
-18. Dispersion
-Electricity and Magnetism
-19. Electric charges
-20. Electric field
-21. Potential, potential difference and potential energy
-22. Capacitor
-23. DC circuits
-Modern physics
-24. Nuclear physics
-25. Solids
-26. Recent trends in physics
+The Laws of Stoichiometry
+Limiting and Excess Reagents, and Reaction Yields
+Balancing Chemical Equations Using the Oxidation Number Method
+Rutherford Atomic Model
+Valence Bond Theory
+Gas Laws: Boyle’s Law, Charles’ Law, Graham’s Law of Diffusion, Dalton’s Law of Partial Pressure, and Avogadro’s Law
+Preparation of Hydrogen Sulphide and Its Properties
+Metallurgical Process
+Classification of Organic Compounds
+IUPAC Nomenclature of Organic Compounds
+Manufacture of Sodium Carbonate by Solvay Process, Manufacture of Nitric Acid by Ostwald’s Process, Manufacture of Sulphuric Acid by Contact Process, Manufacture of Sodium Hydroxide by Diaphragm Cell, Production of Urea with Flow-Sheet Diagram, and Manufacture of Ammonia by Haber’s Process
+
 )
 . Ensure each lesson is used equally, i.e., each lesson appears for 10 questions.
 
