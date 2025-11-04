@@ -50,7 +50,7 @@ const Intro = () => {
 
     // Auto-scroll to next section after selection
     setTimeout(() => {
-      const nextSection = document.querySelectorAll('.snap-start')[questionIndex + 2];
+      const nextSection = document.querySelectorAll('.snap-start')[questionIndex + 1];
       if (nextSection) {
         nextSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }

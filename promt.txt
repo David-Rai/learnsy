@@ -1,21 +1,11 @@
-Generate 100 chemistry-11 questions in CSV format with the following columns:
+Generate 100 science-9 questions in CSV format with the following columns:
 q,a,options,category,hint,lesson
 
 Requirements:
 
 Use exactly  different lessons  (all lowercase)
 lessons are (
-The Laws of Stoichiometry
-Limiting and Excess Reagents, and Reaction Yields
-Balancing Chemical Equations Using the Oxidation Number Method
-Rutherford Atomic Model
-Valence Bond Theory
-Gas Laws: Boyle’s Law, Charles’ Law, Graham’s Law of Diffusion, Dalton’s Law of Partial Pressure, and Avogadro’s Law
-Preparation of Hydrogen Sulphide and Its Properties
-Metallurgical Process
-Classification of Organic Compounds
-IUPAC Nomenclature of Organic Compounds
-Manufacture of Sodium Carbonate by Solvay Process, Manufacture of Nitric Acid by Ostwald’s Process, Manufacture of Sulphuric Acid by Contact Process, Manufacture of Sodium Hydroxide by Diaphragm Cell, Production of Urea with Flow-Sheet Diagram, and Manufacture of Ammonia by Haber’s Process
+
 
 )
 . Ensure each lesson is used equally, i.e., each lesson appears for 10 questions.
