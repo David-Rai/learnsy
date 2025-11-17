@@ -1,5 +1,4 @@
 import { checkAnswer } from "./checkAnswer";
-import { useState, useEffect } from "react";
 import React from "react";
 import useHomeStore from "../context/store";
 
@@ -7,9 +6,9 @@ const Question = ({ q , questionIndex,handleScroll}) => {
   const { answers = [] } = useHomeStore();
 
   //handle check answer
-  const handleAnswer = (q,opt) => {
+  const handleAnswer = (question,opt) => {
     // console.log('checking answer',questionIndex)
-    checkAnswer(q,opt);//checking the answer
+    checkAnswer(question,opt);//checking the answer
     handleScroll(questionIndex)
   };
   

@@ -71,7 +71,7 @@ const Home = () => {
   }, [currentQuestions, currentSelectedLesson?.maxReached]);
 
   // NO categorires and lesson is selected
-  if (!currentLesson.isSelected && !currentCategory.isSelected && isIntroDone) {
+  if (!currentLesson?.isSelected && !currentCategory?.isSelected && isIntroDone) {
     return <SelectACategory />;
   }
 
