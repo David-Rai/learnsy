@@ -7,7 +7,6 @@ const Question = ({ q , questionIndex,handleScroll}) => {
 
   //handle check answer
   const handleAnswer = (question,opt) => {
-    // console.log('checking answer',questionIndex)
     checkAnswer(question,opt);//checking the answer
     handleScroll(questionIndex)
   };

@@ -95,7 +95,7 @@ const Home = () => {
       if (nextSection) {
         nextSection.scrollIntoView({ behavior: "smooth", block: "start" });
       }
-    }, 100);
+    }, 300);
   };
 
   return (
