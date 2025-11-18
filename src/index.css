@@ -102,8 +102,10 @@ small,
     }
 
     .question-text {
-        @apply text-lg sm:text-xl md:text-2xl font-bold mb-6 text-center text-text drop-shadow-lg w-[90%] sm:w-[80%] md:w-[70%] lg:w-[60%] max-w-3xl leading-snug break-words overflow-hidden;
-    }
+        @apply text-lg sm:text-xl md:text-2xl font-bold mb-6 
+        text-center text-text drop-shadow-lg w-[90%] 
+        sm:w-[80%] md:w-[70%] lg:w-[60%] max-w-3xl;
+    }   
 
     .social-contain {
         @apply bg-secondary backdrop-blur-sm p-3 cursor-pointer rounded-full transition-all mb-1
