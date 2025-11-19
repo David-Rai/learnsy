@@ -9,7 +9,6 @@ const Category = ({ c }) => {
   const { setCurrentCategory } = useHomeStore();
   const { name, image, totalquestion } = c;
 
-  //Initial setup getting lessons from the DB
   const handleStart = async () => {
     if (isLoading) return;
 
@@ -52,14 +51,22 @@ const Category = ({ c }) => {
 
   return (
     <div
-      className="group relative
-       flex flex-col w-full
-        sm:w-[calc(50%-0.5rem)]
-         md:w-[calc(33.333%-0.667rem)]
-          lg:w-[280px] xl:w-[300px] h-[280px] rounded-2xl 
-          overflow-hidden bg-gradient-to-b from-gray-800
-           to-gray-900 shadow-xl hover:shadow-2xl transition-all 
-           duration-300 hover:scale-[1.03] active:scale-[0.98] cursor-pointer focus:outline-none focus:ring-4 focus:ring-green-500/50"
+
+      className="
+    group relative flex flex-col w-full
+    sm:w-[calc(50%-0.5rem)]
+    md:w-[calc(33.333%-0.667rem)]
+    lg:w-[280px] xl:w-[300px]
+
+    h-[200px]            /* mobile height */
+    sm:h-[260px]         /* tablet */
+    md:h-[280px]         /* desktop original height */
+
+    rounded-2xl overflow-hidden 
+    bg-gradient-to-b from-gray-800 to-gray-900
+    shadow-xl hover:shadow-2xl transition-all duration-300
+    hover:scale-[1.03] active:scale-[0.98] cursor-pointer
+  "
       onClick={handleStart}
       onKeyDown={handleKeyDown}
       role="button"
@@ -67,18 +74,16 @@ const Category = ({ c }) => {
       aria-label={`${name} category with ${totalquestion || 0} questions`}
       aria-busy={isLoading}
     >
-      {/* Loading Overlay */}
       {isLoading && (
         <div className="absolute inset-0 z-20 bg-gray-900/80 backdrop-blur-sm flex items-center justify-center">
-          <div className="flex flex-col items-center gap-3">
-            <Loader2 className="w-10 h-10 text-green-400 animate-spin" strokeWidth={2.5} />
-            <span className="text-white text-sm font-medium">Loading lessons...</span>
+          <div className="flex flex-col items-center gap-2">
+            <Loader2 className="w-8 h-8 text-green-400 animate-spin" strokeWidth={2.5} />
+            <span className="text-white text-xs font-medium">Loading...</span>
           </div>
         </div>
       )}
 
-      {/* Image Container */}
-      <div className="relative h-[65%] w-full overflow-hidden">
+      <div className="relative h-[60%] w-full overflow-hidden">
         <img
           src={image}
           alt={`${name} category illustration`}
@@ -86,43 +91,28 @@ const Category = ({ c }) => {
           loading="lazy"
         />
 
-        {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent opacity-70 group-hover:opacity-60 transition-opacity duration-300" />
 
-        {/* Shimmer Effect */}
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 transition-opacity duration-700 transform -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%]" />
-
-        {/* Question Count Badge */}
-        <div className="absolute top-3 right-3 flex items-center gap-1.5 px-3 py-1.5 bg-gray-900/90 backdrop-blur-sm rounded-full border border-gray-700/50 transition-all duration-300 group-hover:bg-green-500/20 group-hover:border-green-500/50">
-          <Sparkles className="w-3.5 h-3.5 text-green-400 group-hover:scale-110 transition-transform duration-300" strokeWidth={2.5} />
+        <div className="absolute top-2 right-2 flex items-center gap-1 px-2 py-1 bg-gray-900/90 backdrop-blur-sm rounded-full border border-gray-700/50 transition-all duration-300 group-hover:bg-green-500/20 group-hover:border-green-500/50">
+          <Sparkles className="w-3 h-3 text-green-400" strokeWidth={2.5} />
           <span className="text-white text-xs font-bold">{totalquestion || 0}</span>
         </div>
       </div>
 
-      {/* Content Section */}
-      <div className="relative flex flex-col justify-center flex-1 px-5 py-4 bg-gray-900">
-        {/* Category Name */}
-        <h2 className="capitalize text-white text-lg md:text-xl font-bold mb-3 truncate group-hover:text-green-400 transition-colors duration-300">
+      <div className="relative flex items-center justify-between flex-1 px-4 py-2 bg-gray-900">
+        <h2 className="capitalize text-white text-base font-bold truncate group-hover:text-green-400 transition-colors duration-300 flex-1">
           {name}
         </h2>
 
-        {/* Questions Info */}
-        <div className="flex items-center gap-2.5">
-          <div className="flex items-center justify-center w-9 h-9 rounded-full bg-green-500/10 group-hover:bg-green-500/20 group-hover:scale-110 transition-all duration-300">
-            <Book className="w-4.5 h-4.5 text-green-400 group-hover:scale-110 transition-transform duration-300" strokeWidth={2.5} />
-          </div>
-          <span className="text-gray-300 group-hover:text-white text-sm md:text-base font-medium transition-colors duration-300">
-            {totalquestion || 0} Questions
-          </span>
+        <div className="flex items-center gap-1.5 ml-2">
+          <Book className="w-4 h-4 text-green-400" strokeWidth={2.5} />
+          <span className="text-gray-300 text-sm font-medium">{totalquestion || 0}</span>
         </div>
 
-        {/* Bottom Accent Line */}
-        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-green-500 via-blue-500 to-purple-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-green-500 via-blue-500 to-purple-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
       </div>
 
-      {/* Corner Glow Effect */}
-      <div className="absolute top-0 right-0 w-20 h-20 bg-green-500/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      <div className="absolute bottom-0 left-0 w-24 h-24 bg-blue-500/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100" />
+      <div className="absolute top-0 right-0 w-16 h-16 bg-green-500/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
     </div>
   );
 };
