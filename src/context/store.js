@@ -1,4 +1,3 @@
-// store/homeStore.js
 import { create } from "zustand";
 
 ///********MAIN STORE********* */
@@ -136,6 +135,7 @@ export const useAdminStore = create((set) => ({
   setIsAdmin: (v) => set({ isAdmin: v }),
 }));
 
+
 //******MEMBER STORE******* */
 export const useMemberStore = create((set) => ({
   //Admin data
@@ -153,4 +153,15 @@ export const useMemberStore = create((set) => ({
   setUploads: (u) => set({ uploads: u }),
 }));
 
+//****CLASS STORE**** */
+export const useClassStore=create((set)=>({
+  allClasses:[],
+  setClasses:(nc)=> set({allClasses:nc}),
+  currentClass:{
+    name:null,
+    isSelected:false,
+    categories:[]
+  },
+  setCurrentClass:(n)=> set({currentClass:n})
+}))
 export default useHomeStore;

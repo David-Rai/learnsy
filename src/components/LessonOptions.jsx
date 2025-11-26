@@ -32,10 +32,6 @@ const LessonOptions = () => {
         const categoryName = currentCategory.name
         addNewLesson(lesson, [], categoryName)
 
-
-        // console.log('new lesson object added successfully',useHomeStore.getState().lessons)
-        // console.log("selected lesson state", useHomeStore.getState().currentLesson)
-
         //navigating to home page and showing lesson related questions
         navigate('/')
     }

@@ -5,6 +5,7 @@ import Signin from './routes/auth/Signin.jsx'
 import Profile from './routes/Profile.jsx'
 import Home from './routes/Home'
 import Explore from './routes/Explore.jsx'
+import NewExplore from './routes/NewExplore'
 import AddQuestion from './routes/admins/AddQuestion'
 import { ToastContainer } from 'react-toastify'
 import Leaderboard from './components/Leaderboard.jsx'
@@ -39,7 +40,7 @@ const router = createBrowserRouter([
       ,
       {
         path: '/explore',
-        element: <Explore />
+        element: <NewExplore />
       }, ,
       {
         path: '/leaderboard',
