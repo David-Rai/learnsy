@@ -26,7 +26,7 @@ const ClassChild = ({ c }) => {
     }
 
     if(data.length === 0){
-      return toast.error("no categories")
+      return toast.info("No Subjects")
     }
 
     const ids = data.map((d) => d.category_id);

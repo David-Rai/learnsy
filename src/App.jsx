@@ -4,8 +4,7 @@ import './index.css'
 import Signin from './routes/auth/Signin.jsx'
 import Profile from './routes/Profile.jsx'
 import Home from './routes/Home'
-// import Explore from './routes/Explore.jsx'
-import NewExplore from './routes/NewExplore'
+import Explore from './routes/Explore'
 import AddQuestion from './routes/admins/AddQuestion'
 import { ToastContainer } from 'react-toastify'
 import Leaderboard from './components/Leaderboard.jsx'
@@ -40,7 +39,7 @@ const router = createBrowserRouter([
       ,
       {
         path: '/explore',
-        element: <NewExplore />
+        element: <Explore />
       }, ,
       {
         path: '/leaderboard',

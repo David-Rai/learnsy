@@ -57,6 +57,18 @@ const LessonOptions = () => {
             </div>
         </header>
     
+     {/* Back button */}
+        <footer className='flex-shrink-0 p-4 md:p-6 bg-secondary shadow-lg'>
+            <div className='max-w-4xl mx-auto'>
+                <button
+                    onClick={handleGotoCategory}
+                    className='w-full bg-text text-bg px-6 py-4 cursor-pointer rounded-2xl border-b-4 border-gray-300 font-bold text-base md:text-lg hover:brightness-105 active:border-b-0 active:translate-y-1 transition-all duration-100'
+                >
+                    ← Back to Categories
+                </button>
+            </div>
+        </footer>
+        
         {/* Main content */}
         <section className='flex-1 w-full overflow-y-auto px-4 py-6 md:py-8 custom-scrollbar'>
             <div className='max-w-4xl mx-auto'>
@@ -90,17 +102,6 @@ const LessonOptions = () => {
             </div>
         </section>
     
-        {/* Back button */}
-        <footer className='flex-shrink-0 p-4 md:p-6 bg-secondary shadow-lg'>
-            <div className='max-w-4xl mx-auto'>
-                <button
-                    onClick={handleGotoCategory}
-                    className='w-full bg-text text-bg px-6 py-4 cursor-pointer rounded-2xl border-b-4 border-gray-300 font-bold text-base md:text-lg hover:brightness-105 active:border-b-0 active:translate-y-1 transition-all duration-100'
-                >
-                    ← Back to Categories
-                </button>
-            </div>
-        </footer>
     </main>
     )
 }
