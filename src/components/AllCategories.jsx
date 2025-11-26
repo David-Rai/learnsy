@@ -2,18 +2,15 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router";
-import { useClassStore } from "../context/store";
-import { useMemo } from "react";
+import useHomeStore, { useClassStore } from "../context/store";
 import Category from "../components/Category.jsx";
-import useHomeStore from "../context/store.js";
 import Loader from "../components/Loader.jsx";
-
+import AllLessons from "./AllLessons";
 
 const AllCategories = () => {
   const { currentClass } = useClassStore();
+  const { currentCategory } = useHomeStore();
   const [searchTerm, setSearchTerm] = useState(""); // state for search
-
-  // console.log(currentClass);
 
   // filter categories based on search term
   const filteredCategories = currentClass.categories.filter((c) =>
@@ -21,8 +18,10 @@ const AllCategories = () => {
   );
 
   return (
-     <main className="h-full bg-bg w-full flex flex-col overflow-hidden">
-      
+    <main className="h-full bg-bg w-full flex flex-col overflow-hidden">
+      {currentCategory.isSelected ? (
+        <AllLessons />
+      ) : (
         <div className="h-full flex flex-col overflow-hidden">
           {/* Search Bar */}
           <header className="flex-shrink-0 bg-secondary px-4 py-4 md:py-6 shadow-lg">
@@ -54,6 +53,7 @@ const AllCategories = () => {
             </div>
           </section>
         </div>
+      )}
 
       <ToastContainer />
     </main>

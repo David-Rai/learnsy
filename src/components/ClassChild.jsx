@@ -12,6 +12,7 @@ const ClassChild = ({ c }) => {
     fetchCategories()
   };
 
+  //Fetching All categories
   const fetchCategories=async ()=>{
     const class_id = c.id;
     //Fetch the categories of this class from db

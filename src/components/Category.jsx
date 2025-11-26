@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
-import { Book, Loader2, Sparkles } from 'lucide-react';
-import { toast } from 'react-toastify';
-import useHomeStore from '../context/store';
-import supabase from '../config/supabase';
+import React, { useState } from "react";
+import { Book, Loader2, Sparkles } from "lucide-react";
+import { toast } from "react-toastify";
+import useHomeStore from "../context/store";
+import supabase from "../config/supabase";
 
 const Category = ({ c }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { setCurrentCategory } = useHomeStore();
   const { name, image, totalquestion } = c;
 
+  //On Click of the category
   const handleStart = async () => {
     if (isLoading) return;
 
@@ -16,34 +17,36 @@ const Category = ({ c }) => {
 
     try {
       const { data, error } = await supabase
-        .from('questions')
-        .select('lesson', { distinct: true })
-        .eq('category', name);
+        .from("questions")
+        .select("lesson", { distinct: true })
+        .eq("category", name);
 
       if (error) throw error;
 
-      const newLessons = [...new Set(data.map(item => item.lesson.trim()))];
+      const newLessons = [...new Set(data.map((item) => item.lesson.trim()))];
+
+      console.log(newLessons);
 
       if (newLessons.length === 0) {
-        toast.error('No lessons available for this category');
+        toast.error("No lessons available for this category");
         return;
       }
 
       setCurrentCategory({
         isSelected: true,
         name,
-        lessonOptions: newLessons
+        lessonOptions: newLessons,
       });
     } catch (error) {
-      console.error('Error fetching lessons:', error);
-      toast.error('Failed to load lessons. Please try again.');
+      console.error("Error fetching lessons:", error);
+      toast.error("Failed to load lessons. Please try again.");
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
+    if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       handleStart();
     }
@@ -62,8 +65,13 @@ const Category = ({ c }) => {
       {isLoading && (
         <div className="absolute inset-0 z-20 bg-gray-900/80 backdrop-blur-sm flex items-center justify-center">
           <div className="flex flex-col items-center gap-3">
-            <Loader2 className="w-10 h-10 text-green-400 animate-spin" strokeWidth={2.5} />
-            <span className="text-white text-sm font-medium">Loading lessons...</span>
+            <Loader2
+              className="w-10 h-10 text-green-400 animate-spin"
+              strokeWidth={2.5}
+            />
+            <span className="text-white text-sm font-medium">
+              Loading lessons...
+            </span>
           </div>
         </div>
       )}
@@ -80,10 +88,10 @@ const Category = ({ c }) => {
 
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 transition-opacity duration-700 transform -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%]" />
 
-        <div className="absolute top-3 right-3 flex items-center gap-1.5 px-3 py-1.5 bg-gray-900/90 backdrop-blur-sm rounded-full border border-gray-700/50 transition-all duration-300 group-hover:bg-green-500/20 group-hover:border-green-500/50">
+        {/* <div className="absolute top-3 right-3 flex items-center gap-1.5 px-3 py-1.5 bg-gray-900/90 backdrop-blur-sm rounded-full border border-gray-700/50 transition-all duration-300 group-hover:bg-green-500/20 group-hover:border-green-500/50">
           <Sparkles className="w-3.5 h-3.5 text-green-400 group-hover:scale-110 transition-transform duration-300" strokeWidth={2.5} />
           <span className="text-white text-xs font-bold">{totalquestion || 0}</span>
-        </div>
+        </div> */}
       </div>
 
       <div className="relative flex flex-col justify-center flex-1 px-4 py-2 bg-gray-900">
@@ -91,14 +99,16 @@ const Category = ({ c }) => {
           {name}
         </h2>
 
-        <div className="flex items-center gap-1.5 md:gap-2">
+        {/*
+         <div className="flex items-center gap-1.5 md:gap-2">
           <div className="flex items-center justify-center w-6 h-6 md:w-9 md:h-9 rounded-full bg-green-500/10 group-hover:bg-green-500/20 group-hover:scale-110 transition-all duration-300">
             <Book className="w-3 h-3 md:w-4.5 md:h-4.5 text-green-400 group-hover:scale-110 transition-transform duration-300" strokeWidth={2.5} />
           </div>
           <span className="text-gray-300 group-hover:text-white text-xs md:text-base font-medium transition-colors duration-300">
             {totalquestion || 0} Questions
           </span>
-        </div>
+        </div> 
+        */}
 
         <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-green-500 via-blue-500 to-purple-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
       </div>
