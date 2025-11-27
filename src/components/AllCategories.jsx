@@ -6,9 +6,10 @@ import useHomeStore, { useClassStore } from "../context/store";
 import Category from "../components/Category.jsx";
 import Loader from "../components/Loader.jsx";
 import AllLessons from "./AllLessons";
+import { ArrowLeft } from "lucide-react";
 
 const AllCategories = () => {
-  const { currentClass } = useClassStore();
+  const { currentClass, setCurrentClass } = useClassStore();
   const { currentCategory } = useHomeStore();
   const [searchTerm, setSearchTerm] = useState(""); // state for search
 
@@ -16,6 +17,14 @@ const AllCategories = () => {
   const filteredCategories = currentClass.categories.filter((c) =>
     c.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const handleBack = () => {
+    setCurrentClass({
+      name: null,
+      isSelected: false,
+      categories: [],
+    });
+  };
 
   return (
     <main className="h-full bg-bg w-full flex flex-col overflow-hidden">
@@ -35,6 +44,29 @@ const AllCategories = () => {
               />
             </div>
           </header>
+
+          {/* Back to Classes Button */}
+          <section className="flex-shrink-0 bg-secondary px-4 py-3 md:py-4 shadow-lg border-t border-primary/10">
+            <div className="max-w-4xl mx-auto">
+              <button
+                onClick={handleBack}
+                className='group text-text relative w-full overflow-hidden bg-gradient-to-r from-primary/20 via-primary/10 to-primary/20 backdrop-blur-sm px-6 py-3 md:py-4 cursor-pointer rounded-2xl border-2 border-primary/40 font-bold text-base md:text-lg hover:border-primary hover:shadow-lg hover:shadow-primary/20 active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-3'
+              >
+                <span className='absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700'></span>
+                <span className='relative flex items-center gap-2'>
+                  <svg
+                    className='w-5 h-5 md:w-6 md:h-6 group-hover:-translate-x-1 transition-transform duration-300'
+                    fill='none'
+                    stroke='currentColor'
+                    viewBox='0 0 24 24'
+                  >
+                    <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2.5} d='M10 19l-7-7m0 0l7-7m-7 7h18' />
+                  </svg>
+                  Back to Classes
+                </span>
+              </button>
+            </div>
+          </section>
 
           {/* Categories Section */}
           <section className="flex-1 overflow-y-auto custom-scrollbar">
