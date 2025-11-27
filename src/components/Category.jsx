@@ -25,7 +25,6 @@ const Category = ({ c }) => {
 
       const newLessons = [...new Set(data.map((item) => item.lesson.trim()))];
 
-      console.log(newLessons);
 
       if (newLessons.length === 0) {
         toast.error("No lessons available for this category");
