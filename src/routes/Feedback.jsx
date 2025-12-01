@@ -52,7 +52,8 @@ const Feedback = () => {
   };
 
   return (
-    <main className="min-h-screen h-screen w-full bg-gradient-to-br from-bg via-bg to-primary/10 flex flex-col items-center justify-start gap-8 px-4 py-8 sm:py-12 custom-scrollbar relative overflow-x-hidden overflow-y-scroll">
+<main className="h-[120vh] w-full bg-gradient-to-br from-bg via-bg to-primary/10 flex flex-col items-center justify-start gap-8 px-4 py-8 sm:py-12 custom-scrollbar relative overflow-x-hidden overflow-y-auto">
+
       {/* Animated background elements */}
       <div className="absolute top-20 left-10 w-32 h-32 bg-primary/5 rounded-full blur-3xl animate-[float_6s_ease-in-out_infinite]"></div>
       <div className="absolute bottom-20 right-10 w-40 h-40 bg-primary/8 rounded-full blur-3xl animate-[float_8s_ease-in-out_infinite]"></div>

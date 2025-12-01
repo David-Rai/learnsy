@@ -156,9 +156,9 @@ const Profile = () => {
                     <span>🏆</span>
                     <span>Rank #{stats?.rank || "N/A"}</span>
                   </div>
-                    <i>Give me your reports,suggestions</i>
+                    <i className="py-2 text-gray-400">Give me your reports,suggestions</i>
                   {/* NEW BUTTONS */}
-                  <div className="flex gap-3 mt-5 ">
+                  <div className="flex gap-3 t-2 ">
                     {/* Report Button */}
                     <button
                       onClick={handleReport}
@@ -170,7 +170,7 @@ const Profile = () => {
                     {/* Feedback Button */}
                     <button
                       onClick={handleFeedback}
-                      className="px-4 py-2 hover:cursor-pointer bg-primary text-white rounded-full text-sm font-semibold shadow-lg hover:bg-primary-dark transition"
+                      className="px-4 pb-2 hover:cursor-pointer bg-primary text-white rounded-full text-sm font-semibold shadow-lg hover:bg-primary-dark transition"
                     >
                       Suggestion
                     </button>
