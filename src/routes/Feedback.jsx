@@ -34,8 +34,10 @@ const Feedback = () => {
     const { title, description } = data;
     const {
       id: user_id,
-      user_metadata: { username },
+      user_metadata,
     } = user;
+    const username=user_metadata.name ? user_metadata.name : user_metadata.username
+
     const res = await supabase
       .from("feedbacks")
       .insert({ title, description, user_id, username });

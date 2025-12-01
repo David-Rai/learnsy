@@ -21,7 +21,7 @@ const Report = () => {
   useEffect(() => {
     checkUser().then((result) => {
       if (result.exist) {
-        console.log("user valid to report");
+        console.log("user valid to report",result.user);
         return setUser(result.user);
       }
       console.log("user is not valid to report");
@@ -34,8 +34,9 @@ const Report = () => {
     const { title, description } = data;
     const {
       id: user_id,
-      user_metadata: { username },
+      user_metadata,
     } = user;
+    const username=user_metadata.name ? user_metadata.name : user_metadata.username
     const res = await supabase
       .from("reports")
       .insert({ title, description, user_id, username });
