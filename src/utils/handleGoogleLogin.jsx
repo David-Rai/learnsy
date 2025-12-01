@@ -17,4 +17,4 @@ const handleGoogleLogin = async () => {
 
   };
 
-  export default handleGoogleLogin
+export default handleGoogleLogin

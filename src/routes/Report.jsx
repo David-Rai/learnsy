@@ -21,6 +21,7 @@ const Report = () => {
     checkUser().then((result) => {
       if (result.exist) {
         console.log("user valid to report");
+        console.log(result.user)
         return setUser(result.user);
       }
       console.log("user is not valid to report");
