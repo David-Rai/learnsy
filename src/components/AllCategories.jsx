@@ -6,7 +6,6 @@ import useHomeStore, { useClassStore } from "../context/store";
 import Category from "../components/Category.jsx";
 import Loader from "../components/Loader.jsx";
 import AllLessons from "./AllLessons";
-import { ArrowLeft } from "lucide-react";
 
 const AllCategories = () => {
   const { currentClass, setCurrentClass } = useClassStore();

@@ -11,8 +11,10 @@ import Leaderboard from './components/Leaderboard.jsx'
 import Signup from './routes/auth/Signup.jsx'
 import Member from './routes/admins/Member'
 import Dashboard from './routes/admins/Dashboard.jsx'
+import Report from './routes/Report'
 import GotoProfile from './routes/GotoProfile'
 import Root from './Root'
+import Feedback from './routes/Feedback'
 
 //Public routes
 const router = createBrowserRouter([
@@ -35,6 +37,14 @@ const router = createBrowserRouter([
       {
         path: '/profile/:user_id',
         element: <Profile />
+      },
+      {
+        path: '/report',
+        element: <Report />
+      },
+      {
+        path: '/feedback',
+        element: <Feedback />
       }
       ,
       {

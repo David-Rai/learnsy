@@ -76,7 +76,7 @@ const Leaderboard = () => {
           Top performers this season
         </p>
       </div>
-    </header>
+  </header>
 
     {/* Leaders List */}
     <section className="px-4 mb-6">

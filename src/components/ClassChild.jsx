@@ -24,7 +24,7 @@ const ClassChild = ({ c }) => {
     if (error) return;
 
     if (!links.length) {
-      toast.info("No Subjects");
+      // toast.info("No Subjects");
       return;
     }
 
