@@ -15,6 +15,7 @@ import Report from './routes/Report'
 import GotoProfile from './routes/GotoProfile'
 import Root from './Root'
 import Feedback from './routes/Feedback'
+import Reviews from './routes/Reviews'
 
 //Public routes
 const router = createBrowserRouter([
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: '/feedback',
         element: <Feedback />
+      },
+      {
+        path: '/reviews',
+        element: <Reviews />
       }
       ,
       {
