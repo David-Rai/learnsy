@@ -1,8 +1,6 @@
 import { checkUser } from '../../utils/checkUser.jsx'
 import React from 'react'
 import handleGoogleLogin from '../../utils/handleGoogleLogin.jsx'
-import Sidebar from '../../components/Sidebar.jsx'
-import BottomNav from '../../components/BottomNav.jsx'
 import { toast, ToastContainer } from 'react-toastify'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router'

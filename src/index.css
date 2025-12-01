@@ -71,6 +71,9 @@ small,
     .button {
         @apply h-[40px] w-[120px] rounded-md bg-secondary text-text py-1 px-3 font-light
     }
+    .input{
+        @apply border-bg border-1 p-2 rounded-md placeholder-gray-400 text-bg bg-text w-full
+    }
 
     .option-button.bg-right {
         @apply border-green-600;
