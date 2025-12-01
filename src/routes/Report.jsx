@@ -46,45 +46,39 @@ const Report = () => {
   };
 
   return (
-    <main
-      className="h-full w-full bg-bg flex items-center
-    flex-col gap-4
-    justify-center custom-scrollbar md:h-full"
-    >
-      <h1 className="text-xl">Report</h1>
+  <main className="min-h-screen w-full bg-bg flex flex-col items-center justify-center gap-6 px-4 py-10 custom-scrollbar">
+  <h1 className="text-2xl font-semibold">Report</h1>
 
-      {/* Title and description */}
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="rounded-md 
-      text-text flex flex-col items-center justify-center px-2
-      gap-5
-      "
-      >
-        <input
-          type="text"
-          className="input"
-          placeholder="Title"
-          {...register("title", { required: "Title is required" })}
-        />
-        {errors.title && (
-          <p className="text-red-500  w-full">{errors.title.message}</p>
-        )}
-        <textarea
-          rows="4"
-          cols="50"
-          className="input"
-          placeholder="Description"
-          {...register("description", { required: "Description is required" })}
-        ></textarea>
-        {errors.description && (
-          <p className="text-red-500 w-full">{errors.description.message}</p>
-        )}
-        <button type="submit" className="button bg-primary">
-          Submit
-        </button>
-      </form>
-    </main>
+  <form
+    onSubmit={handleSubmit(onSubmit)}
+    className="w-full max-w-md flex flex-col gap-4 text-text"
+  >
+    <input
+      type="text"
+      className="input w-full"
+      placeholder="Title"
+      {...register("title", { required: "Title is required" })}
+    />
+    {errors.title && (
+      <p className="text-red-500 text-sm">{errors.title.message}</p>
+    )}
+
+    <textarea
+      rows="4"
+      className="input w-full resize-none"
+      placeholder="Description"
+      {...register("description", { required: "Description is required" })}
+    ></textarea>
+    {errors.description && (
+      <p className="text-red-500 text-sm">{errors.description.message}</p>
+    )}
+
+    <button type="submit" className="button bg-primary w-full">
+      Submit
+    </button>
+  </form>
+</main>
+
   );
 };
 
