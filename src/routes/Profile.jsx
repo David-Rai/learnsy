@@ -156,7 +156,7 @@ const Profile = () => {
                     <span>🏆</span>
                     <span>Rank #{stats?.rank || "N/A"}</span>
                   </div>
-
+                    <i>Give me your reports,suggestions</i>
                   {/* NEW BUTTONS */}
                   <div className="flex gap-3 mt-5 ">
                     {/* Report Button */}
@@ -172,7 +172,7 @@ const Profile = () => {
                       onClick={handleFeedback}
                       className="px-4 py-2 hover:cursor-pointer bg-primary text-white rounded-full text-sm font-semibold shadow-lg hover:bg-primary-dark transition"
                     >
-                      Feedback
+                      Suggestion
                     </button>
                   </div>
                 </section>

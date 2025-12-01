@@ -64,7 +64,7 @@ const Feedback = () => {
             <Heart className="w-4 h-4 text-primary absolute -top-1 -right-1 animate-[heartbeat_1.5s_ease-in-out_infinite]" />
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-            Share Your Feedback
+            Share Your Suggestions
           </h1>
         </div>
         <p className="text-center text-text/60 text-sm sm:text-base opacity-0 animate-[fadeIn_0.6s_ease-out_0.3s_forwards]">
@@ -129,7 +129,7 @@ const Feedback = () => {
           >
             <span className={`flex items-center justify-center gap-2 ${isLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`}>
               <Send className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-              Submit Feedback
+              Submit
             </span>
             {isLoading && (
               <div className="absolute inset-0 flex items-center justify-center">
