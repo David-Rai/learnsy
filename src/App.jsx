@@ -62,10 +62,12 @@ const router = createBrowserRouter([
       }, {
         path: '/goto_profile',
         element: <GotoProfile />
-      }, {
-        path: '/member',
-        element: <Member />
-      },
+      }
+      // , {
+      //   path: '/member',
+      //   element: <Member />
+      // }
+      ,
       {
         path: '/addQuestion',
         element: <AddQuestion />

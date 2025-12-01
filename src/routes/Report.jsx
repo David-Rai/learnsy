@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import supabase from "../config/supabase";
 import { useNavigate } from "react-router";
 import useHomeStore from "../context/store";
+import { FileText, Send, AlertCircle, Sparkles } from "lucide-react";
 
 const Report = () => {
   const navigate = useNavigate();
@@ -15,13 +16,12 @@ const Report = () => {
     formState: { errors },
   } = useForm();
   const { user, setUser } = useHomeStore();
+  const [isLoading, setIsLoading] = useState(false);
 
-  //checking user
   useEffect(() => {
     checkUser().then((result) => {
       if (result.exist) {
         console.log("user valid to report");
-        console.log(result.user)
         return setUser(result.user);
       }
       console.log("user is not valid to report");
@@ -29,8 +29,8 @@ const Report = () => {
     });
   }, []);
 
-  //Sending to the backend
   const onSubmit = async (data) => {
+    setIsLoading(true);
     const { title, description } = data;
     const {
       id: user_id,
@@ -39,6 +39,9 @@ const Report = () => {
     const res = await supabase
       .from("reports")
       .insert({ title, description, user_id, username });
+    
+    setIsLoading(false);
+    
     if (res.error) {
       return toast.error(res.error.message);
     }
@@ -47,39 +50,138 @@ const Report = () => {
   };
 
   return (
-  <main className="min-h-screen w-full bg-bg flex flex-col items-center justify-center gap-6 px-4 py-10 custom-scrollbar">
-  <h1 className="text-2xl font-semibold">Report</h1>
+    <main className="min-h-screen w-full bg-gradient-to-br from-bg via-bg to-primary/5 flex flex-col items-center justify-center gap-8 px-4 py-6 sm:py-10 custom-scrollbar relative overflow-x-hidden overflow-y-auto">
+      {/* Animated background elements */}
+      <div className="absolute top-20 left-10 w-32 h-32 bg-primary/5 rounded-full blur-3xl animate-[float_6s_ease-in-out_infinite]"></div>
+      <div className="absolute bottom-20 right-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl animate-[float_8s_ease-in-out_infinite]"></div>
+      <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-primary/5 rounded-full blur-2xl animate-[float_7s_ease-in-out_infinite]"></div>
 
-  <form
-    onSubmit={handleSubmit(onSubmit)}
-    className="w-full max-w-md flex flex-col gap-4 text-text"
-  >
-    <input
-      type="text"
-      className="input w-full"
-      placeholder="Title"
-      {...register("title", { required: "Title is required" })}
-    />
-    {errors.title && (
-      <p className="text-red-500 text-sm">{errors.title.message}</p>
-    )}
+      {/* Header */}
+      <div className="opacity-0 animate-[fadeIn_0.6s_ease-out_forwards] relative z-10">
+        <div className="flex items-center gap-3 mb-2 justify-center opacity-0 animate-[slideDown_0.6s_ease-out_0.1s_forwards]">
+          <div className="relative">
+            <FileText className="w-8 h-8 sm:w-10 sm:h-10 text-primary animate-[pulse_2s_ease-in-out_infinite]" />
+            <Sparkles className="w-4 h-4 text-primary absolute -top-1 -right-1 animate-[spin_3s_linear_infinite]" />
+          </div>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+            Submit Report
+          </h1>
+        </div>
+        <p className="text-center text-text/60 text-sm sm:text-base opacity-0 animate-[fadeIn_0.6s_ease-out_0.3s_forwards]">
+          Share your feedback or report an issue
+        </p>
+      </div>
 
-    <textarea
-      rows="4"
-      className="input w-full resize-none"
-      placeholder="Description"
-      {...register("description", { required: "Description is required" })}
-    ></textarea>
-    {errors.description && (
-      <p className="text-red-500 text-sm">{errors.description.message}</p>
-    )}
+      {/* Form Card */}
+      <div
+        className="w-full max-w-md sm:max-w-lg flex flex-col gap-5 sm:gap-6 text-text opacity-0 animate-[slideUp_0.6s_ease-out_0.2s_forwards] relative z-10"
+      >
+        <div className="bg-bg/50 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-2xl border border-primary/10 transition-all duration-500 hover:shadow-primary/20">
+          {/* Title Input */}
+          <div className="mb-5 sm:mb-6 group">
+            <div className="relative">
+              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-primary/60 group-focus-within:text-primary transition-colors duration-300">
+                <FileText className="w-5 h-5" />
+              </div>
+              <input
+                type="text"
+                className="input w-full pl-12 pr-4 py-3 sm:py-4 bg-bg/50 border-2 border-primary/20 rounded-xl sm:rounded-2xl transition-all duration-300 focus:ring-2 focus:ring-primary/50 focus:border-primary focus:scale-[1.02] hover:border-primary/40 opacity-0 animate-[fadeIn_0.6s_ease-out_0.4s_forwards] text-white placeholder:text-white/50"
+                placeholder="Enter a descriptive title"
+                {...register("title", { required: "Title is required" })}
+              />
+            </div>
+            {errors.title && (
+              <div className="flex items-center gap-2 mt-2 text-red-500 text-sm animate-[shake_0.3s_ease-in-out]">
+                <AlertCircle className="w-4 h-4" />
+                <p>{errors.title.message}</p>
+              </div>
+            )}
+          </div>
 
-    <button type="submit" className="button bg-primary w-full">
-      Submit
-    </button>
-  </form>
-</main>
+          {/* Description Textarea */}
+          <div className="mb-5 sm:mb-6 group">
+            <div className="relative">
+              <textarea
+                rows="5"
+                className="input w-full p-4 bg-bg/50 border-2 border-primary/20 rounded-xl sm:rounded-2xl resize-none transition-all duration-300 focus:ring-2 focus:ring-primary/50 focus:border-primary focus:scale-[1.02] hover:border-primary/40 opacity-0 animate-[fadeIn_0.6s_ease-out_0.5s_forwards] sm:rows-6 text-white placeholder:text-white/50"
+                placeholder="Provide detailed information about your report..."
+                {...register("description", { required: "Description is required" })}
+              ></textarea>
+            </div>
+            {errors.description && (
+              <div className="flex items-center gap-2 mt-2 text-red-500 text-sm animate-[shake_0.3s_ease-in-out]">
+                <AlertCircle className="w-4 h-4" />
+                <p>{errors.description.message}</p>
+              </div>
+            )}
+          </div>
 
+          {/* Submit Button */}
+          <button 
+            type="submit" 
+            disabled={isLoading}
+            onClick={handleSubmit(onSubmit)}
+            className="w-full py-4 rounded-xl sm:rounded-2xl font-semibold text-base sm:text-lg text-white bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-primary/30 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed opacity-0 animate-[fadeIn_0.6s_ease-out_0.6s_forwards] relative overflow-hidden group"
+          >
+            <span className={`flex items-center justify-center gap-2 ${isLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`}>
+              <Send className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+              Submit Report
+            </span>
+            {isLoading && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-6 h-6 border-3 border-white border-t-transparent rounded-full animate-spin"></div>
+              </div>
+            )}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+          </button>
+        </div>
+      </div>
+
+      <style jsx>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+
+        @keyframes slideDown {
+          from {
+            opacity: 0;
+            transform: translateY(-30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes slideUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          25% { transform: translateX(-8px); }
+          50% { transform: translateX(8px); }
+          75% { transform: translateX(-8px); }
+        }
+
+        @keyframes float {
+          0%, 100% { transform: translateY(0px) scale(1); }
+          50% { transform: translateY(-20px) scale(1.1); }
+        }
+      `}</style>
+    </main>
   );
 };
 
