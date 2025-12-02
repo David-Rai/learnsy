@@ -12,7 +12,7 @@ const Layout = () => {
   return !isIntroDone ? (
     <IntroPopUp />
   ) : (
-    <div className="h-screen w-full bg-bg md:flex md:flex-row rootLayout">
+    <div className="h-[100dvh] w-full bg-bg md:flex md:flex-row rootLayout">
       <Sidebar />
       <main className="h-[calc(100%-80px)] md:h-screen bg-bg w-full flex flex-col overflow-hidden">
         <Outlet />
