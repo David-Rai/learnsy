@@ -193,11 +193,11 @@ const Intro = () => {
 
                 <div className="mt-12 flex gap-8">
                   <div className="flex flex-col items-center">
-                    <div className="text-3xl font-bold text-primary">2000+</div>
+                    <div className="text-3xl font-bold text-primary">3000+</div>
                     <div className="text-sm text-gray-400">Questions</div>
                   </div>
                   <div className="flex flex-col items-center">
-                    <div className="text-3xl font-bold text-green-400">25+</div>
+                    <div className="text-3xl font-bold text-green-400">30+</div>
                     <div className="text-sm text-gray-400">Categories</div>
                   </div>
                 </div>
