@@ -94,7 +94,9 @@ const Category = ({ c }) => {
       </div>
 
       <div className="relative flex flex-col justify-center flex-1 px-4 py-2 bg-gray-900">
-        <h2 className="uppercase text-white text-sm md:text-xl font-bold mb-1 md:mb-2 truncate group-hover:text-green-400 transition-colors duration-300">
+        <h2 className="capitalize text-white text-sm
+         md:text-xl font-bold mb-1
+          md:mb-2 truncate group-hover:text-green-400 transition-colors duration-300">
           {name}
         </h2>
 

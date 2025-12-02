@@ -22,7 +22,7 @@ const NewExplore = () => {
 
   //Fetching all classes
   const getAllClasses = async () => {
-    const {data,error} = await supabase.from("class").select();
+    const {data,error} = await supabase.from("class").select().order('type',{assending:true})
 
     if(error){
       return setClasses([])
@@ -30,6 +30,8 @@ const NewExplore = () => {
     setClasses(data)
     // console.log("All classes",data);
   };
+
+
 
   //Filtering the classes on search parameters
   const filteredClasses = useMemo(() => {

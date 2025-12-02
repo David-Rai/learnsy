@@ -1,4 +1,4 @@
-Generate 100 english-grammer questions in CSV format with the following columns:
+Generate 100 accounting from basic to advanced questions in CSV format with the following columns:
 q,a,options,category,hint,lesson
 
 Requirements:
