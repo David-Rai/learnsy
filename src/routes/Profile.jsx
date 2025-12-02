@@ -170,7 +170,7 @@ const Profile = () => {
                     {/* Feedback Button */}
                     <button
                       onClick={handleFeedback}
-                      className="px-4 pb-2 hover:cursor-pointer bg-primary text-white rounded-full text-sm font-semibold shadow-lg hover:bg-primary-dark transition"
+                      className="px-4 hover:cursor-pointer bg-primary text-white rounded-full text-sm font-semibold shadow-lg hover:bg-primary-dark transition"
                     >
                       Suggestion
                     </button>
