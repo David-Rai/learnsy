@@ -1,13 +1,9 @@
-Generate 100 science-9 questions in CSV format with the following columns:
+Generate 100 english-grammer questions in CSV format with the following columns:
 q,a,options,category,hint,lesson
 
 Requirements:
 
 Use exactly  different lessons  (all lowercase)
-lessons are (
-
-
-)
 . Ensure each lesson is used equally, i.e., each lesson appears for 10 questions.
 
 The options column must be a JSON array (e.g., ["option1","option2","option3","option4"]) containing either 4 options or True/False.

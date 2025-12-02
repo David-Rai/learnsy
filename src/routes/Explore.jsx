@@ -64,7 +64,7 @@ const NewExplore = () => {
           <section className="flex-1 overflow-y-auto custom-scrollbar">
             <div className="p-4 md:p-6">
               {filteredClasses.length > 0 ? (
-                <div className="flex flex-col gap-3 md:gap-4 justify-center max-w-6xl mx-auto">
+                <div className="flex flex-col md:flex-row md:flex-wrap md:gap-5 gap-3 md:gap-4 justify-center max-w-6xl mx-auto">
                   {filteredClasses.map((c, index) => (
                     <ClassChild c={c} key={c.id || index} />
                   ))}

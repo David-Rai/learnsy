@@ -49,7 +49,7 @@ const ClassChild = ({ c }) => {
       onClick={handleClick}
       className="group relative flex flex-row sm:flex-col items-center sm:justify-between 
                  p-4 sm:p-5 md:p-6 lg:p-7 rounded-2xl cursor-pointer 
-                 h-auto sm:h-60 md:h-64 lg:h-72 w-full
+                 h-auto sm:h-60 md:h-64 lg:h-72 w-full md:w-1/3
                  bg-white/10 backdrop-blur-xl border border-white/20
                  hover:bg-white/20 hover:border-primary/50 hover:shadow-[0_0_25px_var(--color-primary)] hover:shadow-primary/20
                  transition-all duration-300 ease-out sm:hover:-translate-y-2 overflow-hidden"
