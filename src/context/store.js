@@ -8,7 +8,8 @@ const useHomeStore = create((set) => ({
   categories: [],
   setCategories: (c) => set({ categories: c }),
 
-  isIntroDone: localStorage.getItem("isIntroDone") === "true",
+  // isIntroDone: localStorage.getItem("isIntroDone") === "true",
+  isIntroDone:true,
   setIsIntroDone: (t) =>
     set(() => {
       localStorage.setItem("isIntroDone", t);
