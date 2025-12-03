@@ -156,9 +156,7 @@ const Profile = () => {
                     <span>🏆</span>
                     <span>Rank #{stats?.rank || "N/A"}</span>
                   </div>
-                    <i className="pt-2 text-gray-400">Give me your reports,suggestions</i>
-                    <p className="pb-2 text-gray-200">Thanks marika and prabhat for contibutions</p>
-                  {/* NEW BUTTONS */}
+                    <i className="pt-2 text-gray-400">Give me your reports,suggestions</i>                  {/* NEW BUTTONS */}
                   <div className="flex gap-3 t-2 ">
                     {/* Report Button */}
                     <button
