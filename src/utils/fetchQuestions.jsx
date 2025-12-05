@@ -42,12 +42,11 @@ export default async function fetchQuestions() {
   let totalquestions = [...questionsIds, ...answerIds]
 
   //if user dont fetch previous answered questions
-  if (isUser) {
-    const previousQuestions = await supabase.from("user_answer").select('*').eq("user_id", user.id)
-    const previousIds = previousQuestions.data.map(q => q.q_id); // get array of q_id
-    totalquestions = [...totalquestions, ...previousIds]
-  }
-
+  // if (isUser) {
+  //   const previousQuestions = await supabase.from("user_answer").select('*').eq("user_id", user.id)
+  //   const previousIds = previousQuestions.data.map(q => q.q_id); // get array of q_id
+  //   totalquestions = [...totalquestions, ...previousIds]
+  // }
 
   //filter for already fetch questions
   if (totalquestions?.length > 0) {
