@@ -86,7 +86,7 @@ const SocialIcons = ({ q }) => {
       {/* Social */}
       <div className=" w-full  flex justify-center items-center gap-4 z-20 py-3">
         {/* like */}
-        <div className="flex flex-col items-center" onClick={handleLike}>
+        {/* <div className="flex flex-col items-center" onClick={handleLike}>
           <button className="social-contain">
             {isLiked ? (
               <FaHeart className="w-6 h-6 text-red-500" />
@@ -94,7 +94,7 @@ const SocialIcons = ({ q }) => {
               <FaHeart className="w-6 h-6 text-white" />
             )}
           </button>
-        </div>
+        </div> */}
 
         {/* Hint */}
         <div
