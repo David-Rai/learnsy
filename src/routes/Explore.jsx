@@ -22,7 +22,8 @@ const NewExplore = () => {
 
   //Fetching all classes
   const getAllClasses = async () => {
-    const {data,error} = await supabase.from("class").select().order('type',{assending:true})
+    // const {data,error} = await supabase.from("class").select().order('type',{assending:true})
+    const {data,error} = await supabase.from("class").select().eq('type','b')
 
     if(error){
       return setClasses([])

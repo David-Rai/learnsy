@@ -91,7 +91,7 @@ const SocialIcons = ({ q }) => {
             {isLiked ? (
               <FaHeart className="w-6 h-6 text-red-500" />
             ) : (
-              <FaHeart className="w-6 h-6 text-white" />
+              <FaHeart className="w-6  h-6 text-white" />
             )}
           </button>
         </div> */}
