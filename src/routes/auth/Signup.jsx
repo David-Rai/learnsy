@@ -125,7 +125,7 @@ const Signup = () => {
               <div className="text-center mb-8">
                 <h1 className="text-3xl font-bold bg-primary
               bg-clip-text text-transparent mb-2">
-                  Learnsy
+                  Learnwhilescrolling
                 </h1>
                 <p className="text-gray-300 text-sm">Sign up to start your learning journey</p>
               </div>
